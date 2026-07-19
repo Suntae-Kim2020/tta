@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI-Ready 표준화 · 문서 지도</title>
+<style>*{box-sizing:border-box}html,body{margin:0;padding:0}img{max-width:100%}</style>
+</head>
+<body>
+<style>
+  :root{
+    --bg:#f6f8fa; --surface:#ffffff; --surface-2:#eef1f5; --surface-3:#e6eaf0;
+    --ink:#1a2531; --ink-soft:#54606f; --ink-faint:#7b8798;
+    --line:#dbe1e9; --line-soft:#e7ebf1;
+    --accent:#0e7c86; --accent-2:#0a5a63; --accent-soft:#d6ecee; --accent-ink:#0a5a63;
+    --good:#2f8757; --good-soft:#dcefe4;
+    --warn:#a9750f; --warn-soft:#f4e9d2;
+    --crit:#b23a3a; --crit-soft:#f3dede;
+    --new:#0e7c86; --new-soft:#d6ecee;
+    --keep:#6a7686; --keep-soft:#e6eaf0;
+    --shadow:0 1px 2px rgba(20,30,45,.05),0 4px 16px rgba(20,30,45,.05);
+    --mono:'SFMono-Regular',ui-monospace,'JetBrains Mono','D2Coding',Consolas,monospace;
+    --sans:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',system-ui,-apple-system,'Segoe UI',sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0f141a; --surface:#161d26; --surface-2:#1d2530; --surface-3:#232c38;
+      --ink:#e8edf3; --ink-soft:#9ba7b5; --ink-faint:#6c7887;
+      --line:#293341; --line-soft:#212a35;
+      --accent:#36b2bc; --accent-2:#57c6cf; --accent-soft:#123239; --accent-ink:#57c6cf;
+      --good:#4db07c; --good-soft:#16302340;
+      --warn:#d9a441; --warn-soft:#33290f60;
+      --crit:#d97070; --crit-soft:#3a1e1e60;
+      --new:#36b2bc; --new-soft:#123239;
+      --keep:#8592a2; --keep-soft:#232c38;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.28);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f6f8fa; --surface:#ffffff; --surface-2:#eef1f5; --surface-3:#e6eaf0;
+    --ink:#1a2531; --ink-soft:#54606f; --ink-faint:#7b8798;
+    --line:#dbe1e9; --line-soft:#e7ebf1;
+    --accent:#0e7c86; --accent-2:#0a5a63; --accent-soft:#d6ecee; --accent-ink:#0a5a63;
+    --good:#2f8757; --good-soft:#dcefe4; --warn:#a9750f; --warn-soft:#f4e9d2;
+    --crit:#b23a3a; --crit-soft:#f3dede; --new:#0e7c86; --new-soft:#d6ecee;
+    --keep:#6a7686; --keep-soft:#e6eaf0;
+    --shadow:0 1px 2px rgba(20,30,45,.05),0 4px 16px rgba(20,30,45,.05);
+  }
+  :root[data-theme="dark"]{
+    --bg:#0f141a; --surface:#161d26; --surface-2:#1d2530; --surface-3:#232c38;
+    --ink:#e8edf3; --ink-soft:#9ba7b5; --ink-faint:#6c7887;
+    --line:#293341; --line-soft:#212a35;
+    --accent:#36b2bc; --accent-2:#57c6cf; --accent-soft:#123239; --accent-ink:#57c6cf;
+    --good:#4db07c; --good-soft:#16302340; --warn:#d9a441; --warn-soft:#33290f60;
+    --crit:#d97070; --crit-soft:#3a1e1e60; --new:#36b2bc; --new-soft:#123239;
+    --keep:#8592a2; --keep-soft:#232c38;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.28);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;
+    font-feature-settings:"tnum";}
+  .wrap{max-width:1120px;margin:0 auto;padding:clamp(20px,4vw,52px) clamp(16px,3.5vw,40px) 80px;}
+  a{color:var(--accent-ink)}
+
+  /* header */
+  header{border-bottom:1px solid var(--line);padding-bottom:26px;margin-bottom:34px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-ink);
+    font-weight:700;margin:0 0 12px}
+  h1{font-size:clamp(24px,3.4vw,34px);line-height:1.18;margin:0 0 12px;font-weight:750;
+    letter-spacing:-.01em;text-wrap:balance;}
+  .lede{font-size:16px;color:var(--ink-soft);max-width:70ch;margin:0}
+  .meta{margin-top:16px;font-size:12.5px;color:var(--ink-faint);font-family:var(--mono);
+    display:flex;flex-wrap:wrap;gap:6px 18px}
+
+  section{margin-top:44px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--accent-ink);font-weight:700}
+  h2{font-size:20px;margin:0;font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+  .sec-sub{color:var(--ink-soft);margin:2px 0 20px;font-size:14.5px;max-width:74ch}
+
+  /* process rail */
+  .rail{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:8px 0 6px}
+  @media (max-width:860px){.rail{grid-auto-flow:column;grid-template-columns:none;
+    grid-auto-columns:minmax(180px,1fr);overflow-x:auto;padding-bottom:10px}}
+  .step{background:var(--surface);border:1px solid var(--line);border-radius:11px;
+    padding:14px 14px 15px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .step::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent)}
+  .step .n{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--accent-ink);
+    letter-spacing:.05em}
+  .step .t{font-weight:680;font-size:14px;margin:5px 0 4px;line-height:1.3}
+  .step .who{font-size:12px;color:var(--ink-soft)}
+  .step .out{font-size:11.5px;color:var(--ink-faint);margin-top:7px;font-family:var(--mono);line-height:1.45}
+  .gate{margin:14px 0;font-size:12.5px;color:var(--ink-faint);text-align:center;
+    font-family:var(--mono);letter-spacing:.02em}
+  .gate span{background:var(--surface-2);padding:4px 12px;border-radius:20px;border:1px solid var(--line)}
+
+  /* tables */
+  .tbl-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;
+    box-shadow:var(--shadow);background:var(--surface)}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:640px}
+  thead th{background:var(--surface-2);text-align:left;font-weight:680;color:var(--ink-soft);
+    font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;padding:11px 14px;
+    border-bottom:1px solid var(--line);white-space:nowrap;position:sticky;top:0}
+  tbody td{padding:11px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top;line-height:1.5}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:var(--surface-2)}
+  td .doc{font-weight:640;color:var(--ink)}
+  td .sub{color:var(--ink-faint);font-size:12px;display:block;margin-top:2px}
+  td .path{font-family:var(--mono);font-size:10.5px;color:var(--accent-ink);display:block;
+    margin-top:4px;word-break:break-all;opacity:.9}
+  td .path::before{content:"📄 ";opacity:.7}
+  code,.m{font-family:var(--mono);font-size:12.5px;background:var(--surface-2);
+    padding:1px 6px;border-radius:5px;color:var(--accent-ink);white-space:nowrap}
+  .grp-row td{background:var(--surface-3);font-weight:700;font-size:12px;letter-spacing:.03em;
+    color:var(--ink-soft);text-transform:uppercase;padding:9px 14px}
+
+  /* chips */
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:680;
+    padding:2px 9px;border-radius:20px;line-height:1.5;white-space:nowrap;font-family:var(--mono)}
+  .c-new{background:var(--new-soft);color:var(--new);border:1px solid color-mix(in srgb,var(--new) 32%,transparent)}
+  .c-keep{background:var(--keep-soft);color:var(--keep);border:1px solid color-mix(in srgb,var(--keep) 30%,transparent)}
+  .c-high{background:var(--crit-soft);color:var(--crit);border:1px solid color-mix(in srgb,var(--crit) 34%,transparent)}
+  .c-med{background:var(--warn-soft);color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 36%,transparent)}
+  .c-low{background:var(--keep-soft);color:var(--ink-soft);border:1px solid var(--line)}
+  .c-ok{background:var(--good-soft);color:var(--good);border:1px solid color-mix(in srgb,var(--good) 34%,transparent)}
+
+  /* status band */
+  .band{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:6px 0 26px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 17px;
+    box-shadow:var(--shadow)}
+  .stat .k{font-size:12px;color:var(--ink-soft);font-weight:640}
+  .stat .v{font-size:15px;font-weight:640;margin-top:7px;line-height:1.4}
+  .stat.ok{border-left:3px solid var(--good)}
+  .stat.attn{border-left:3px solid var(--warn)}
+
+  /* findings */
+  .finds{display:flex;flex-direction:column;gap:11px}
+  .find{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:14px 16px;
+    box-shadow:var(--shadow);display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:start}
+  .find .sev{grid-row:1/3}
+  .find .where{font-family:var(--mono);font-size:12px;color:var(--ink-faint)}
+  .find .what{font-size:13.5px;line-height:1.5}
+  .find .what b{font-weight:680}
+  .find .fix{font-size:12.5px;color:var(--ink-soft);margin-top:5px}
+  .find .fix::before{content:"✓ 조치 완료 · ";color:var(--good);font-weight:700}
+
+  .foot{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:12.5px;color:var(--ink-faint);line-height:1.6}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:14px;font-size:12px;color:var(--ink-soft)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .dot{width:9px;height:9px;border-radius:50%}
+</style>
+
+<style>
+  .app{display:flex;min-height:100vh;align-items:flex-start}
+  .side{position:sticky;top:0;width:255px;flex-shrink:0;max-height:100vh;overflow-y:auto;
+    border-right:1px solid var(--line);background:var(--surface);padding:20px 14px 40px}
+  .side-brand{font-weight:750;font-size:14.5px;padding:4px 12px 4px;color:var(--ink);line-height:1.35}
+  .side-brand small{display:block;font-weight:500;font-size:11.5px;color:var(--ink-faint);margin-top:3px}
+  .side-group{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-faint);
+    margin:20px 0 6px 12px;font-weight:700}
+  .menu{display:block;width:100%;text-align:left;background:none;border:none;color:var(--ink-soft);
+    font-family:inherit;font-size:13px;padding:9px 12px;border-radius:8px;cursor:pointer;margin-bottom:2px;line-height:1.35}
+  .menu:hover{background:var(--surface-2);color:var(--ink)}
+  .menu.active{background:var(--accent-soft);color:var(--accent-ink);font-weight:680}
+  .content{flex:1;min-width:0;padding:clamp(22px,3vw,44px) clamp(16px,3vw,40px) 80px;max-width:1180px}
+  .panel{display:none}
+  .panel.active{display:block;animation:fade .18s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .doc-src{font-family:var(--mono);font-size:11.5px;color:var(--accent-ink);background:var(--surface-2);
+    border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin-bottom:20px;display:inline-block}
+  .doc-content h3{font-size:17.5px;margin:30px 0 12px;padding-bottom:7px;border-bottom:2px solid var(--accent);
+    color:var(--ink);text-wrap:balance}
+  .doc-content h3:first-of-type{margin-top:4px}
+  .doc-content h4{font-size:14px;margin:22px 0 8px;color:var(--accent-ink);font-weight:700}
+  .doc-content p{margin:8px 0;font-size:13.5px;line-height:1.68;max-width:74ch}
+  .doc-content .tbl-wrap{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--line);
+    border-radius:10px;box-shadow:var(--shadow)}
+  .doc-tbl{border-collapse:collapse;width:100%;font-size:12.5px;min-width:540px;background:var(--surface)}
+  .doc-tbl th,.doc-tbl td{border:1px solid var(--line);padding:8px 12px;vertical-align:top;
+    text-align:left;line-height:1.55}
+  .doc-tbl th{background:var(--surface-2);font-weight:680;color:var(--ink-soft);font-size:12px}
+  .doc-tbl.cmp td{width:50%}
+  .doc-tbl.cmp tr td:first-child{background:color-mix(in srgb,var(--ink) 3%,transparent);color:var(--ink-soft)}
+  .doc-content strong{color:var(--accent-ink);background:color-mix(in srgb,var(--accent) 13%,transparent);
+    padding:0 3px;border-radius:3px;font-weight:680}
+  .doc-tbl th strong{background:none;color:inherit}
+  .flow{max-width:660px;margin:18px auto 8px}
+  .node{background:var(--surface);border:1.5px solid var(--line);border-radius:11px;padding:12px 16px;box-shadow:var(--shadow)}
+  .node .nm{font-weight:700;font-size:14px;color:var(--ink)}
+  .node .node-sub{display:block;font-size:11.5px;color:var(--ink-faint);margin-top:3px;line-height:1.5}
+  .node.gate{border-style:dashed}
+  .arrow{text-align:center;color:var(--ink-faint);font-size:17px;line-height:1;margin:4px 0}
+  .ai-note{--r:#c0272d;margin-top:9px;background:color-mix(in srgb,var(--r) 11%,transparent);
+    border:1px solid color-mix(in srgb,var(--r) 42%,transparent);border-radius:8px;padding:7px 11px;
+    font-size:12px;color:var(--r);font-weight:620;line-height:1.5}
+  .red-em{--r:#c0272d;color:var(--r);font-weight:700}
+  @media (prefers-color-scheme:dark){.ai-note{--r:#ff8a8f}.red-em{--r:#ff8a8f}}
+  :root[data-theme="dark"] .ai-note{--r:#ff8a8f} :root[data-theme="dark"] .red-em{--r:#ff8a8f}
+  :root[data-theme="light"] .ai-note{--r:#c0272d} :root[data-theme="light"] .red-em{--r:#c0272d}
+  /* 상호 참조 링크 + 팝업 창 */
+  a.xref{color:var(--accent-ink);text-decoration:none;cursor:pointer;font-weight:inherit;
+    border-bottom:1px dashed color-mix(in srgb,var(--accent-ink) 55%,transparent);padding:0 1px;white-space:nowrap}
+  a.xref:hover{background:var(--accent-soft);border-bottom-style:solid}
+  a.xref::after{content:"\2197";font-size:.78em;vertical-align:super;opacity:.6;margin-left:1px}
+  .ai-note a.xref{color:inherit;border-bottom-color:currentColor}
+  .doc-tbl th a.xref{color:inherit;border-bottom-color:currentColor}
+  .xref-modal[hidden]{display:none}
+  .xref-modal{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:clamp(12px,3vw,32px)}
+  .xref-backdrop{position:absolute;inset:0;background:color-mix(in srgb,var(--ink) 46%,transparent)}
+  @supports (backdrop-filter:blur(2px)){.xref-backdrop{backdrop-filter:blur(2px)}}
+  .xref-window{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 24px 64px rgba(0,0,0,.34);width:min(940px,96vw);max-height:88vh;display:flex;flex-direction:column;
+    overflow:hidden;animation:xpop .16s ease}
+  @keyframes xpop{from{opacity:0;transform:scale(.98) translateY(8px)}to{opacity:1;transform:none}}
+  .xref-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px 11px 18px;
+    border-bottom:1px solid var(--line);background:var(--surface-2)}
+  .xref-title{font-weight:720;font-size:14px;color:var(--ink);line-height:1.3}
+  .xref-title small{font-weight:500;color:var(--accent-ink);margin-left:8px;font-size:12px}
+  .xref-actions{display:flex;gap:8px;flex-shrink:0}
+  .xref-full,.xref-close{font-family:inherit;border:1px solid var(--line);background:var(--surface);
+    color:var(--ink-soft);border-radius:8px;padding:6px 12px;font-size:12.5px;cursor:pointer;white-space:nowrap}
+  .xref-full:hover,.xref-close:hover{background:var(--accent-soft);color:var(--accent-ink);border-color:var(--accent)}
+  .xref-close{padding:6px 11px;font-weight:700}
+  .xref-body{padding:8px 24px 28px;overflow-y:auto}
+  .xref-body h3:first-of-type{margin-top:10px}
+  .xref-hit{animation:xhit 1.7s ease}
+  @keyframes xhit{0%,35%{background:color-mix(in srgb,var(--accent) 36%,transparent);border-radius:4px}100%{background:transparent}}
+  @media (max-width:880px){
+    .app{flex-direction:column}
+    .side{position:static;width:100%;max-height:none;border-right:none;border-bottom:1px solid var(--line);
+      display:flex;flex-wrap:wrap;gap:4px;align-items:center;padding:12px 14px}
+    .side-brand{width:100%}
+    .side-group{width:100%;margin:8px 0 0 6px}
+    .menu{width:auto;font-size:12.5px;padding:7px 11px}
+  }
+</style>
+
+<div class="app">
+  <nav class="side">
+    <div class="side-brand">AI-Ready 표준화<small>문서 지도 &amp; 규범 개정안</small></div>
+    <div class="side-group">지도</div>
+    <button class="menu active" data-t="overview">📋 문서 체계 · 정합성 · 참고문헌</button>
+    <div class="side-group">규범 개정안 (문서 내용)</div>
+    <button class="menu" data-t="regs">📜 규범 3종 개정 대비표</button>
+    <button class="menu" data-t="byotable">📑 별표 10 · 별지 제11-1호</button>
+    <button class="menu" data-t="byoji">📋 별지 15 · 23 · 24 개정</button>
+    <button class="menu" data-t="selfcheck">🧾 자가점검표 (별지 제21-1호)</button>
+    <button class="menu" data-t="jichim">📘 작성지침 개정 대비표</button>
+    <button class="menu" data-t="flow">🔴 별표 1 절차도 (AI-Ready 접점)</button>
+    <div class="side-group">참고</div>
+    <button class="menu" data-t="faq">❓ 규정 용어·조직 FAQ (SPC·IPR)</button>
+  </nav>
+  <main class="content">
+    <section class="panel active" id="overview">
+<header>
+  <p class="eyebrow">TTA AI-Ready 표준화 전략과제</p>
+  <h1>문서 체계 지도 &amp; 정합성 점검</h1>
+  <p class="lede">이 과제가 생성한 문서, 실제 표준화 과정에서 만들어지는 문서, 각 문서의 작성 주체와 프로세스상 시점을 한 장에 정리하고, 전 문서를 정본 모델과 대조한 결과를 함께 싣는다.</p>
+  <div class="meta"><span>범위 · RG 11종 + TG 9종 분석 · 실증 5종 패키지 · 규범 4문서</span><span>점검 · 3개 클러스터 병렬 감사</span></div>
+</header>
+
+<!-- PROCESS -->
+<section>
+  <div class="sec-head"><span class="sec-num">01</span><h2>표준화 프로세스와 산출 시점</h2></div>
+  <p class="sec-sub">한 표준이 제안부터 제정까지 거치는 웹 5단계. 굵은 단계는 AI-Ready가 새로 더한 것이고, 나머지는 기존 TTA 절차에 부가된다. 아래 문서들은 모두 이 타임라인 위의 어느 지점에 놓인다.</p>
+  <div class="gate"><span>사전 · 표준 검토·진단 (RG/TG 분석 산출물 → §4)</span></div>
+  <div class="rail">
+    <div class="step"><div class="n">STEP 1</div><div class="t">표준(과제) 제안서</div><div class="who">제안 기관</div><div class="out">별지 제11호 · 기존</div></div>
+    <div class="step"><div class="n">STEP 2 · 신설</div><div class="t">AI-Ready 선언</div><div class="who">제안자</div><div class="out">프로파일 · 목표 수준</div></div>
+    <div class="step"><div class="n">STEP 3</div><div class="t">표준초안 · 요소 정의표</div><div class="who">에디터 (도메인)</div><div class="out">4절 = 부속서 A</div></div>
+    <div class="step"><div class="n">STEP 4 · 신설</div><div class="t">부속서 설계 명세</div><div class="who">공동 에디터 (어휘)</div><div class="out">→ 부속서 B·C·U 자동생성 · D·E·F·G 설계</div></div>
+    <div class="step"><div class="n">STEP 5 · 신설</div><div class="t">AI-Ready 자가점검</div><div class="who">에디터 / 기술위</div><div class="out">등급 · 정합성 · 산출물</div></div>
+  </div>
+  <div class="gate"><span>Step 2·3 사이 · 과제 채택 → 에디터·공동 에디터 지정 (사무국)</span></div>
+  <div class="gate"><span>Step 5 이후 · 표준안 상정 → 심의·의결 → 정보통신단체표준 제정/개정</span></div>
+</section>
+
+<!-- REAL PROCESS DOCS -->
+<section>
+  <div class="sec-head"><span class="sec-num">02</span><h2>실제 표준화 과정에서 생성되는 문서</h2></div>
+  <p class="sec-sub">기존 TTA 절차 문서와 AI-Ready가 신설하는 문서를 프로세스 순서로 나열한다. AI-Ready 신설분은 <span class="chip c-new">신설</span>, 기존 유지분은 <span class="chip c-keep">기존</span>. 신설 문서의 실제 파일 위치는 §3에 있다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>문서</th><th>구분</th><th>작성 주체</th><th>시점</th></tr></thead>
+    <tbody>
+      <tr><td><span class="doc">표준(과제) 제안서</span><span class="sub">별지 제11호</span></td><td><span class="chip c-keep">기존</span></td><td>제안 기관</td><td>제안</td></tr>
+      <tr><td><span class="doc">AI-Ready 선언</span><span class="sub">기술 대상 프로파일 · 목표 수준</span></td><td><span class="chip c-new">신설</span></td><td>제안자</td><td>제안</td></tr>
+      <tr><td><span class="doc">표준초안</span><span class="sub">본문 · 서문 · 인용표준</span></td><td><span class="chip c-keep">기존</span></td><td>에디터 (PG 위원)</td><td>초안 작성</td></tr>
+      <tr><td><span class="doc">└ 요소 정의표 (4절 = 부속서 A)</span><span class="sub">정규 컬럼표 · 도메인 컬럼</span></td><td><span class="chip c-new">신설</span></td><td>에디터</td><td>초안 작성</td></tr>
+      <tr><td><span class="doc">부속서 설계 명세</span><span class="sub">어휘 IRI · 코드 URI · 단위 · 구성요소 설계</span></td><td><span class="chip c-new">신설</span></td><td>공동 에디터 (어휘 전문가)</td><td>초안 작성</td></tr>
+      <tr><td><span class="doc">부속서 <code>B</code> @context · <code>C</code> SHACL · <code>U</code> 단위</span><span class="sub">요소표+바인딩에서 자동 생성(파생)</span></td><td><span class="chip c-new">신설</span></td><td>시스템 / 공동 에디터</td><td>초안 작성</td></tr>
+      <tr><td><span class="doc">부속서 <code>D</code> PROV-O · <code>E</code> DQV · <code>F</code> Croissant · <code>G</code> ODRL</span><span class="sub">해당 목표·프로파일만</span></td><td><span class="chip c-new">신설</span></td><td>공동 에디터</td><td>초안 작성</td></tr>
+      <tr><td><span class="doc">AI-Ready 자가점검표</span><span class="sub">등급 · 정합성 · 산출물 확인</span></td><td><span class="chip c-new">신설</span></td><td>에디터 작성 → 기술위 확인</td><td>상정 전</td></tr>
+      <tr><td><span class="doc">표준안 · 검토의견서 · 회의록</span></td><td><span class="chip c-keep">기존</span></td><td>기술위원회 / 사무국</td><td>상정 · 심의</td></tr>
+      <tr><td><span class="doc">정보통신단체표준 (최종)</span><span class="sub">TTAK / TTAE / TTAR</span></td><td><span class="chip c-keep">기존</span></td><td>—</td><td>제정 / 개정</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- OUR DOCS -->
+<section>
+  <div class="sec-head"><span class="sec-num">03</span><h2>이 과제가 생성한 문서</h2></div>
+  <p class="sec-sub">위 프로세스를 뒷받침하려고 만든 규범·서식·실증·해설 문서. 작업 루트 <code>…\TTA\</code>, 주 폴더 <code>new\</code>. 각 행의 <span style="color:var(--accent-ink)">📄 경로</span>로 실제 파일을 찾을 수 있다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>문서</th><th>목적</th><th>작성 주체</th><th>프로세스상 시점</th></tr></thead>
+    <tbody>
+      <tr class="grp-row"><td colspan="4">규범 · 전략 — 전 과정의 기준</td></tr>
+      <tr><td><span class="doc">수준요건 명세서 v0.3</span><span class="path">new\AI-Ready_수준요건_명세서_v0.3.docx</span></td><td>7구성요소·L1/L2/L3 요건 + 20종 실측 등급</td><td>과제 수행팀</td><td>상위 규범</td></tr>
+      <tr><td><span class="doc">요소정의체계·프로파일 설계안</span><span class="path">new\AI-Ready_메타데이터_표준제안_요소정의체계와_프로파일_설계안.docx</span></td><td>정규 컬럼표 + 3프로파일 설계</td><td>과제 수행팀</td><td>규범 보완</td></tr>
+      <tr><td><span class="doc">작성지침 <a class="xref" data-t="jichim" data-find="작성지침">TTAR-09.0040</a> 개정안</span><span class="sub">신구조문대비표</span><span class="path">new\작성지침_TTAR-09.0040_개정안_신구조문대비표.docx</span></td><td><a class="xref" data-t="jichim" data-find="6.5.3">6.5.3</a> 인용표준 · <a class="xref" data-t="jichim" data-find="6.5.7">6.5.7</a> 요소정의표 신설 · <a class="xref" data-t="jichim" data-find="6.6">6.6</a> 부속서</td><td>전략계획위원회(SPC)</td><td>8/10 운영위 상정 → 기술위 채택</td></tr>
+      <tr><td><span class="doc">TTA 규범 3종 개정(안) 신구조문대비표</span><span class="sub">운영요령(안건①)·운영규정 근거·작성지침 연계</span><span class="path">new\TTA규범3종_AI-Ready_개정안_신구조문대비표.docx</span></td><td>운영요령 8개 조문 신설·보강 + 별표10·별지11-1호</td><td>과제 수행팀 (→ 운영위원회 상정)</td><td>8/10 운영위 안건 ①</td></tr>
+      <tr><td><span class="doc"><a class="xref" data-t="byotable" data-find="별표 10">별표 제10호</a>·<a class="xref" data-t="byotable" data-find="별지 제11-1호">별지 제11-1호</a> 서식안</span><span class="sub">AI-Ready 수준 요건표 · 선언 서식</span><span class="path">new\운영요령_별표제10호_별지제11-1호_서식안.docx</span></td><td>운영요령 신설 별표·별지의 실제 서식(등급기준·산식·프로파일 목표 / 선언 양식)</td><td>과제 수행팀</td><td>운영요령 개정 부속</td></tr>
+      <tr><td><span class="doc"><a class="xref" data-t="byoji" data-find="별지 제15호">별지 제15호</a>·제23호 개정안</span><span class="sub">검토결과서에 AI-Ready 확인란 추가</span><span class="path">new\운영요령_별지제15호_제23호_개정안.docx</span></td><td>제안 검토결과서(<a class="xref" data-t="regs" data-find="3.3 제15조">제15조②</a>)·유지보수 결과서(<a class="xref" data-t="regs" data-find="3.7 제26조">제26조⑥</a>)에 확인란 신설</td><td>과제 수행팀</td><td>운영요령 개정 부속</td></tr>
+      <tr><td><span class="doc">웹프로세스 필드명세 v0.2</span><span class="path">new\AI-Ready_웹프로세스_필드명세.docx</span></td><td>웹 5단계 화면별 필드·자동채움 규칙</td><td>과제 수행팀</td><td>시스템 요구사항</td></tr>
+      <tr><td><span class="doc">참고 문헌 목록</span><span class="sub">규범 3종·외부 어휘·분석 대상·근거 문서 (§6)</span><span class="path">new\AI-Ready_참고문헌_목록.docx</span></td><td>과제가 참조한 문헌·인용 표준·조문</td><td>과제 수행팀</td><td>보고서 부속</td></tr>
+      <tr class="grp-row"><td colspan="4">서식 — 빈 템플릿</td></tr>
+      <tr><td><span class="doc">AI-Ready 선언 서식</span><span class="path">new\AI-Ready_선언_목표수준신청.docx</span></td><td>제안자가 채우는 선언 서식</td><td>제안자용</td><td>Step 2</td></tr>
+      <tr><td><span class="doc">AI-Ready 자가점검 서식</span><span class="path">new\AI-Ready_자가점검표.docx</span></td><td>상정 전 점검 서식</td><td>에디터·기술위용</td><td>Step 5</td></tr>
+      <tr class="grp-row"><td colspan="4">실증 패키지 — 5종 × 4문서 + 부속서 (실제 제안 시연)</td></tr>
+      <tr><td><span class="doc">1 선언 · 2 표준초안 · 3 부속서 설계 명세 · 4 자가점검표</span><span class="sub">폴더: 0976_연구데이터메타 · 1510_국토공통모델 · 1530_수산센서구조 · 1594_AI모델메타 · 0310_자율주행품질</span><span class="path">new\AI-Ready_제안패키지\{번호}_{라벨}\1_선언…·2_표준초안…·3_부속서설계명세…·4_자가점검표.docx</span></td><td>실제 값으로 채운 제안 프로세스 완본</td><td>제안자 → 에디터 → 공동에디터 → 기술위</td><td>Step 2 → 5</td></tr>
+      <tr><td><span class="doc">부속서 A~G</span><span class="sub">context·shacl·units·provo·dqv·croissant·odrl</span><span class="path">new\AI-Ready_제안패키지\{번호}_{라벨}\부속서\</span></td><td>기계가독 산출물(관련 구성요소만)</td><td>에디터 · 공동 에디터</td><td>Step 3·4</td></tr>
+      <tr><td><span class="doc">전환사례 5종 · 00 기호·부속서 안내</span><span class="path">new\5종_표준제안문서\AI-Ready_전환사례_{번호}_{라벨}.docx · 00_기호·약어_및_부속서_안내.docx</span></td><td>선언+자가점검 요약 · 해설서</td><td>과제 수행팀</td><td>참고 자료</td></tr>
+      <tr class="grp-row"><td colspan="4">분석 산출물 — RG 11종 · TG 9종 (표준 착수 전 진단, §4)</td></tr>
+      <tr><td><span class="doc">검토 · 분석카드 · 개선방향 · 종합매트릭스 보고서</span><span class="path">new\RG\ · new\TG\ (§4 참조)</span></td><td>결함 식별 → 등급화 → 처방 → 전략 종합</td><td>과제 수행팀</td><td>사전 진단 1~4단계</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ANALYSIS PIPELINE -->
+<section>
+  <div class="sec-head"><span class="sec-num">04</span><h2>분석 산출물 파이프라인 (RG · TG)</h2></div>
+  <p class="sec-sub">표준을 실제로 제안하기 전, 기존 표준 20종을 진단해 AI-Ready 전환 대상·방법을 도출한 4단계. 최종 실증 샘플 5종(1594·0976 + 1530·1510·0310)이 여기서 선정됐다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>단계</th><th>산출물</th><th>내용</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td><span class="m">1</span></td><td><span class="doc">표준별 검토</span><span class="path">new\RG\{표준}-검토.docx · new\TG\{표준}-검토.docx</span></td><td>표준 정독 · A축 결함 원점검</td><td>RG 11 · TG 9</td></tr>
+      <tr><td><span class="m">2</span></td><td><span class="doc">분석카드</span><span class="path">new\RG\분석카드_RG.xlsx · new\TG\분석카드_TG.xlsx</span></td><td>7구성요소 등급 · 성숙도 원장(A·B축) · 종합매트릭스</td><td>등급 원자료 · 유형별 평균</td></tr>
+      <tr><td><span class="m">3</span></td><td><span class="doc">표준별 개선방향</span><span class="path">new\RG\{표준}-개선방향.docx · new\TG\{표준}-개선방향.docx</span></td><td>표준별 전환 로드맵(JSON-LD·PROV-O·DQV …)</td><td>헤더·로드맵 정합 · 보정표 수치 34곳 정정</td></tr>
+      <tr><td><span class="m">4</span></td><td><span class="doc">종합매트릭스 분석보고서</span><span class="path">new\RG\종합매트릭스-분석보고서_RG.docx · new\TG\종합매트릭스_분석보고서_TG.docx</span></td><td>공통 공백 · 전략 과제 · 최종 샘플 선정</td><td>정본 정합 ✓</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- CONSISTENCY -->
+<section>
+  <div class="sec-head"><span class="sec-num">05</span><h2>정합성 점검 결과</h2></div>
+  <p class="sec-sub">전 문서를 정본 모델(3프로파일·7구성요소·L1/L2/L3·5단계 역할)과 대조한 결과, 핵심 산출물(실증 패키지·RG/TG 원장)은 정본과 정합한다.</p>
+  <div class="band">
+    <div class="stat ok"><div class="k">실증 패키지 5종 (20문서 + 부속서)</div><div class="v">정본과 완전 정합 <span class="chip c-ok">PASS</span><br><span style="font-size:12.5px;color:var(--ink-soft);font-weight:400">프로파일·목표·등급·성숙도·부속서 집합 교차검증 통과</span></div></div>
+    <div class="stat ok"><div class="k">RG/TG 원장 (카드·매트릭스·종합보고서)</div><div class="v">정본과 정합 <span class="chip c-ok">PASS</span><br><span style="font-size:12.5px;color:var(--ink-soft);font-weight:400">성숙도 역산·구성요소 평균·종합통계 일치</span></div></div>
+  </div>
+</section>
+
+<!-- REFERENCES -->
+<section>
+  <div class="sec-head"><span class="sec-num">06</span><h2>참고 문헌</h2></div>
+  <p class="sec-sub">이 과제가 참조한 문헌. 규범 3종은 정식 명칭·문서번호·시행일·경로와 실제 참조 조문을 함께 싣는다. 전체 목록은 <span class="path" style="display:inline">new\AI-Ready_참고문헌_목록.docx</span>.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>TTA 규범 (개정 대상·근거)</th><th>문서번호 · 시행일</th><th>참조 조문 (발췌)</th></tr></thead>
+    <tbody>
+      <tr><td><span class="doc">정보통신표준화 운영규정</span><span class="path">new\정보통신표준화 운영규정.pdf</span></td><td>SAG-0029(24)/R24<br>2025.6.27 · 30면</td><td><a class="xref" data-t="regs" data-find="4. 정보통신표준화 운영규정">제5조①</a>4(개정=표준총회) · 제20조의3(전문위원회 한계) · 제29조①2(특별위원) · 제33조⑤(의결권 없음) · 제38조②③(에디터·작성지침 위임) · 제39조②·제42조·<a class="xref" data-t="regs" data-find="5. 정보통신단체표준 작성지침">제47조①</a>·제54조</td></tr>
+      <tr><td><span class="doc">정보통신표준화 운영요령</span><span class="path">new\정보통신표준화 운영요령.pdf</span></td><td>SBG-0030(13)/R13<br>2025.6.13 · 62면</td><td><a class="xref" data-t="regs" data-find="3.1 제2조">제2조①</a>(정의) · <a class="xref" data-t="regs" data-find="3.2 제13조">제13조⑤</a>·별지 제11호(제안서) · <a class="xref" data-t="regs" data-find="3.3 제15조">제15조①</a>②(적용대상 판정) · <a class="xref" data-t="regs" data-find="3.4 제19조">제19조①</a>2·9 · <a class="xref" data-t="regs" data-find="3.5 제19조의2">제19조의2①</a>④(공동 에디터) · <a class="xref" data-t="regs" data-find="3.6 제21조">제21조⑤</a> · <a class="xref" data-t="regs" data-find="3.7 제26조">제26조⑥</a> · <b><a class="xref" data-t="regs" data-find="4. 정보통신표준화 운영규정">제57조</a>(개정=운영위원회)</b> · 별표1·10</td></tr>
+      <tr><td><span class="doc">정보통신단체표준 작성지침</span><span class="path">new\[TTA]정보통신단체표준 작성지침(TTAR-09.0040R1).pdf</span></td><td><a class="xref" data-t="jichim" data-find="작성지침">TTAR-09.0040</a>/R1<br>2025.5.23 · 44면</td><td>5.2(기술규격) · 6.5(본문) · <a class="xref" data-t="jichim" data-find="6.5.3">6.5.3</a>(인용표준) · <b><a class="xref" data-t="jichim" data-find="6.5.7">6.5.7</a>(요소정의표·신설)</b> · <b><a class="xref" data-t="jichim" data-find="6.6">6.6</a>(부속서·@context·신설)</b> · 부속서 A·B · 부록 Ⅱ</td></tr>
+    </tbody>
+  </table></div>
+  <p class="sec-sub" style="margin-top:14px"><b>외부 어휘·표준 (AI-Ready 구성요소 근거).</b> 시맨틱·신태틱 — DCMI·DCAT 3·DataCite·SKOS·schema.org·JSON-LD 1.1·GeoSPARQL·SOSA/SSN(W3C·OGC) / 데이터 모델 — SHACL·XSD·JSON Schema / 단위 — QUDT 2.1·UCUM / 출처 — PROV-O / 운영 — Croissant(MLCommons) / 품질 — DQV·ISO/IEC 5259-2 / 접근 — ODRL 2.2·DUO.</p>
+</section>
+
+<div class="foot">
+  <p><b>정본 모델 요약</b> — 3 프로파일(① 지식정보 · ② 자기기술형 레코드 · ③ AI 데이터세트) · 7 구성요소(시맨틱·신태틱=L1 / 데이터모델·출처=L2 / 운영·품질·접근=L3, L1 위는 DAG) · 성숙도 = 등급합 ÷ (적용수×2, 비-ML 12·ML 14) · 역할 3분(제안자→에디터→공동 에디터) + 기술위 · 부속서는 구성요소가 목표(필수∪권장)이거나 등급≥1일 때만 포함.</p>
+  <div class="legend">
+    <span><span class="dot" style="background:var(--new)"></span>신설 = AI-Ready가 더한 문서</span>
+    <span><span class="dot" style="background:var(--keep)"></span>기존 = TTA 절차 유지</span>
+    <span><span class="dot" style="background:var(--crit)"></span>높음 · 문서 간 충돌/내부 모순</span>
+    <span><span class="dot" style="background:var(--warn)"></span>중간 · 규칙/수치 갱신</span>
+    <span><span class="dot" style="background:var(--good)"></span>정합 확인</span>
+  </div>
+</div>
+</section><section class="panel" id="regs"><div class="doc-src">📄 new\TTA규범3종_AI-Ready_개정안_신구조문대비표.docx</div><div class="doc-content"><p><strong>TTA 표준화 규범 3종 AI-Ready 개정(안)</strong></p>
+<p>신구조문대비표 — 운영요령 개정 · 운영규정 근거 · 작성지침 개정 연계</p>
+<p>운영규정 SAG-0029(24)/R24(2025.6.27.) · 운영요령 SBG-0030(13)/R13(2025.6.13.) · 작성지침 <a class="xref" data-t="jichim" data-find="작성지침">TTAR-09.0040</a>/R1(2025.5.23.) 기준</p>
+<h3>1. 개정 이유</h3>
+<p>데이터의 의미·구조·출처·품질·이용조건을 사람과 기계가 함께 읽을 수 있는 AI-Ready 표준으로 전환하기 위해, 제안(선언)→초안(요소 정의표·부속서)→상정(자가점검)에 이르는 절차 근거를 규범에 신설·보강한다. 변경은 원칙적으로 운영요령에 담는다(운영요령으로 개정한다) — 운영요령 개정은 운영규정 제57조(&quot;운영위원회는 … 필요한 사항을 요령으로 정할 수 있다&quot;)에 따라 운영위원회 권한이며, 표준 제·개정과 달리 60일 의견수렴(제39조)이나 표준총회 상정을 요하지 않으므로 안건으로 상정되면 그 회의에서 심의·의결할 수 있다. 반면 운영규정 개정은 표준총회(연 2회) 권한이라 절차가 길어, 운영규정은 기존 조문을 근거로만 활용하고 개정하지 않는다. 초안 작성 방법의 세부는 작성지침(<a class="xref" data-t="jichim" data-find="작성지침">TTAR-09.0040</a>) 개정으로 규정한다.</p>
+<h3>2. 개정 개요 — 3종의 역할과 상정 순서</h3>
+<div class="tbl-wrap"><table class="doc-tbl"><tr><th><strong>규범</strong></th><th><strong>개정 성격</strong></th><th><strong>핵심 내용</strong></th><th><strong>권한 · 상정</strong></th></tr><tr><td>정보통신표준화 운영요령</td><td>신설·보강</td><td>용어(제2조)·제안 시 선언(제13조)·적용대상 판정(제15조)·초안 요소표 의무(제19조)·공동 에디터(제19조의2)·상정 자가점검(제21조)·유지보수 점검(제26조)·기계 점검(제11조) + <a class="xref" data-t="byotable" data-find="별표 10">별표 10</a>·<a class="xref" data-t="byotable" data-find="별지 제11-1호">별지 제11-1호</a>(선언)·제21-1호(자가점검표)·제15호·제23호·제24호</td><td>운영위원회 (제57조) · 안건 ①</td></tr><tr><td>정보통신표준화 운영규정</td><td>개정 불필요</td><td>기존 조문을 근거로 활용 — 제29조①2(특별위원)·제33조⑤(의결권 없음)·제38조②③(에디터·지침 위임)·제57조(운영요령 위임)</td><td>표준총회 (제5조①4) · 개정 회피</td></tr><tr><td>정보통신단체표준 작성지침</td><td>신설·보강</td><td><a class="xref" data-t="jichim" data-find="6.5.3">6.5.3</a> 인용표준·<a class="xref" data-t="jichim" data-find="6.5.7">6.5.7</a> 요소 정의표(신설)·<a class="xref" data-t="jichim" data-find="6.6">6.6</a> 부속서/@context(신설)·부속서 B 단위·부록 Ⅱ-4 이력</td><td>전략계획위원회·TC (제47조①) · 안건 ②</td></tr></table></div>
+<p><strong>상정 순서 ①→②. </strong>작성지침 <a class="xref" data-t="jichim" data-find="6.6">6.6</a>이 &quot;운영요령 제19조의2에 따라 지정된 공동 에디터&quot;를 인용하므로, 운영요령(공동 에디터 근거)이 먼저 의결돼야 작성지침 개정이 성립한다.</p>
+<h3>3. 정보통신표준화 운영요령 신구조문대비표 (안건 ①)</h3>
+<p>굵게 표시한 부분이 신설·추가되는 내용이다. 현행 문안은 SBG-0030(13)/R13 추출본으로, 의결 전 원문 최종 대조가 필요하다.</p>
+<h4>3.1 제2조(용어의 정의) — 제1항 6~8호 신설</h4>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>현 행</strong></th><th><strong>개정(안)  (굵은 부분이 신설·추가)</strong></th></tr><tr><td>제2조(용어의 정의) ① 이 운영요령에서 사용하는 용어의 정의는 다음과 같다.<br>1. &quot;표준화과제&quot;란 … 채택한 표준화 대상을 말한다.<br>2.~5. (표준초안 · 표준안 · 정보통신용어표준화 · 표준용어)<br>② … 운영규정과 IPR요령에서 정하는 바에 따른다.</td><td>제2조(용어의 정의) ① … (현행 1.~5. 유지)<br><strong>6. &quot;AI-Ready 표준&quot;이란 데이터의 의미·구조·출처·품질·이용조건을 사람과 기계가 함께 읽을 수 있도록, 데이터 요소를 전역 어휘 식별자(IRI)에 매핑하고 기계가독 형식으로 기술한 표준을 말한다.</strong><br><strong>7. &quot;AI-Ready 적용 대상&quot;이란 데이터 요소·구조·품질을 기술하는 표준을 말한다. 다만, 기술규격(제19조제1항제2호에 따라 앞표지와 원문으로 구성)은 제외한다.</strong><br><strong>8. &quot;AI-Ready 수준&quot;이란 데이터의 기계가독 성숙도로서 L1(시맨틱·신태틱)·L2(데이터 모델·출처)·L3(운영·품질·접근)의 도달 정도를 말하며, 세부 요건은 <a class="xref" data-t="byotable" data-find="별표 10">별표 10</a>에 따른다.</strong><br>② (현행 유지)</td></tr></table></div>
+<h4>3.2 제13조(표준화과제의 제안 및 접수) — 제5항 신설</h4>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>현 행</strong></th><th><strong>개정(안)  (굵은 부분이 신설·추가)</strong></th></tr><tr><td>제13조(표준화과제의 제안 및 접수) ① … 별지 제11호 서식 … 의 제안서를 사무국에 제출한다.<br>② … 첨부하는 표준초안의 종류는 다음 각 호와 같으며 … 1.~4.<br>③ 사무국은 … 보완을 요청 …<br>④ 개인 또는 중소기업이 … 사무국의 협력을 받을 수 있다.</td><td>① ~ ④ (현행 유지)<br><strong>⑤ AI-Ready 적용 대상 표준을 제안하는 경우, 제안자는 <a class="xref" data-t="byotable" data-find="별지 제11-1호">별지 제11-1호</a> 서식의 AI-Ready 선언(기술 대상 프로파일 및 목표 수준)을 제안서에 함께 첨부한다.</strong></td></tr></table></div>
+<h4>3.3 제15조(제안된 표준화과제의 검토) — 제2항 보강</h4>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>현 행</strong></th><th><strong>개정(안)  (굵은 부분이 신설·추가)</strong></th></tr><tr><td>제15조(제안된 표준화과제의 검토) ① 사무국은 … 검토할 기술위원회등을 선정하여야 한다. …<br>② … 기술위원회등의 장은 … 추진 타당성을 검토하고 … <a class="xref" data-t="byoji" data-find="별지 제15호">별지 제15호</a> 서식 … 의 검토결과서를 작성하여 운영위원회에 제안한다.<br>③ … 관련 프로젝트그룹등을 선정하고 …</td><td>① (현행 유지)<br>② … 검토결과서를 작성하여 운영위원회에 제안한다. <strong>이때 제안된 과제의 AI-Ready 적용 대상 여부와 목표 수준을 확인하여 검토결과서(<a class="xref" data-t="byoji" data-find="별지 제15호">별지 제15호</a> 서식)에 기재한다.</strong><br>③ (현행 유지)</td></tr></table></div>
+<h4>3.4 제19조(표준초안의 작성) — 제1항 9호 신설</h4>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>현 행</strong></th><th><strong>개정(안)  (굵은 부분이 신설·추가)</strong></th></tr><tr><td>제19조(표준초안의 작성) ① 프로젝트그룹등에서의 표준초안 작성은 다음 각 호를 따른다.<br>1. … 지식재산권 … 확약서 …<br>2. 표준초안에는 표지·서문·목차·본문·해설서 … 다만, 기술규격은 앞표지와 원문으로 한다.<br>3.~8. (명확 작성 · 준용 · 번역 · 차이점 · draft 처리)</td><td>① 1.~8. (현행 유지)<br><strong>9. AI-Ready 적용 대상 표준의 표준초안은 「정보통신단체표준 작성지침」에 따라 데이터 요소를 정규 컬럼표로 정의하고, 요소와 전역 어휘 식별자의 매핑을 JSON-LD @context 부속서로 첨부하며, 규범적으로 사용하는 외부 어휘·스키마를 인용표준에 등재한다.</strong></td></tr></table></div>
+<h4>3.5 제19조의2(표준초안 에디터) — 제5항 신설 (공동 에디터)</h4>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>현 행</strong></th><th><strong>개정(안)  (굵은 부분이 신설·추가)</strong></th></tr><tr><td>제19조의2(표준초안 에디터) ① 운영규정 제38조제2항에 따라 … 위원 중에서 에디터를 지정한다. 필요시 복수의 에디터를 지정할 수 있으며, 이 경우 주에디터를 지정한다.<br>② 프로젝트그룹등의 장은 에디터를 겸임할 수 있다.<br>③ 에디터의 임기는 … 표준으로 채택되는 시점까지 …<br>④ 에디터는 … 「정보통신단체표준 작성지침」에 따라 표준초안을 작성한다.</td><td>① ~ ④ (현행 유지)<br><strong>⑤ AI-Ready 적용 대상 표준의 경우, 프로젝트그룹등의 장은 운영규정 제29조제1항제2호에 따라 위촉된 어휘 전문가(특별위원)를 제1항에 따른 공동 에디터로 지정할 수 있다. 공동 에디터는 요소와 전역 어휘 식별자의 매핑 및 기계가독 부속서를 보강하며, 특별위원으로서 의결권을 갖지 아니한다(운영규정 제33조제5항).</strong></td></tr></table></div>
+<h4>3.6 제21조(표준안의 채택) — 제5항 신설 (상정 자가점검)</h4>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>현 행</strong></th><th><strong>개정(안)  (굵은 부분이 신설·추가)</strong></th></tr><tr><td>제21조(표준안의 채택) ① 기술위원회등은 … 표준초안을 심의·채택한다.<br>② … 표준안을 표준총회에 상정한다.<br>③ … 제출된 의견서 및 검토결과서를 표준총회에 제출 …<br>④ … 부결되어 재논의된 이력이 있는 경우 … 활동경위서를 상정한다.</td><td>① ~ ④ (현행 유지)<br><strong>⑤ AI-Ready 적용 대상 표준안을 상정하는 경우, 기술위원회등의 장은 <a class="xref" data-t="byotable" data-find="별표 10">별표 10</a>의 기준에 따른 AI-Ready 자가점검표(<a class="xref" data-t="selfcheck" data-find="별지 제21-1호">별지 제21-1호</a> 서식 — 구성요소별 달성 등급·문서 정합성·제출 산출물 확인)를 함께 제출한다.</strong></td></tr></table></div>
+<h4>3.7 제26조(표준의 관리) — 제6항 신설 (유지보수 점검)</h4>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>현 행</strong></th><th><strong>개정(안)  (굵은 부분이 신설·추가)</strong></th></tr><tr><td>제26조(표준의 관리) ① … 표준 공고 후 5년 이내의 표준 … 에 대하여 유지·개정 또는 폐지 여부를 검토(유지보수)한다.<br>② … <a class="xref" data-t="byoji" data-find="별지 제23호">별지 제23호</a> 서식 … 의 검토결과서를 작성하여 운영위원회에 보고 …<br>③ ~ ⑤ (재검토 기간 · 잠정표준 · 개정/폐지 상정)</td><td>① ~ ⑤ (현행 유지)<br><strong>⑥ 제1항에 따른 유지보수 시, AI-Ready 적용 대상 표준은 <a class="xref" data-t="byotable" data-find="별표 10">별표 10</a>의 기준에 따른 AI-Ready 자가점검(달성 등급·성숙도)을 함께 실시하여 그 결과를 검토결과서(<a class="xref" data-t="byoji" data-find="별지 제23호">별지 제23호</a> 서식)에 기재한다.</strong></td></tr></table></div>
+<h4>3.8 제11조(회의 진행) — 제4항 신설 (기계 점검, 재량)</h4>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>현 행</strong></th><th><strong>개정(안)  (굵은 부분이 신설·추가)</strong></th></tr><tr><td>제11조(회의 진행) ① 의장은 모든 위원이 충분히 발언할 수 있도록 … 발언을 제한할 수 있다.<br>② … 이해관계인을 회의에 참석시킬 수 있다.<br>③ 사무국은 … 전자적 방법을 활용할 수 있다.</td><td>① ~ ③ (현행 유지)<br><strong>④ 사무국은 AI-Ready 적용 대상 표준의 산출물(요소 정의표·@context·부속서)에 대하여 형식 정합성을 전자적 방법으로 점검할 수 있다.</strong><br>※ &quot;할 수 있다&quot;(재량)로 두어 필수 관문화(별표1 절차 개정·사무국 부담)를 피한다.</td></tr></table></div>
+<h4>3.9 별표·별지 신설·개정</h4>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>구분</strong></th><th><strong>내용</strong></th></tr><tr><td><strong><a class="xref" data-t="byotable" data-find="별표 10">별표 10</a> 신설</strong></td><td>AI-Ready 수준 요건표 — L1(시맨틱·신태틱)·L2(데이터 모델·출처)·L3(운영·품질·접근) × 7구성요소별 등급 기준·성숙도 산식(적용 구성요소 수×2로 나눔; 비-ML 12·ML 14)</td></tr><tr><td><strong><a class="xref" data-t="byotable" data-find="별지 제11-1호">별지 제11-1호</a> 신설</strong></td><td>AI-Ready 선언(목표 수준 신청) 서식 — 프로파일(①지식정보/②자기기술형 레코드/③AI 데이터세트)·필수/권장 목표·현행 진단. (하이픈 서식 선례: 별지 제5-1호·제10-1호)</td></tr><tr><td><strong><a class="xref" data-t="byoji" data-find="별지 제15호">별지 제15호</a> 개정</strong></td><td>표준화과제안(제·개정) 검토결과서에 &quot;AI-Ready 적용 대상·목표 수준&quot; 확인란 추가(제15조제2항 연계). ※ 별지 제16호(표준 폐지 검토)는 AI-Ready 무관이라 개정 제외</td></tr><tr><td><strong><a class="xref" data-t="byoji" data-find="별지 제23호">별지 제23호</a>·제24호 개정</strong></td><td>유지보수 검토결과서에 &quot;AI-Ready 자가점검 결과&quot;란 추가(제26조제6항 연계) — <a class="xref" data-t="byoji" data-find="별지 제23호">별지 제23호</a>(표준)·제24호(잠정표준) 동일 적용</td></tr></table></div>
+<h4>3.10 별표 목록·별지 서식 목록 반영 (신설 항목 등재)</h4>
+<p><a class="xref" data-t="byotable" data-find="별표 10">별표 10</a>과 <a class="xref" data-t="byotable" data-find="별지 제11-1호">별지 제11-1호</a>는 신설 항목이므로, 운영요령 앞부분의 「별표 목록」(No.·별표 내용·관련 운영요령)과 「별지 서식 목록」(분류·No.·서식 내용·관련 운영규정·관련 운영요령)에도 등재한다. 별지 제15·23·24호는 제목이 바뀌지 않으므로(내용 확인란만 추가) 목록 변경이 없다.</p>
+<p><strong>「별표 목록」 반영</strong></p>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>현 행</strong></th><th><strong>개정(안)  (굵은 부분이 신설·추가)</strong></th></tr><tr><td>「별표 목록」 (발췌)<br>7  &lt;별표 7&gt; 정보통신 표준용어의 제·개정 및 폐지 절차도   제29조<br>8  &lt;별표 8&gt; &lt;삭 제&gt;<br>9  &lt;별표 9&gt; &lt;삭 제&gt;</td><td>「별표 목록」 (발췌)<br>7  &lt;별표 7&gt; …   제29조<br>8·9  &lt;삭 제&gt;<br><strong>10  &lt;<a class="xref" data-t="byotable" data-find="별표 10">별표 10</a>&gt; AI-Ready 수준 요건   제2조·제21조·제26조</strong></td></tr></table></div>
+<p><strong>「별지 서식 목록」 반영 — 두 곳에 신설 (제안 · 상정)</strong></p>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>현 행</strong></th><th><strong>개정(안)  (굵은 부분이 신설·추가)</strong></th></tr><tr><td>「별지 서식 목록」 (발췌)<br>11    &lt;별지 제11호서식&gt; 표준 (제정, 개정) 제안서   제35조 / 제13조<br>12    &lt;별지 제12호서식&gt; 표준 폐지 제안서   제35조 / 제13조<br>  …  (중략)<br>21    &lt;별지 제21호서식&gt; 표준화 활동 경위서   -  / 제21조<br>22    &lt;별지 제22호서식&gt; 국가표준(KS)와 단체표준 동일성 검토 결과서   제43조 / 제24조의2</td><td>「별지 서식 목록」 (발췌)<br>11    &lt;별지 제11호서식&gt; 표준 (제정, 개정) 제안서   제35조 / 제13조<br><strong>11-1  &lt;<a class="xref" data-t="byotable" data-find="별지 제11-1호">별지 제11-1호</a>서식&gt; AI-Ready 선언(목표 수준 신청)   제35조 / 제13조</strong><br>12    &lt;별지 제12호서식&gt; 표준 폐지 제안서   제35조 / 제13조<br>  …  (중략)<br>21    &lt;별지 제21호서식&gt; 표준화 활동 경위서   -  / 제21조<br><strong>21-1  &lt;<a class="xref" data-t="selfcheck" data-find="별지 제21-1호">별지 제21-1호</a>서식&gt; AI-Ready 자가점검표   -  / 제21조</strong><br>22    &lt;별지 제22호서식&gt; 국가표준(KS)와 단체표준 동일성 검토 결과서   제43조 / 제24조의2</td></tr></table></div>
+<p>※ 11-1(선언)·21-1(자가점검표)은 5-1·10-1호와 같은 하이픈 서식 선례를 따른다. 11-1은 제11호(제·개정 제안서) 첨부라 11~12 사이, 21-1은 제21호(상정, 제21조) 관련이라 21 다음에 둔다.</p>
+<h4>3.11 부칙 신설 (시행일·적용례)</h4>
+<p>규정 개정에는 부칙을 붙여 시행일을 정한다. 운영요령은 개정마다 부칙을 누적해 왔으며(최종 부칙: 2025. 6. 13. 시행), 이번 AI-Ready 개정에도 부칙을 말미에 신설한다. 신규 요건이 진행 중인 과제에 소급되지 않도록 적용례를 함께 둔다.</p>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>현 행</strong></th><th><strong>개정(안)  (굵은 부분이 신설·추가)</strong></th></tr><tr><td>(현행 부칙 — 최종)<br>부칙<br>제1조(시행일) 이 운영요령은 2025년 6월 13일부터 시행한다.</td><td>(개정 시 부칙 신설 — 기존 부칙 말미에 추가)<br><strong>부칙  〈AI-Ready 표준 지원 개정〉</strong><br><strong>제1조(시행일) 이 운영요령은 공포한 날부터 시행한다.</strong><br><strong>제2조(적용례) ① 제2조·제13조·제15조·제19조·제19조의2·제21조와 <a class="xref" data-t="byotable" data-find="별표 10">별표 10</a>·<a class="xref" data-t="byotable" data-find="별지 제11-1호">별지 제11-1호</a>의 개정 규정은 이 운영요령 시행 후 최초로 제안하는 표준화과제부터 적용한다.</strong><br><strong>② 이 운영요령 시행 당시 이미 공고된 표준에 대해서는 제26조제6항의 개정 규정을 그 표준의 다음 유지보수 시부터 적용한다.</strong></td></tr></table></div>
+<p>※ 8월 10일은 운영위원회 상정·의결 회의일이며 시행일이 아니다. 시행일은 아직 정해지지 않았고, AI-Ready 개정 과제(작성지침 개정 등)가 2026년 말까지 진행되므로 그 완료 시점에 맞춰 의결·공포 절차에서 확정한다. 따라서 이 부칙은 특정일 대신 &quot;공포한 날부터&quot;로 두며, 특정일로 시행하려면 의결 시 그 날짜를 기재한다. 적용례(제2조)는 진행·기존 표준의 부담을 줄이고 전환을 유지보수 주기(제26조⑥)로 흡수하는 설계다.</p>
+<h4>3.12 <a class="xref" data-t="flow" data-find="별표 1">별표 1</a> (제·개정·폐지 절차도) — AI-Ready 접점 주석</h4>
+<p><a class="xref" data-t="flow" data-find="별표 1">별표 1</a>의 절차 흐름(제안→검토→채택→초안→의견수렴→상정→공고)은 바뀌지 않는다 — AI-Ready는 새 단계를 더하지 않고 기존 단계에 산출물·점검을 부가하기 때문이다. 아래 주석을 해당 단계에 덧붙여 AI-Ready 접점을 표시하고(적용 대상 표준에 한함), 서식 범위 표기는 신설분을 포함하도록 넓힌다.</p>
+<div class="tbl-wrap"><table class="doc-tbl"><tr><th><strong>절차 단계</strong></th><th><strong>현행 서식</strong></th><th><strong>AI-Ready 접점 (주석 신설)</strong></th></tr><tr><td>표준화과제 제안</td><td>제11호~제12호</td><td><strong>★ AI-Ready 선언(<a class="xref" data-t="byotable" data-find="별지 제11-1호">별지 제11-1호</a>) 첨부</strong></td></tr><tr><td>타당성 검토</td><td>제15호~제16호</td><td><strong>★ 적용 대상·목표 수준 확인(<a class="xref" data-t="byoji" data-find="별지 제15호">별지 제15호</a>)</strong></td></tr><tr><td>표준초안 작성</td><td>(서식 없음)</td><td><strong>★ 요소 정의표·@context 부속서(제19조①9호) · 공동 에디터(제19조의2⑤)</strong></td></tr><tr><td>표준안 채택·심의</td><td>제18호~제21호 → <br><strong>제18호~제21-1호</strong></td><td><strong>★ AI-Ready 자가점검표(<a class="xref" data-t="selfcheck" data-find="별지 제21-1호">별지 제21-1호</a>) 제출</strong></td></tr></table></div>
+<p>※ 심의 단계 서식 참조 &quot;제18호~제21호&quot;는 자가점검표(<a class="xref" data-t="selfcheck" data-find="별지 제21-1호">별지 제21-1호</a>)를 포함하도록 &quot;제18호~제21-1호&quot;로 넓힌다. 제안 단계 &quot;제11호~제12호&quot;는 <a class="xref" data-t="byotable" data-find="별지 제11-1호">별지 제11-1호</a>를 이미 범위에 포함하므로 표기는 그대로 두어도 된다.</p>
+<h3>4. 정보통신표준화 운영규정 — 개정 불필요 (근거 조문)</h3>
+<p>모든 변경을 운영요령에 담으므로 운영규정 개정은 요하지 않는다. 아래 기존 조문을 근거로 활용한다. (운영규정 개정은 표준총회 권한이라 절차가 길다 — 제5조제1항제4호.)</p>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>근거 조문</strong></th><th><strong>활용 내용</strong></th></tr><tr><td>제57조</td><td>&quot;운영위원회는 … 필요한 사항을 요령으로 정할 수 있다&quot; — 운영요령 제정·개정권을 운영위원회에 부여(안건 ①의 근거). 제정권은 개정권을 포함한다.</td></tr><tr><td>제5조제1항제4호</td><td>표준총회 임무 = &quot;규정·결의 등의 제정 등&quot; 심의·의결 → 규정(운영규정)은 표준총회 소관. 운영요령은 여기의 &quot;규정&quot;이 아니라 제57조가 운영위에 맡긴 &quot;요령&quot;이다.</td></tr><tr><td>제29조제1항제2호</td><td>관련분야 전문가를 특별위원으로 위촉 → 어휘 전문가 = 공동 에디터의 신분 근거(운영요령 제19조의2 신설분이 이를 인용)</td></tr><tr><td>제33조제5항</td><td>특별위원은 의결권 없음 → 공동 에디터가 형식화만 하고 표준 내용은 좌우하지 않는다는 설계 보장</td></tr><tr><td>제38조제2항·제3항</td><td>표준초안 작성 주체 = 해당 PG 위원인 에디터 / 작성 방법은 작성지침에 위임 → 안건 ②의 근거</td></tr><tr><td>제47조제1항</td><td>기술보고서(작성지침 TTAR)는 표준총회 없이 TC가 최종 채택 → 안건 ②의 채택 경로</td></tr></table></div>
+<p><strong>예상 반론 — &quot;운영위 임무(제16조)에 운영요령 개정이 없다&quot;. </strong>제16조는 운영위원회의 임무(과제 채택·PG 신설·의견조정 등)를 열거한 조항이고, 운영요령의 제정·개정권은 제57조가 별도로 부여한다(임무 열거 ≠ 규칙 제정권). 표준총회 임무(제5조제1항제4호)의 &quot;규정 제정&quot;은 운영규정을 가리키며, 운영요령은 제57조가 운영위에 맡긴 요령이다. 역대 운영요령 개정도 전부 운영위 경로다(연 2회뿐인 표준총회로는 불가능한 개정 빈도가 이를 방증).</p>
+<p><strong>개정이 필요해지는 유일한 경우. </strong>AI-Ready를 표준총회 채택 요건(제42조)으로 의무화할 때뿐이며, 권장하지 않는다(권한·절차 부담 증가, 자율적 확산 저해).</p>
+<h3>5. 정보통신단체표준 작성지침 (<a class="xref" data-t="jichim" data-find="작성지침">TTAR-09.0040</a>) — 개정 요약 (안건 ②)</h3>
+<p>세부 신구조문은 별도 문서 「작성지침_TTAR-09.0040_개정안_신구조문대비표.docx」에 완성돼 있다. 골자는 다음과 같다.</p>
+<p><strong>절차 유의 (안건 ② 일정). </strong>운영규정 제47조제1항에 따라 작성지침(기술보고서)의 개정은 제35조부터 제39조까지의 표준 제정 절차(의견수렴 4주 이상 포함)를 준용하되 기술위원회등이 최종 채택한다(표준총회 불요). 따라서 안건 ②는 8/10 회의 당일 확정이 아니라 의견수렴 절차를 거쳐 확정되며, 상정 순서는 여전히 운영요령(①)이 먼저다.</p>
+<div class="tbl-wrap"><table class="doc-tbl"><tr><th><strong>조항</strong></th><th><strong>성격</strong></th><th><strong>내용</strong></th></tr><tr><td><a class="xref" data-t="jichim" data-find="6.5.3">6.5.3</a> 인용 표준</td><td>보강</td><td>외부 어휘·스키마를 규범적으로 사용하면 인용 표준에 등재(참고 문헌에만 두면 분류 오류). AI-Ready 무관하게 모든 표준에 이로움 — 매트릭스 90%가 오류.</td></tr><tr><td><a class="xref" data-t="jichim" data-find="6.5.7">6.5.7</a> 데이터 요소 정의</td><td>신설</td><td>데이터 요소를 정의하는 표준은 요소를 정규 컬럼표(①식별번호~⑬관련출처=에디터, ⑭어휘 식별자=공동 에디터)로 작성. 에디터가 IRI를 직접 지정하지 않고 표·출처만 채움.</td></tr><tr><td><a class="xref" data-t="jichim" data-find="6.6">6.6</a> 부속서</td><td>보강</td><td>요소↔전역 어휘 식별자 매핑을 JSON-LD @context 부속서로 첨부. 운영요령 제19조의2의 공동 에디터가 보강. 기술규격은 제외(5.2 앞표지·원문 구성).</td></tr><tr><td>부속서 B</td><td>신설(선택)</td><td>전역 어휘 매핑·단위 결합(QUDT/UCUM)·@context 작성 방법 지침.</td></tr><tr><td>부록 Ⅱ-4</td><td>개정</td><td>기술보고서의 이력에 개정 판(R2) 추가.</td></tr></table></div>
+<h3>6. 규정 정합성 및 유의사항</h3>
+<p><strong>① 규율 위치는 운영요령. </strong>변경은 운영규정이 아니라 운영요령에 담는다. 운영요령 개정은 운영규정 제57조에 따라 운영위원회 권한이며, 표준 제·개정과 달리 60일 의견수렴·표준총회 상정을 요하지 않는다. 따라서 8/10 회의에 안건으로 상정하면(회의 1주일 전 제출·정족수 충족 전제) 그 회의에서 의결까지 가능하다. 운영규정 개정(표준총회, 연 2회)은 회피한다.</p>
+<p><strong>② 상정 순서 ①→②. </strong>작성지침 <a class="xref" data-t="jichim" data-find="6.6">6.6</a>이 운영요령 제19조의2의 공동 에디터를 인용하므로, 운영요령이 먼저 의결돼야 작성지침이 성립한다.</p>
+<p><strong>③ 전문위원회 관련 유의. </strong>전문위원회는 개별 표준초안을 대신 작성할 수 없다(운영규정 제20조의3②는 전략·지침·정책만). 어휘 전문가는 그 PG의 특별위원으로 위촉하여 공동 에디터로 지정한다. &quot;전문위원회에 검토 요청&quot; 신설안은 채택하지 않는다.</p>
+<p><strong>④ 적용 범위를 조건절로. </strong>&quot;AI-Ready 적용 대상 표준은 …&quot;처럼 대상을 가르지 말고, &quot;데이터 요소를 정의하는 표준은 …&quot;처럼 요건을 조건절로 서술하면 절차 문서·어휘 표준이 자연히 빠진다.</p>
+<p><strong>⑤ 재량 관문. </strong>사무국 기계 점검(제11조④)은 &quot;할 수 있다&quot;로 두어 필수 관문화에 따르는 별표1 절차 개정·사무국 부담을 피한다.</p>
+<p><strong>⑥ 현행 문안 대조. </strong>위 현행 조문은 PDF 추출본이므로, 의결 상정 전 SBG-0030(13)/R13 원문 최종본과 자구를 재대조한다.</p></div></section><section class="panel" id="byotable"><div class="doc-src">📄 new\운영요령_별표제10호_별지제11-1호_서식안.docx</div><div class="doc-content"><p style="text-align:right"><strong>[별표 10] (<a class="xref" data-t="regs" data-find="3.1 제2조">제2조제1항제8호</a>, <a class="xref" data-t="regs" data-find="3.6 제21조">제21조제5항</a>, <a class="xref" data-t="regs" data-find="3.7 제26조">제26조제6항</a> 관련)</strong></p>
+<p style="text-align:center"><strong>AI-Ready 수준 요건</strong></p>
+<p style="text-align:center">7개 구성요소 · L1~L3 단계 · 등급 기준 · 성숙도 산식 · 프로파일별 목표</p>
+<h3>1. 구성요소별 등급 기준</h3>
+<p>AI-Ready는 7개 구성요소로 이뤄지며, 각 구성요소를 0(미충족)·1(부분)·2(충족)의 3등급으로 평가한다.</p>
+<div class="tbl-wrap"><table class="doc-tbl"><tr><th><strong>구성요소</strong></th><th><strong>단계</strong></th><th><strong>무엇을 보는가</strong></th><th><strong>0 · 미충족</strong></th><th><strong>1 · 부분</strong></th><th><strong>2 · 충족</strong></th></tr><tr><td>시맨틱</td><td>L1</td><td>요소의 뜻을 전역 어휘 식별자(IRI)에 연결</td><td>다루지 않음</td><td>산문·표로만 설명</td><td>IRI에 매핑</td></tr><tr><td>신태틱</td><td>L1</td><td>그 매핑을 기계가독 형식으로 배포</td><td>없음</td><td>부분</td><td>규범 @context(JSON-LD)</td></tr><tr><td>데이터 모델</td><td>L2</td><td>값 형식·제약을 기계검증 스키마로</td><td>없음</td><td>산문·표</td><td>SHACL·XSD·JSON Schema</td></tr><tr><td>출처/계보</td><td>L2</td><td>데이터의 생성·가공 내력을 형식화</td><td>없음</td><td>산문</td><td>PROV-O</td></tr><tr><td>운영 시맨틱</td><td>L3</td><td>(ML만) 학습·검증·시험 분할·역할</td><td>없음 / N·A</td><td>부분</td><td>Croissant</td></tr><tr><td>품질 프로파일</td><td>L3</td><td>품질 지표를 형식 어휘로</td><td>없음</td><td>산문</td><td>DQV</td></tr><tr><td>접근/사용 제약</td><td>L3</td><td>라이선스·이용조건을 데이터 수준에서</td><td>없음</td><td>산문</td><td>ODRL·DUO</td></tr></table></div>
+<h3>2. 단계(L) 구성</h3>
+<p>L1은 모든 AI-Ready의 기준선이며, 그 위(L2·L3)는 단계적 사슬이 아니라 구성요소별 분기 구조다 — 요구는 단계가 아니라 구성요소로 적는다.</p>
+<div class="tbl-wrap"><table class="doc-tbl"><tr><th><strong>단계</strong></th><th><strong>구성요소</strong></th><th><strong>의미</strong></th></tr><tr><td>L1 (기준선)</td><td>시맨틱 · 신태틱</td><td>요소의 뜻을 전역 어휘에 연결하고 기계가 읽게 배포</td></tr><tr><td>L2</td><td>L1 + 데이터 모델 · 출처</td><td>값 제약·생성 내력을 기계가 검증·추적</td></tr><tr><td>L3</td><td>L2 + 운영 · 품질 · 접근</td><td>ML 분할·품질·이용조건까지 형식화</td></tr></table></div>
+<h3>3. 성숙도 산식</h3>
+<p><strong>성숙도(%) = 구성요소 등급 합계 ÷ (적용 구성요소 수 × 2) × 100</strong></p>
+<div class="tbl-wrap"><table class="doc-tbl"><tr><th><strong>구분</strong></th><th><strong>적용 구성요소</strong></th><th><strong>분모</strong></th></tr><tr><td>비-ML 표준</td><td>운영 시맨틱 제외 6개</td><td>6 × 2 = 12</td></tr><tr><td>ML 학습·검증 데이터 표준</td><td>운영 시맨틱 포함 7개</td><td>7 × 2 = 14</td></tr></table></div>
+<p>※ 운영 시맨틱은 ML 학습·검증 데이터를 기술하는 표준에만 적용하며, 그 외에는 N·A로 두고 분모를 12로 한다.</p>
+<h3>4. 프로파일별 목표 수준</h3>
+<p>기술 대상의 성격(프로파일)에 따라 필수·권장 목표가 다르다. 제안자는 별지 제11-1호에서 프로파일과 목표를 선언한다.</p>
+<div class="tbl-wrap"><table class="doc-tbl"><tr><th><strong>기술 대상 프로파일</strong></th><th><strong>필수</strong></th><th><strong>권장</strong></th></tr><tr><td>① 지식정보 (카탈로그 — 논문·데이터셋 목록 등)</td><td>시맨틱 · 신태틱 (L1)</td><td>데이터 모델 · 출처 (L2) · 이용조건</td></tr><tr><td>② 자기기술형 레코드 (센서·물성·공간객체)</td><td>시맨틱 · 신태틱 · 데이터 모델(값·형식/단위) (L1+)</td><td>출처 (L2)</td></tr><tr><td>③ AI 데이터세트 (ML 학습·검증 데이터)</td><td>시맨틱 · 신태틱 · 데이터 모델 · 출처 (L2)</td><td>운영 · 품질 · 접근 (L3)</td></tr><tr><td>   예외 · ② 참조표준·물성</td><td>시맨틱 · 신태틱 · 데이터 모델 (L1+)</td><td>품질</td></tr><tr><td>   예외 · ③ 품질 검증 지침</td><td>시맨틱 · 신태틱 (L1)</td><td>품질</td></tr></table></div>
+<p>※ 예외 프로파일은 데이터 자체가 아니라 참조값·검증 절차를 규정하는 표준으로, 출처·운영이 성립하지 않아 목표에서 제외한다.</p>
+<p style="text-align:right"><strong>[별지 제11-1호 서식] (<a class="xref" data-t="regs" data-find="3.2 제13조">제13조제5항</a> 관련)</strong></p>
+<p style="text-align:center"><strong>AI-Ready 선언 (목표 수준 신청)</strong></p>
+<p style="text-align:center">표준(과제) 제안 시 제안자가 작성하여 별지 제11호 제안서에 첨부한다</p>
+<h3>1. 기본 정보</h3>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><td>표준(과제)명</td><td>&nbsp;</td></tr><tr><td>제안 기관</td><td>&nbsp;</td></tr><tr><td>소관 프로젝트그룹(PG)</td><td>&nbsp;</td></tr><tr><td>제정 / 개정 구분</td><td>☐ 제정      ☐ 개정 (개정이면 아래 4. 현행 진단 작성)</td></tr></table></div>
+<h3>2. 기술 대상 프로파일 (택일)</h3>
+<p>이 표준이 기술하는 데이터의 성격을 고른다. 판단이 어려우면 아래 안내를 참고한다.</p>
+<div class="tbl-wrap"><table class="doc-tbl"><tr><th><strong>구분</strong></th><th><strong>프로파일</strong></th><th><strong>해당 예</strong></th></tr><tr><td>☐</td><td>① 지식정보 (카탈로그)</td><td>논문·보고서·데이터셋을 목록으로 기술 — 값이 아니라 &quot;무엇이 어디에&quot;</td></tr><tr><td>☐</td><td>② 자기기술형 레코드</td><td>센서 관측·물성·공간객체 — 값+단위+시각이 한 레코드에</td></tr><tr><td>☐</td><td>③ AI 데이터세트</td><td>ML 학습·검증·시험 데이터를 통째로 기술</td></tr><tr><td>☐</td><td>예외 · ② 참조표준·물성</td><td>참조값·물성표를 규정(데이터 자체 아님)</td></tr><tr><td>☐</td><td>예외 · ③ 품질 검증 지침</td><td>데이터 품질 검증 절차·지표를 규정(특정 데이터 아님)</td></tr></table></div>
+<h3>3. 목표 수준 (택일)</h3>
+<p>별표 10의 프로파일별 목표를 기준으로, 이번 제·개정에서 어디까지 달성할지 선언한다.</p>
+<div class="tbl-wrap"><table class="doc-tbl"><tr><th><strong>선택</strong></th><th><strong>목표</strong></th><th><strong>뜻</strong></th></tr><tr><td>☐</td><td>필수만</td><td>해당 프로파일의 필수 구성요소(L1 등)까지 달성</td></tr><tr><td>☐</td><td>권장까지</td><td>필수 + 권장 구성요소까지 달성</td></tr></table></div>
+<p>※ 필수·권장 구성요소는 위 2에서 고른 프로파일에 따라 별표 10 제4항에서 자동으로 정해진다. (세부 산출물은 과제 채택 후 「작성지침」 <a class="xref" data-t="jichim" data-find="6.5.7">6.5.7</a>·<a class="xref" data-t="jichim" data-find="6.6">6.6</a>에 따라 작성)</p>
+<h3>4. 현행 진단 (개정인 경우만)</h3>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><td>현행 표준번호</td><td>&nbsp;</td></tr><tr><td>현행 성숙도(추정)</td><td>____ %   (별표 10 산식 · 자율 기재)</td></tr><tr><td>주요 공백 · 보완 방향</td><td>&nbsp;</td></tr></table></div>
+<h3>5. 신청 확인</h3>
+<p>제안 기관은 위 프로파일과 목표 수준으로 이 표준을 AI-Ready로 전환할 것을 신청합니다. 세부 기계가독 산출물(요소 정의표·@context·부속서)은 과제 채택 후 지정된 에디터·공동 에디터가 작성합니다.</p>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><td>제안 기관</td><td>&nbsp;</td></tr><tr><td>작성자 · 직위</td><td>&nbsp;</td></tr><tr><td>신청일</td><td>        .        .        .</td></tr><tr><td>서명 / 기관 직인</td><td>&nbsp;</td></tr></table></div>
+<p>※ 웹으로 신청하는 경우 이 서식의 항목은 화면 입력으로 대체되며, 프로파일 선택에 따라 목표·산출물 항목이 자동 표시된다.</p></div></section><section class="panel" id="byoji"><div class="doc-src">📄 new\운영요령_별지제15호_제23호_개정안.docx</div><div class="doc-content"><p style="text-align:center"><strong>운영요령 별지 제15호·제23호·제24호 개정(안)</strong></p>
+<p style="text-align:center">검토결과서에 「AI-Ready 확인」란 추가</p>
+<p style="text-align:center">SBG-0030(13)/R13 기준 · <a class="xref" data-t="regs" data-find="3.3 제15조">제15조제2항</a>·<a class="xref" data-t="regs" data-find="3.7 제26조">제26조제6항</a> 연계</p>
+<h3>1. 개정 개요</h3>
+<p>두 검토결과서 서식에 AI-Ready 확인 항목을 추가한다. 현행 서식의 기존 항목은 그대로 두고, 표 말미에 「AI-Ready 확인」 절만 신설한다(굵은 표가 신설분).</p>
+<div class="tbl-wrap"><table class="doc-tbl"><tr><th><strong>별지</strong></th><th><strong>서식</strong></th><th><strong>작성 주체 · 시점</strong></th><th><strong>추가 항목</strong></th><th><strong>연계 조문</strong></th></tr><tr><td>제15호</td><td>검토결과서 (표준화과제 제·개정 검토)</td><td>TC 의장 · 과제 검토 시</td><td>AI-Ready 적용 대상·목표 확인</td><td><a class="xref" data-t="regs" data-find="3.3 제15조">제15조②</a>(보강)</td></tr><tr><td>제23호
+·제24호</td><td>검토결과서 (표준·잠정표준 유지보수)</td><td>TC 의장 · 유지보수 시</td><td>AI-Ready 자가점검 결과</td><td><a class="xref" data-t="regs" data-find="3.7 제26조">제26조⑥</a>(신설)</td></tr></table></div>
+<p>※ 별지 제16호(표준 폐지 검토)는 표준을 없애는 절차라 AI-Ready와 무관하므로 개정하지 않는다.</p>
+<h3>2. 별지 제15호 서식 (제안 과제 검토결과서) 개정</h3>
+<p><strong>현행(요지). </strong>사무국이 선정한 기술위원회등의 의장이 제안된 표준화과제의 추진 타당성을 검토하고 산하 담당 프로젝트그룹을 결정하여 작성하는 서식(<a class="xref" data-t="regs" data-find="3.3 제15조">제15조제2항</a>). 통상 과제명·제안자·소관 PG·검토 의견(타당성)·채택 권고·작성자·일자 항목으로 구성된다.</p>
+<p><strong>개정. </strong>아래 「AI-Ready 확인」 절을 서식 말미에 신설한다. 제안자가 첨부한 <a class="xref" data-t="byotable" data-find="별지 제11-1호">별지 제11-1호</a>(AI-Ready 선언)를 근거로 TC 의장이 확정한다.</p>
+<p><strong>[별지 제15호 서식] 검토결과서 — 신설 「AI-Ready 확인」 절</strong></p>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><td>AI-Ready 확인 (<a class="xref" data-t="regs" data-find="3.3 제15조">제15조제2항</a>)</td><td>&nbsp;</td></tr><tr><td>적용 대상 여부</td><td>☐ 적용 대상      ☐ 비대상 (기술규격 · 데이터 미기술 등)</td></tr><tr><td>(대상 시) 선언 프로파일</td><td>☐ ① 지식정보   ☐ ② 자기기술형 레코드   ☐ ③ AI 데이터세트   ☐ 예외 ②   ☐ 예외 ③</td></tr><tr><td>(대상 시) 선언 목표 수준</td><td>☐ 필수만      ☐ 권장까지      (<a class="xref" data-t="byotable" data-find="별표 10">별표 10</a> 기준)</td></tr><tr><td>확인 의견</td><td>(제안자 선언의 적정성 · 프로파일/목표 확정 의견 — TC 의장 기재)</td></tr></table></div>
+<h3>3. 별지 제23호·제24호 서식 (유지보수 검토결과서) 개정</h3>
+<p><strong>현행(요지). </strong>기술위원회등의 의장이 공고 후 5년 이내 표준(별지 제23호) 또는 1년 이내 잠정표준(별지 제24호)의 유지·개정·폐지 여부를 검토(유지보수)하여 운영위원회에 보고하는 서식(<a class="xref" data-t="regs" data-find="3.7 제26조">제26조제2항</a>). 통상 표준번호·표준명·검토 사유·검토 의견·결정(유지/개정/폐지)·재검토 기간·작성자·일자 항목으로 구성된다.</p>
+<p><strong>개정. </strong>아래 「AI-Ready 자가점검」 절을 두 서식 말미에 동일하게 신설한다. AI-Ready 적용 대상 표준(잠정표준 포함)은 유지보수 시 자가점검을 함께 실시해 결과를 기재한다(<a class="xref" data-t="regs" data-find="3.7 제26조">제26조제6항</a>).</p>
+<p><strong>[별지 제23호·제24호 서식] 검토결과서 — 신설 「AI-Ready 자가점검」 절</strong></p>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><td>AI-Ready 자가점검 (<a class="xref" data-t="regs" data-find="3.7 제26조">제26조제6항</a>)</td><td>&nbsp;</td></tr><tr><td>적용 대상 여부</td><td>☐ 적용 대상      ☐ 비대상</td></tr><tr><td>현행 AI-Ready 성숙도</td><td>________ %   (<a class="xref" data-t="byotable" data-find="별표 10">별표 10</a> 산식: 등급합 ÷ 적용수×2)</td></tr><tr><td>미충족 · 보완 필요 구성요소</td><td>(7구성요소 중 등급 0·1 항목 기재 — 예: 신태틱 1, 품질 0)</td></tr><tr><td>유지보수 조치</td><td>☐ 현행 유지      ☐ AI-Ready 보완을 위한 개정 과제 제안 (<a class="xref" data-t="regs" data-find="3.7 제26조">제26조제5항</a> 연계)</td></tr><tr><td>자가점검표 첨부</td><td>☐ 첨부 (<a class="xref" data-t="selfcheck" data-find="별지 제21-1호">별지 제21-1호</a> AI-Ready 자가점검표 — 구성요소 등급·정합성·산출물)</td></tr></table></div>
+<h3>4. 유의사항</h3>
+<p><strong>① 최소 개정. </strong>기존 서식의 항목·구조는 그대로 두고 「AI-Ready 확인/자가점검」 절만 말미에 덧붙인다 — 비대상 표준은 &quot;비대상&quot;에 체크하고 나머지를 비워 부담을 최소화한다.</p>
+<p><strong>② 근거 연계. </strong>제15호는 <a class="xref" data-t="regs" data-find="3.3 제15조">제15조제2항</a> 보강(적용 대상 확인)에, 제23호·제24호는 <a class="xref" data-t="regs" data-find="3.7 제26조">제26조제6항</a> 신설(유지보수 자가점검)에 대응한다. 두 조문은 「TTA규범3종_AI-Ready_개정안_신구조문대비표」 3.3·3.7에 있다.</p>
+<p><strong>③ 현행 원문 대조. </strong>위 &quot;현행(요지)&quot;는 서식의 목적·통상 항목을 기술한 것으로, 개정 상정 전 SBG-0030(13)/R13 원문 서식의 실제 항목·배치와 대조하여 확정한다.</p></div></section><section class="panel" id="selfcheck"><div class="doc-src">📄 new\AI-Ready_자가점검표.docx</div><div class="doc-content"><p style="text-align:right"><strong>[별지 제21-1호 서식] (<a class="xref" data-t="regs" data-find="3.6 제21조">제21조제5항</a> 관련)</strong></p>
+<p><strong>AI-Ready 자가점검표</strong></p>
+<p>표준안 상정 전 작성 — 완성된 표준초안이 선언한 목표를 충족했는지 점검한다</p>
+<p>AI-Ready 표준화 전략 · 수준 요건 명세서 v0.3 연계 · v0.1</p>
+<h3>0. 이 문서에 대하여</h3>
+<p>이 문서는 표준초안이 작성된 뒤, 표준안을 기술위원회에 상정하기 전에 작성한다. 「AI-Ready 선언(목표 수준 신청)」에서 정한 목표를, 완성된 표준초안이 실제로 충족했는지 점검하는 문서다.</p>
+<p><strong>누가, 언제 쓰나. </strong>이 표는 표준초안을 다 작성한 뒤에 쓴다. 초안을 작성한 담당자(에디터·공동 에디터)가 자기 초안을 스스로 점검해 이 표를 채우고, 그 초안을 표준안으로 채택받기 위해 소관 기술위원회에 올릴 때 위원회가 이 점검 결과를 함께 확인한다. 제안 단계의 「선언」이 “무엇을 목표하는가”였다면, 이 표는 “그 목표를 실제로 이뤘는가”를 보여주는 결과다.</p>
+<p>이 문서는 세 가지를 다룬다 — 1부는 AI-Ready 7개 구성요소의 달성 등급(선언한 목표에 도달했나), 2부는 문서의 정합성(오류가 없나), 3부는 제출 산출물이 갖춰졌는지 확인이다.</p>
+<h4>0.1 선언 요약</h4>
+<p>점검은 “선언한 목표에 도달했나”를 보는 것이므로, 먼저 제안 단계의 「AI-Ready 선언」에서 정한 프로파일과 목표 수준을 아래에 옮겨 적는다. 1부의 달성 목표와 3부의 산출물 해당 여부는 모두 이 칸을 기준으로 판단한다.</p>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>항목</strong></th><th><strong>선언 내용 (「AI-Ready 선언」에서 옮겨 적음)</strong></th></tr><tr><td>기술 대상 프로파일</td><td>☐ ① 지식정보   ☐ ② 자기기술형 레코드   ☐ ③ AI 데이터세트   (예외: ☐ ② 참조표준·물성  ☐ ③ 품질 검증 지침)</td></tr><tr><td>선언한 목표 수준</td><td>☐ 필수만   ☐ 권장까지</td></tr></table></div>
+<p>※ 웹으로 신청한 경우 이 칸은 제안 단계 입력값에서 자동으로 채워지며, 종이 서식일 때만 손으로 옮겨 적는다.</p>
+<h3>1. AI-Ready 구성요소 달성 점검</h3>
+<p>AI-Ready 7개 구성요소 각각에 대해, 완성된 초안의 현재 등급(0 미충족 / 1 부분 / 2 충족)과 그 증빙(초안의 어느 부속서·절에 있는지)을 적는다. 맨 오른쪽 “단계(L)” 열은 각 구성요소의 계층(L1~L3)이며, 실제 달성 목표는 0.1 선언 요약의 프로파일·목표에서 정해진다. 현재 등급을 나란히 두면 남은 보완이 드러난다.</p>
+<p><strong>등급 기준. </strong>0 = 해당 요소를 다루지 않음, 1 = 산문·표로만 있고 기계가 읽는 형식은 아님, 2 = 기계가 읽는 형식(IRI·@context·SHACL 등)으로 갖춤. 목표(선언)와 현재 등급을 나란히 두면 남은 보완이 드러난다.</p>
+<div class="tbl-wrap"><table class="doc-tbl"><tr><th><strong>구성요소</strong></th><th><strong>무엇을 보는가</strong></th><th><strong>현재 등급 (0/1/2)</strong></th><th><strong>증빙 (초안의 어디에)</strong></th><th><strong>단계(L)</strong></th></tr><tr><td>시맨틱</td><td>요소의 뜻을 전역 어휘(IRI)에 연결했나</td><td>&nbsp;</td><td>&nbsp;</td><td>L1</td></tr><tr><td>신태틱</td><td>그 매핑을 @context로 냈나</td><td>&nbsp;</td><td>&nbsp;</td><td>L1</td></tr><tr><td>데이터 모델</td><td>값 형식·제약을 기계검증 스키마로 형식화했나</td><td>&nbsp;</td><td>&nbsp;</td><td>L2</td></tr><tr><td>출처/계보</td><td>데이터의 생성·가공 내력을 형식화했나</td><td>&nbsp;</td><td>&nbsp;</td><td>L2</td></tr><tr><td>운영 시맨틱</td><td>(ML만) 학습·검증 분할·역할을 선언했나</td><td>&nbsp;</td><td>&nbsp;</td><td>L3</td></tr><tr><td>품질 프로파일</td><td>품질을 형식 어휘로 붙였나</td><td>&nbsp;</td><td>&nbsp;</td><td>L3</td></tr><tr><td>접근/사용 제약</td><td>라이선스·이용조건을 데이터 수준에서 명시했나</td><td>&nbsp;</td><td>&nbsp;</td><td>L3</td></tr><tr><td>합계 / 성숙도</td><td>&nbsp;</td><td>____ / ____</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div>
+<p><strong>성숙도 계산. </strong>성숙도 = 등급 합계 ÷ (적용 구성요소 수 × 2). 운영 시맨틱은 ML 학습·검증 데이터 표준에만 적용되므로, 비-ML 표준은 이 줄을 “N/A”로 두고 분모를 12로(그 외 14로) 계산한다.</p>
+<h3>2. 정합성 자가검증</h3>
+<p>AI-Ready 등급과 별개로, 문서 자체의 오류를 점검한다. 아래 7개 항목은 표준 20종 분석에서 반복 발견된 결함으로(인용표준 분류 오류·내부 일관성은 각 18종=90%에서 발견), 모두 기계로 검출할 수 있다.</p>
+<p><strong>점검 방법. </strong>각 항목이 이상 없으면 “이상 없음”에 체크하고, 문제를 발견하면 오른쪽에 무엇을 어떻게 고쳤는지 적는다.</p>
+<div class="tbl-wrap"><table class="doc-tbl"><tr><th><strong>점검 항목</strong></th><th><strong>이상 없음</strong></th><th><strong>발견 시 조치 내용</strong></th></tr><tr><td>데이터 타입 정의가 사실과 일치하는가 (예: xs:short를 16비트로 바르게 기술했나)</td><td>☐</td><td>&nbsp;</td></tr><tr><td>측정값의 단위가 표준 단위 어휘(QUDT/UCUM)에 결합되었는가</td><td>☐</td><td>&nbsp;</td></tr><tr><td>규범적으로 의존하는 외부 표준·어휘를 인용표준에 등재했는가 (참고문헌에만 두면 오류)</td><td>☐</td><td>&nbsp;</td></tr><tr><td>코드·열거값의 유효값·헤더가 정확한가</td><td>☐</td><td>&nbsp;</td></tr><tr><td>오탈자·영문 요소명 중복·표 표제 오기가 없는가</td><td>☐</td><td>&nbsp;</td></tr><tr><td>약어 정의·절 번호·요소 명칭이 본문과 일치하는가</td><td>☐</td><td>&nbsp;</td></tr><tr><td>그 밖의 정합성 결함이 없는가</td><td>☐</td><td>&nbsp;</td></tr></table></div>
+<h3>3. 제출 산출물 확인</h3>
+<p>표준안과 함께 제출하는 AI-Ready 산출물을 확인한다. 이 산출물들은 표준초안의 부속서로 들어가며, 작성 방법은 「정보통신단체표준 작성지침」 <a class="xref" data-t="jichim" data-find="6.5.7">6.5.7</a>·<a class="xref" data-t="jichim" data-find="6.6">6.6</a>을 따른다. 이 표에서는 각 산출물이 갖춰졌는지 확인만 한다.</p>
+<p><strong>무엇을 내는가는 표준마다 다르다. </strong>별표(★, L1)만 모든 표준의 필수 산출물이다(요소 정의표는 초안 4절 본문 자체이므로 별도 파일이 아니다). 나머지는 그 구성요소가 선언한 목표(필수·권장)이거나 이미 부분 충족(등급 1 이상)일 때만 낸다 — 목표도 아니고 등급도 0인 구성요소는 산출물을 내지 않고 “N/A”를 적는다(예: 학습 분할을 다루지 않는 ①·②의 Croissant).</p>
+<div class="tbl-wrap"><table class="doc-tbl"><tr><th><strong>산출물</strong></th><th><strong>단계</strong></th><th><strong>해당 여부 (언제 내나)</strong></th><th><strong>제출 / N·A</strong></th></tr><tr><td>★ 요소 정의표 (4절 본문 · 별도 파일 없음)</td><td>L1</td><td>전부</td><td>본문</td></tr><tr><td>★ JSON-LD @context 파일</td><td>L1</td><td>전부</td><td>☐</td></tr><tr><td>★ 이 자가점검표 (1부·2부)</td><td>L1</td><td>전부</td><td>☐</td></tr><tr><td>값 스키마 (XSD·SHACL·JSON Schema)</td><td>L2</td><td>값을 정의할 때</td><td>☐ / N·A</td></tr><tr><td>PROV-O 출처 그래프</td><td>L2</td><td>출처를 목표·등급으로 다룰 때</td><td>☐ / N·A</td></tr><tr><td>Croissant ML 계층 (분할·역할)</td><td>L3</td><td>③ AI 데이터세트(학습 분할)만</td><td>☐ / N·A</td></tr><tr><td>DQV 품질</td><td>L3</td><td>품질을 목표·등급으로 다룰 때</td><td>☐ / N·A</td></tr><tr><td>ODRL·DUO 이용정책</td><td>L3</td><td>이용조건을 다룰 때</td><td>☐ / N·A</td></tr><tr><td>예시 데이터 인스턴스 1건 이상</td><td>권장</td><td>전부</td><td>☐ / N·A</td></tr></table></div></div></section><section class="panel" id="jichim"><div class="doc-src">📄 new\작성지침_TTAR-09.0040_개정안_신구조문대비표.docx</div><div class="doc-content"><p><strong>정보통신단체표준 작성지침(TTAR-09.0040) 개정(안)</strong></p>
+<p>신구조문대비표 — AI-Ready 표준 전환 지원을 위한 조항 신설·보강</p>
+<p>현행 TTAR-09.0040/R1(2025.5.23. 시행) 기준 · 담당 전략계획위원회(SPC)</p>
+<h3>1. 개정 이유</h3>
+<p>정보통신단체표준을 기계가 읽을 수 있는(AI-Ready) 형태로 작성·전환하기 위한 근거를 작성지침에 마련한다. 「정보통신표준화 운영규정」 제38조제3항은 표준초안 작성을 이 지침에 위임하고 있으므로, 요소 정의·전역 어휘 매핑·기계가독 부속서 등 초안 작성 단계의 요건은 이 지침에 규정하는 것이 타당하다.</p>
+<p><strong>분석 근거. </strong>데이터를 기술하는 표준 20종을 실측한 결과, 성숙도를 가른 것은 도메인이 아니라 작성 방식이었다. 특히 외부 어휘·스키마에 규범적으로 의존하면서 이를 인용 표준에 등재하지 않은 사례가 20종 중 18종(90%)에서 발견됐다. 개별 표준이 아니라 작성 방법의 문제이므로, 표준마다 대응하는 대신 작성지침을 정비하여 해소한다.</p>
+<h3>2. 주요 개정 사항</h3>
+<p><strong>① 6.5.3(인용 표준) 보강 — </strong>외부 어휘·스키마를 규범적으로 사용하면 인용 표준에 등재하도록 명확화(참고 문헌에만 두는 것은 분류 오류).</p>
+<p><strong>② 6.5.7(데이터 요소 정의) 신설 — </strong>데이터 요소를 정의하는 표준은 요소를 14개 정규 컬럼(①식별번호~⑬관련출처는 에디터, ⑭어휘 식별자는 공동 에디터)의 표로 작성.</p>
+<p><strong>③ 6.6(부속서) 보강 — </strong>요소↔전역 어휘 식별자(IRI) 매핑을 JSON-LD @context 부속서로 첨부. 공동 에디터가 보강. 기술규격 제외.</p>
+<p><strong>④ 부속서 B(단위·어휘 매핑 지침) 신설(선택) — </strong>전역 어휘 매핑·단위 결합(QUDT/UCUM)·@context 작성 방법.</p>
+<p><strong>⑤ 부록 Ⅱ-4(기술보고서의 이력) — </strong>개정 판(R2) 추가.</p>
+<h3>3. 신구조문대비표</h3>
+<p>굵게 표시한 부분이 신설·추가되는 내용이다.</p>
+<h4>3.1 6.5.3 인용 표준 (보강)</h4>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>현 행</strong></th><th><strong>개정(안)</strong></th></tr><tr><td>6.5.3 인용 표준<br>표준의 주요 내용을 구성하기 위해 직접 인용한 표준에 대하여 작성하며, 단순 출처 및 근거 등의 정보를 나타내기 위한 표준 또는 문서는 작성하지 않는다. 용어 정의, 계산식, 그림 등을 인용하는 경우는 부록의 ‘x-4 참고 문헌’에 기재한다.<br>모든 표준을 다 인용할 수 있는 것은 아니므로, 해당 표준화기구나 단체의 저작권 정책을 확인하여야 한다. TTA와 준용 협약을 맺은 기관 중 IEEE와 ETSI는 부속서 A에 정리되어 있으므로 참조한다.<br>(이하 현행 유지)</td><td>6.5.3 인용 표준<br>표준의 주요 내용을 구성하기 위해 직접 인용한 표준에 대하여 작성하며, 단순 출처 및 근거 등의 정보를 나타내기 위한 표준 또는 문서는 작성하지 않는다. 용어 정의, 계산식, 그림 등을 인용하는 경우는 부록의 ‘x-4 참고 문헌’에 기재한다.<br><strong>표준이 외부 어휘 또는 스키마(예: W3C DCAT·SKOS·DCMI Terms, W3C XML Schema 데이터 타입, ISO/IEC 표준 등)의 클래스·속성·데이터 타입을 규범적으로 사용하는 경우에는, 해당 어휘 또는 표준을 인용 표준에 등재한다. 본문에서 규범적으로 의존하면서 ‘인용표준 해당없음’으로 기재하거나 참고 문헌에만 두는 것은 인용 표준의 분류 오류이다.</strong><br>모든 표준을 다 인용할 수 있는 것은 아니므로, 해당 표준화기구나 단체의 저작권 정책을 확인하여야 한다. TTA와 준용 협약을 맺은 기관 중 IEEE와 ETSI는 부속서 A에 정리되어 있으므로 참조한다.<br>(이하 현행 유지)</td></tr></table></div>
+<h4>3.2 6.5.7 데이터 요소 정의 (신설)</h4>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>현 행</strong></th><th><strong>개정(안)</strong></th></tr><tr><td>(신설)<br><br>※ 현행 6.5는 6.5.1 본문 일반 사항 ~ 6.5.6 그림과 표·수식까지로 구성되며, 데이터 요소의 정의 방법에 관한 항이 없다.</td><td><strong>6.5.7 데이터 요소 정의</strong><br><strong>데이터의 요소(항목)를 정의하는 표준은 각 요소를 아래 정규 컬럼을 갖춘 표(이하 “요소 정의표”)로 작성한다. 요소 정의표는 사람이 읽을 수 있도록 작성하며, 기계가독 형식으로의 변환은 6.6에 따른다.</strong><br><strong>가) 표준초안 에디터가 작성하는 컬럼</strong><br><strong>① 식별번호(ID): 요소의 계층 번호. 하위요소는 “2.1”, 그 속성은 “2.1.a” 형식으로 부여한다.</strong><br><strong>② 한글명 / ③ 영문명: 요소의 명칭. 정보통신표준용어를 사용한다.</strong><br><strong>④ 정의: 요소의 의미. 본문에서 해당 정의로 대체될 수 있도록 명사형으로 적는다.</strong><br><strong>⑤ 필수 여부: 필수(M) / 권장(R) / 선택(O)으로 표기하며, 조건부인 경우 그 조건을 명시한다.</strong><br><strong>⑥ 카디널리티: 발생 제약(1, 0-1, 0-n, 1-n).</strong><br><strong>⑦ 데이터 유형: 값의 형태(string·integer·dateTime·anyURI 등). 값이 다른 클래스를 가리키는 경우 그 대상(Range)을 함께 적는다.</strong><br><strong>⑧ 표시상수: 화면·교환 표시용 상수(있는 경우).</strong><br><strong>⑨ 길이: 최소/최대 길이(제약이 있는 경우).</strong><br><strong>⑩ 값 범위 / 허용값: 유효 범위 또는 통제어휘 목록.</strong><br><strong>⑪ 단위: 측정값을 기술하는 요소에 한하여 기재한다. 단위의 전역 식별자 결합은 부속서 B를 참조한다.</strong><br><strong>⑫ 예시: 요소의 예시 값.</strong><br><strong>⑬ 관련 출처: 요소 또는 정의가 참조한 어휘·표준(어휘 식별자 매핑의 근거가 된다).</strong><br><strong>나) 공동 에디터가 6.6에 따라 보강하는 컬럼</strong><br><strong>⑭ 어휘 식별자(IRI): 요소의 의미를 나타내는 전역 어휘의 식별자(예: dct:creator). IRI란 개념에 부여된 전 세계 공용 식별자를 말한다.</strong><br><strong>표준초안 에디터는 가)의 컬럼(①~⑬)까지 작성한다. 나)의 어휘 식별자 매핑(⑭)과 6.6의 부속서 작성은 「정보통신표준화 운영요령」 <a class="xref" data-t="regs" data-find="3.5 제19조의2">제19조의2</a>에 따라 지정된 공동 에디터가 보강한다.</strong></td></tr></table></div>
+<h4>3.3 6.6 부속서 (보강)</h4>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>현 행</strong></th><th><strong>개정(안)</strong></th></tr><tr><td>6.6 부속서<br>부속서는 내용으로서는 본래 표준의 본문에 포함시켜도 되는 사항이지만, 표준의 구성상 특별히 추려서 본문에 준하여 정리한 것을 말한다.<br>부속서 제목은 부속서 첫 번째 쪽 중앙 맨 위쪽에 위치하여야 하며, 부속서 번호 밑에 ‘(본 부속서는 표준 내용의 일부임)’을 표기한다.<br>부속서는 A, B, C 순으로 작성하며, 항목 번호 앞에 부속서 번호(알파벳)를 붙인다. …(이하 현행 유지)</td><td>6.6 부속서<br>부속서는 내용으로서는 본래 표준의 본문에 포함시켜도 되는 사항이지만, 표준의 구성상 특별히 추려서 본문에 준하여 정리한 것을 말한다.<br>부속서 제목은 부속서 첫 번째 쪽 중앙 맨 위쪽에 위치하여야 하며, 부속서 번호 밑에 ‘(본 부속서는 표준 내용의 일부임)’을 표기한다.<br>부속서는 A, B, C 순으로 작성하며, 항목 번호 앞에 부속서 번호(알파벳)를 붙인다. …(이하 현행 유지)<br><strong>데이터 요소를 정의하는 표준은, 6.5.7의 요소 정의표에 따라 각 요소와 전역 어휘 식별자(IRI)의 매핑을 JSON-LD @context 형식으로 직렬화하여 부속서로 첨부한다. 이 매핑과 직렬화는 「정보통신표준화 운영요령」 <a class="xref" data-t="regs" data-find="3.5 제19조의2">제19조의2</a>에 따라 지정된 공동 에디터(해당 분야 어휘 전문가)가 보강할 수 있다.</strong><br><strong>다만, 앞표지와 원문으로 구성되는 기술규격(5.2 참조)에는 적용하지 아니한다.</strong></td></tr></table></div>
+<h4>3.4 부속서 B 단위·어휘 매핑 지침 (신설, 선택)</h4>
+<p>현행 부속서 A(표준화기구별 영문 준용 지침)에 이어 부속서 B를 둘 수 있다. 세부 문안은 아래 골격을 따른다.</p>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>현 행</strong></th><th><strong>개정(안)</strong></th></tr><tr><td>(신설)</td><td><strong>부 속 서 B  단위·어휘 매핑 지침</strong><br><strong>B.1 전역 어휘 매핑 — 요소의 의미를 공용 어휘의 전역 식별자에 대응한다. 공통 요소는 DCMI Terms·DCAT, 개념의 상하·유사 관계는 SKOS를 우선 참조한다.</strong><br><strong>B.2 단위 결합 — 측정값의 단위는 QUDT 단위 식별자(예: unit:MilliGM-PER-L)로 결합하고, 필요 시 UCUM 코드(예: mg.L-1)를 함께 기재한다. UCUM은 지수 표기를 쓰므로 ‘mg/L’이 아니라 ‘mg.L-1’이다.</strong><br><strong>B.3 @context 작성 — 요소 이름을 키로, 전역 어휘 식별자를 값으로 하는 JSON-LD @context를 6.6에 따라 부속서로 제공한다.</strong></td></tr></table></div>
+<h4>3.5 부록 Ⅱ-4 기술보고서의 이력</h4>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>현 행</strong></th><th><strong>개정(안)</strong></th></tr><tr><td>제2판 | 2025.05.23. | TTAR-09.0040/R1 | 저작권 및 지식재산권 문구 및 표 양식 등 수정, 부속서 A 추가 | 전략계획위원회(SPC)</td><td>제2판 | 2025.05.23. | TTAR-09.0040/R1 | 저작권 및 지식재산권 문구 및 표 양식 등 수정, 부속서 A 추가 | 전략계획위원회(SPC)<br><strong>제3판 | (채택일) | TTAR-09.0040/R2 | AI-Ready 데이터 요소 정의·기계가독 부속서 관련 조항 신설(6.5.7, 6.6) 및 인용 표준 보강(6.5.3), 부속서 B 신설 | 전략계획위원회(SPC)</strong></td></tr></table></div>
+<h3>4. 규정 정합성 및 유의사항</h3>
+<p><strong>가. 개정 주체. </strong>이 지침의 개정은 「정보통신표준화 운영규정」 제20조의3제1항제6호(정보통신단체표준 작성지침 수립 및 검토)에 따라 전략계획위원회(SPC)의 임무에 속한다. 기술보고서이므로 표준총회를 거치지 않고 기술위원회에서 최종 채택한다(운영규정 <a class="xref" data-t="regs" data-find="5. 정보통신단체표준 작성지침">제47조제1항</a>).</p>
+<p><strong>나. 상정 순서 — 운영요령 개정이 전제. </strong>3.2·3.3의 “공동 에디터”는 「정보통신표준화 운영요령」 <a class="xref" data-t="regs" data-find="3.5 제19조의2">제19조의2</a>(복수 에디터 지정)와 운영규정 제29조제1항제2호(특별위원 위촉)에 근거한다. 어휘 전문가를 특별위원으로 위촉해 공동 에디터로 지정하는 근거가 운영요령에 먼저 마련되어야 하므로, 상정은 운영요령 개정(안건①) → 이 지침 개정(안건②) 순으로 한다.</p>
+<p><strong>다. 역할 분담. </strong>6.5.7(본문)은 표준초안 에디터가 요소 정의표와 관련 출처를 작성하는 단계이고, 6.6(부속서)은 공동 에디터(어휘 전문가)가 전역 어휘 식별자 매핑과 @context를 보강하는 단계다. 제안 기관·에디터에게 SHACL·JSON-LD 지식을 요구하지 않는다.</p>
+<p><strong>라. 적용 범위. </strong>요소 정의표·@context 요건은 “데이터 요소를 정의하는 표준”에 적용된다. 데이터 요소를 정의하지 않는 절차·지침 성격의 표준에는 요소 정의표가 성립하지 않으며, 앞표지와 원문으로 구성되는 기술규격은 부속서를 붙일 수 없으므로(5.2) @context 요건에서 제외한다.</p>
+<p><strong>마. 병행 정비(선택). </strong>이번 개정과 무관하나, 5.1 e)의 작성도구 버전(“한글 2010, 워드 2010 이상”)은 차기 정비 시 현행화를 검토한다.</p></div></section><section class="panel" id="faq"><div class="doc-src">📄 new\규정_용어_조직_FAQ.docx</div><div class="doc-content"><p><strong>TTA 표준화 규정 용어·조직 FAQ</strong></p>
+<p>전략계획위원회(SPC) · 지식재산권(IPR) — 모든 조문 원문 대조 확정</p>
+<p>근거: 운영규정 SAG-0029(24)/R24 · 운영요령 SBG-0030(13)/R13 원문</p>
+<p>※ 이 FAQ의 조문 번호는 원문 PDF에서 직접 확인한 값이다. 특히 &quot;표준 공고 후 이의·지식재산권 폐지&quot;는 운영규정이 아니라 운영요령 제23조임을 유의(운영규정 제23조는 기술위원회 위원 구성).</p>
+<h3>A. 전략계획위원회 (SPC)</h3>
+<h4>Q1. SPC란 무엇인가?</h4>
+<p><strong>SPC = 전략계획위원회</strong> (Strategic Planning Committee). 표준화 전략·작성지침·지식재산권 정책 등을 다루는 위원회다.</p>
+<p><strong>⚠️ &quot;SPC&quot;는 규정 원문에 없는 약칭이다. </strong>운영규정·운영요령 어디에도 &quot;SPC&quot;나 영문명이 없다. 공식 명칭은 「전략계획위원회」이며, SPC는 통용 영문 약칭이다.</p>
+<h4>Q2. SPC의 조직상 위치와 구성은?</h4>
+<p><strong>위치 — 운영위원회 산하. </strong>운영규정 제20조(조직): &quot;운영위원회는 표준화 관련 업무의 효율적 검토와 추진을 위하여 운영위원회 산하에 전략계획위원회를 둘 수 있다.&quot;</p>
+<p>위계: 표준총회 → 운영위원회 → 전략계획위원회(SPC) → (산하) 전문위원회.</p>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>구분</strong></th><th><strong>내용 (근거)</strong></th></tr><tr><td>위원 구성</td><td>① 각 기술위원회 장이 소속 위원 중 추천한 각 1명, ② 사업참가자 추천 전문가, ③ 운영위·SPC 의장이 추천하고 회장이 위촉한 자, ④ 회장 위촉 협회직원 (운영규정 제20조의2①) — 각 TC 대표가 참여하는 범위원회 전략 조직</td></tr><tr><td>의장단</td><td>의장·부의장(3명 이내)·간사. 의장·부의장은 위원 중 선출, 임기 2년·연임 가능. 간사는 협회 표준화 담당자 (운영규정 제20조의4)</td></tr></table></div>
+<h4>Q3. SPC의 임무는? (운영규정 제20조의3)</h4>
+<div class="tbl-wrap"><table class="doc-tbl cmp"><tr><th><strong>No.</strong></th><th><strong>임무</strong></th></tr><tr><td>①1</td><td>기술위원회등 표준화전략 검토 및 정보통신표준화위원회 표준화전략 수립</td></tr><tr><td>①2</td><td>중기(3개년) 과제계획안 검토 및 수립</td></tr><tr><td>①3</td><td>정보통신표준화에 이용자 의견 반영 절차 수립·검토</td></tr><tr><td>①4</td><td>정보통신표준화위원회의 지식재산권(IPR) 관련 정책 수립·검토</td></tr><tr><td>①5</td><td>전략계획위원회 활동결과의 운영위원회 보고</td></tr><tr><td>①6</td><td>정보통신단체표준 작성지침 수립·검토  ← 안건 ②(작성지침 개정)의 소관 근거</td></tr><tr><td>①7</td><td>그 밖에 운영위원회에서 지정한 업무</td></tr><tr><td>②</td><td>제1항 임무 수행을 위해 필요시 산하에 전문위원회를 둘 수 있음  ← 안건 ③(AI-Ready 전문위원회)의 근거</td></tr></table></div>
+<h4>Q4. 8/10에 SPC와 무엇을 논의하나? (AI-Ready 3안건)</h4>
+<div class="tbl-wrap"><table class="doc-tbl"><tr><th><strong>안건</strong></th><th><strong>소관</strong></th><th><strong>SPC와의 관계</strong></th></tr><tr><td>② 작성지침(<a class="xref" data-t="jichim" data-find="작성지침">TTAR-09.0040</a>) 개정</td><td>전략계획위원회 (제20조의3①6)</td><td>★ SPC 정면 소관 — 논의 핵심</td></tr><tr><td>③ AI-Ready 전문위원회 설치</td><td>SPC 산하 (제20조의3②)</td><td>★ SPC가 두는 것</td></tr><tr><td>① 운영요령 개정</td><td>운영위원회 (<a class="xref" data-t="regs" data-find="4. 정보통신표준화 운영규정">제57조</a>)</td><td>SPC는 운영위 산하라 연계되나 의결은 운영위</td></tr></table></div>
+<p><strong>유의. </strong>작성지침(기술보고서) 개정은 운영규정 <a class="xref" data-t="regs" data-find="5. 정보통신단체표준 작성지침">제47조제1항</a>에 따라 제35~39조(의견수렴 4주 이상 포함)를 준용하되 기술위원회등이 최종 채택한다(표준총회 불요). 즉 안건 ②는 8/10 당일 확정이 아니라 의견수렴 절차를 거친다.</p>
+<h3>B. 지식재산권 (IPR)</h3>
+<h4>Q5. IPR이란 무엇인가?</h4>
+<p><strong>IPR = Intellectual Property Rights = 지식재산권</strong> (특허·저작권 등).</p>
+<p><strong>규정 근거. </strong>운영요령 <a class="xref" data-t="regs" data-find="3.1 제2조">제2조제2항</a>이 「정보통신표준화 관련 지식재산권 취급요령」을 &quot;IPR요령&quot;으로 약칭한다 — 즉 규정 스스로 IPR ↔ 지식재산권을 연결한다.</p>
+<p><strong>왜 중요한가. </strong>표준에 특정 회사의 특허가 포함되는 일이 흔하다. 그 특허를 남들이 공정·합리·비차별 조건으로 쓸 수 있어야 표준이 제 기능을 하므로, TTA는 이를 별도의 IPR요령과 규정 절차로 규율한다.</p>
+<h4>Q6. TTA는 IPR을 어떻게 다루나? (절차·조문 — 원문 확정)</h4>
+<div class="tbl-wrap"><table class="doc-tbl"><tr><th><strong>단계</strong></th><th><strong>내용</strong></th><th><strong>근거 (원문 확정)</strong></th></tr><tr><td>제안·채택 시 확인</td><td>사무국이 제안 과제의 지식재산권 포함 여부를 제안자 확인 거치고, 과제 채택 후 60일간 홈페이지 공고하여 관련 지식재산권을 확인</td><td>운영요령 제14조(지식재산권 확인)</td></tr><tr><td>확인 절차도</td><td>지식재산권 처리 절차도(별표 2)를 따름</td><td>운영요령 제14조② · 별표 2</td></tr><tr><td>초안 작성 시 확약서</td><td>지식재산권이 포함되면 IPR요령 제4조에 따른 &quot;확약서&quot;(지식재산권 취급 확약서)를 권리자가 제출</td><td>운영요령 <a class="xref" data-t="regs" data-find="3.4 제19조">제19조제1항제1호</a></td></tr><tr><td>공고 후 문제 시 폐지</td><td>표준 채택 후 지식재산권이 확인된 경우, ① 확약서 미제출 또는 ② 실시허락 거절이면 의견수렴 없이 표준총회에 표준 폐지를 건의</td><td>운영요령 제23조제3항 (⚠️운영규정 아님)</td></tr><tr><td>정책 수립</td><td>SPC가 정보통신표준화위원회의 IPR 관련 정책을 수립·검토</td><td>운영규정 제20조의3제1항제4호</td></tr></table></div>
+<h4>Q7. IPR·SPC가 AI-Ready와 관련 있나?</h4>
+<p><strong>SPC — 직접 관련(핵심). </strong>AI-Ready 규범 개정의 안건 ②(작성지침)·③(전문위원회)를 담당하는 기구다.</p>
+<p><strong>IPR — 직접 관련은 적음. </strong>AI-Ready는 데이터의 기계가독성(의미·구조·품질)을 다루지 특허를 다루지 않는다. IPR은 SPC의 여러 임무 중 하나(제20조의3①4)로 등장하므로 참고 맥락으로 알아두면 된다.</p></div></section><section class="panel" id="flow"><div class="doc-src">📄 운영요령 별표 1 (제12조 관련) · AI-Ready 접점 표시</div><div class="doc-content"><h3>정보통신단체표준 제·개정·폐지 절차도 — AI-Ready 접점</h3><p>절차 흐름(제안→검토→채택→초안→의견수렴→상정→공고)은 <b>바뀌지 않는다.</b> <b class="red-em">빨간색 주석(★)</b>이 각 단계에 부가되는 AI-Ready 산출물·점검이며, AI-Ready 적용 대상 표준에만 해당한다. 심의 단계 서식 참조는 자가점검표를 포함하도록 "제18호~제21-1호"로 넓힌다.</p><div class="flow"><div class="node"><span class="nm">표준화과제 제안</span><span class="node-sub">이해관계인 · 서식 제11호~제12호</span><div class="ai-note">★ AI-Ready 선언(<a class="xref" data-t="byotable" data-find="별지 제11-1호">별지 제11-1호</a>) 첨부 — 기술 대상 프로파일·목표 수준</div></div>
+<div class="arrow">↓</div>
+<div class="node"><span class="nm">제안 접수</span><span class="node-sub">사무국</span></div>
+<div class="arrow">↓</div>
+<div class="node"><span class="nm">표준화과제 추진 타당성 검토</span><span class="node-sub">기술위원회·특별기술위원회 · 서식 제15호~제16호  (부결 → 제안자에 사유통보)</span><div class="ai-note">★ AI-Ready 적용 대상 여부·목표 수준 확인 (<a class="xref" data-t="byoji" data-find="별지 제15호">별지 제15호</a>)</div></div>
+<div class="arrow">↓</div>
+<div class="node gate"><span class="nm">표준화과제 채택</span><span class="node-sub">표준총회 또는 운영위원회  (부결 → 미채택)</span></div>
+<div class="arrow">↓</div>
+<div class="node"><span class="nm">표준초안 작성 요청</span><span class="node-sub">기술위원회·특별기술위원회  (표준폐지 제외)</span></div>
+<div class="arrow">↓</div>
+<div class="node"><span class="nm">표준초안 작성</span><span class="node-sub">프로젝트그룹·특별기술위원회  (표준폐지 제외)</span><div class="ai-note">★ 요소 정의표·@context 부속서 작성 (<a class="xref" data-t="regs" data-find="3.4 제19조">제19조①</a>9호) · 어휘 전문가를 공동 에디터로 지정·보강 (<a class="xref" data-t="regs" data-find="3.5 제19조의2">제19조의2⑤</a>)</div></div>
+<div class="arrow">↓</div>
+<div class="node"><span class="nm">의견수렴</span><span class="node-sub">사무국 (4주 이상, 최소 60일) · 서식 제18호~제19호</span></div>
+<div class="arrow">↓</div>
+<div class="node"><span class="nm">의견 검토</span><span class="node-sub">프로젝트그룹·특별기술위원회 · 서식 제20호</span></div>
+<div class="arrow">↓</div>
+<div class="node gate"><span class="nm">표준안 / 폐지안 채택</span><span class="node-sub">기술위원회·특별기술위원회</span></div>
+<div class="arrow">↓</div>
+<div class="node"><span class="nm">표준 심의</span><span class="node-sub">표준총회 · 서식 제18호~제21-1호</span><div class="ai-note">★ AI-Ready 자가점검표(<a class="xref" data-t="selfcheck" data-find="별지 제21-1호">별지 제21-1호</a>) 제출 — 구성요소 달성 등급·정합성·산출물 확인</div></div>
+<div class="arrow">↓</div>
+<div class="node"><span class="nm">표준 제정 / 개정 / 폐지 공고</span><span class="node-sub">회장</span></div></div></div></section>
+  </main>
+</div>
+
+<script>
+  // 좌측 메뉴 → 패널 전환
+  document.querySelectorAll('.menu').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.menu').forEach(function(x){x.classList.remove('active');});
+      document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+      b.classList.add('active');
+      var el=document.getElementById(b.dataset.t);
+      if(el){el.classList.add('active');}
+      window.scrollTo({top:0,behavior:'instant'});
+    });
+  });
+
+  // 상호 참조 → 스택형 팝업 (팝업 위에 또 팝업). 전체 페이지 버튼 없음.
+  (function(){
+    var LABELS={overview:'문서 체계 지도',regs:'규범 3종 개정 대비표',byotable:'별표 10 · 별지 제11-1호',
+      byoji:'별지 15·23·24 개정',selfcheck:'자가점검표 (별지 제21-1호)',jichim:'작성지침 개정 대비표',
+      flow:'별표 1 절차도 (AI-Ready 접점)',faq:'규정 용어·조직 FAQ'};
+    var stack=[];
+    function esc(x){return (x||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+    function scrollToFind(body,find){
+      var els=body.querySelectorAll('h3,h4,td,p,strong,li');
+      for(var i=0;i<els.length;i++){
+        if(els[i].textContent && els[i].textContent.indexOf(find)>=0){
+          (function(el){setTimeout(function(){
+            el.scrollIntoView({block:'center'}); el.classList.add('xref-hit');
+            setTimeout(function(){el.classList.remove('xref-hit');},1700);
+          },50);})(els[i]);
+          return;
+        }
+      }
+    }
+    function openX(t,find){
+      var src=document.getElementById(t); if(!src){return;}
+      var c=src.querySelector('.doc-content')||src;
+      var layer=document.createElement('div');
+      layer.className='xref-modal'; layer.style.zIndex=String(60+stack.length*2);
+      layer.innerHTML='<div class="xref-backdrop" data-close="1"></div>'+
+        '<div class="xref-window" role="dialog" aria-modal="true">'+
+        '<div class="xref-bar"><span class="xref-title">'+esc(LABELS[t]||t)+
+        (find?' <small>&#9656; '+esc(find)+'</small>':'')+'</span>'+
+        '<button class="xref-close" type="button" data-close="1" aria-label="닫기">&#10005;</button></div>'+
+        '<div class="xref-body doc-content"></div></div>';
+      layer.querySelector('.xref-body').innerHTML=c.innerHTML;
+      document.body.appendChild(layer);
+      document.body.style.overflow='hidden';
+      stack.push(layer);
+      if(find){scrollToFind(layer.querySelector('.xref-body'),find);}
+    }
+    function closeTop(){
+      var layer=stack.pop(); if(layer){layer.remove();}
+      if(!stack.length){document.body.style.overflow='';}
+    }
+    document.addEventListener('click',function(e){
+      var a=e.target.closest?e.target.closest('a.xref'):null;
+      if(a){e.preventDefault();openX(a.dataset.t,a.dataset.find||'');return;}
+      if(e.target.dataset&&e.target.dataset.close){closeTop();}
+    });
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&stack.length){closeTop();}});
+  })();
+</script>
+
+
+</body>
+</html>

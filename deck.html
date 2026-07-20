@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPC 발표 · AI-Ready 데이터 단체표준</title>
+</head>
+<body>
+
+<style>
+:root{
+  --ink:#16222b; --ink2:#51605f; --acc:#0e7c86; --accd:#0a535b; --acc-ink:#0a535b;
+  --slide:#ffffff; --soft:#f1f6f6; --soft2:#e5efef; --line:#d7e2e2; --red:#c0272d;
+  --dark:#0c1c22; --stage:#c9d6d6; --cov-sub:#cfe3e4; --cov-brand:#7fc7cd;
+}
+@media (prefers-color-scheme:dark){:root{--stage:#0a1418;}}
+:root[data-theme="dark"]{--stage:#0a1418;}
+:root[data-theme="light"]{--stage:#c9d6d6;}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Malgun Gothic","맑은 고딕",system-ui,sans-serif;background:var(--stage);
+  -webkit-font-smoothing:antialiased}
+.deck{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.stage{width:1280px;height:720px;position:relative;transform-origin:center center;flex:none}
+.slide{position:absolute;inset:0;padding:60px 72px;display:none;flex-direction:column;
+  background:var(--slide);color:var(--ink);overflow:hidden}
+.slide.active{display:flex;animation:fade .28s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.kicker{font-size:16px;font-weight:800;letter-spacing:.06em;color:var(--acc);margin-bottom:10px;text-transform:none}
+.kicker.light{color:var(--cov-brand)}
+.s-title{font-size:38px;font-weight:800;line-height:1.12;margin:0;color:var(--ink);letter-spacing:-.01em;max-width:1050px}
+.rule{width:84px;height:5px;background:var(--acc);border-radius:3px;margin:18px 0 26px}
+.bl{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:16px;max-width:1080px}
+.bl li{position:relative;padding-left:26px;font-size:20px;line-height:1.5}
+.bl li::before{content:"▪";position:absolute;left:0;top:1px;color:var(--acc);font-size:16px}
+.bl b{color:var(--ink);font-weight:800;margin-right:12px}
+.bl span{color:var(--ink2)}
+.kpis{display:flex;gap:22px;margin:8px 0 30px}
+.kpi{flex:1;background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:26px 26px 22px}
+.kv{font-size:52px;font-weight:800;color:var(--accd);line-height:1}
+.kl{font-size:16px;color:var(--ink2);margin-top:12px;line-height:1.4}
+.dt{border-collapse:collapse;width:100%;margin:4px 0 22px;font-size:18px;table-layout:fixed}
+.dt th{background:var(--accd);color:#fff;text-align:left;padding:13px 16px;font-weight:700;font-size:17px}
+.dt td{padding:14px 16px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:top;line-height:1.45}
+.dt tbody tr:nth-child(even){background:var(--soft)}
+.dt td.c0{color:var(--ink);font-weight:800}
+.dt td.star{color:var(--red);font-weight:800}
+.dt th:first-child,.dt td:first-child{width:22%}
+.callout{display:flex;gap:16px;align-items:flex-start;border-radius:14px;padding:22px 26px;margin-top:auto}
+.callout .ca-mk{font-weight:800;font-size:20px;line-height:1.5}
+.callout .ca-tx div{font-size:21px;font-weight:800;line-height:1.5}
+.callout.soft{background:var(--soft2);color:var(--accd);border-left:7px solid var(--acc)}
+.callout.strong{background:var(--accd);color:#fff}
+.callout.strong .ca-mk{color:#7fdbe2}
+/* cover */
+.s-cover{background:var(--dark);color:#fff;justify-content:center;padding-left:96px;border-left:14px solid var(--acc)}
+.cov-brand{color:var(--cov-brand);font-weight:800;font-size:19px;margin-bottom:26px}
+.cov-title{font-size:52px;font-weight:800;line-height:1.1;margin:0;letter-spacing:-.01em}
+.cov-rule{width:110px;height:6px;background:var(--acc);border-radius:3px;margin:30px 0 24px}
+.cov-sub{font-size:24px;color:var(--cov-sub)}
+.cov-meta{position:absolute;left:96px;bottom:64px;color:#9ab2b3;font-size:17px}
+.cov-meta .dot{margin:0 12px;opacity:.6}
+/* agenda */
+.s-agenda{flex-direction:row;padding:0}
+.ag-left{width:36%;background:var(--dark);color:#fff;padding:60px 44px}
+.ag-title{font-size:38px;font-weight:800;line-height:1.12;margin:6px 0 0}
+.ag-left .rule{background:var(--acc)}
+.ag-right{flex:1;padding:52px 60px;display:flex;flex-direction:column;justify-content:center;gap:30px}
+.ag-row{display:flex;gap:26px;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:26px}
+.ag-row:last-child{border-bottom:none}
+.ag-n{font-size:40px;font-weight:800;color:var(--acc);line-height:1;flex:none;width:64px}
+.ag-h{font-size:25px;font-weight:800;color:var(--ink)}
+.ag-s{font-size:17px;color:var(--ink2);margin-top:8px;line-height:1.45}
+/* process */
+.pflow{display:flex;align-items:stretch;gap:2px;margin:6px 0 14px}
+.pstep{flex:1;background:var(--soft);border:2px solid var(--acc);border-radius:14px;padding:16px 16px 18px;min-height:150px}
+.pstep.hot{background:#fdecec;border-color:var(--red)}
+.p-n{font-size:15px;font-weight:800;color:var(--accd)}
+.pstep.hot .p-n{color:var(--red)}
+.pstar{color:var(--red)}
+.p-nm{font-size:19px;font-weight:800;color:var(--ink);margin-top:12px;line-height:1.2}
+.p-sub{font-size:14px;color:var(--ink2);margin-top:12px}
+.p-arrow{align-self:center;color:var(--acc);font-size:30px;font-weight:700;padding:0 2px}
+.p-legend{color:var(--red);font-weight:800;font-size:16px;margin:2px 0 18px}
+/* insight */
+.s-insight{background:var(--soft)}
+/* close */
+.rm-label{color:var(--acc);font-weight:800;font-size:16px;margin:28px 0 12px}
+.rmflow{display:flex;align-items:center;gap:8px}
+.rm{flex:1;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:16px;
+  text-align:center;font-weight:800;font-size:17px;color:var(--ink)}
+.rm.hot{background:var(--accd);color:#fff;border-color:var(--accd)}
+.rm-arrow{color:var(--acc);font-weight:800;font-size:18px}
+.closing{margin:38px -72px -60px;background:var(--dark);color:#fff;text-align:center;
+  font-size:30px;font-weight:800;padding:34px}
+/* HUD */
+.hud{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:6px;
+  background:rgba(12,28,34,.86);color:#fff;border-radius:999px;padding:6px 8px;z-index:20;font-size:14px;
+  backdrop-filter:blur(6px)}
+.hud button{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;width:34px;height:34px;
+  border-radius:50%;line-height:1}
+.hud button:hover{background:rgba(255,255,255,.16)}
+.hud .counter{padding:0 8px;font-variant-numeric:tabular-nums;min-width:56px;text-align:center}
+.hud .nbtn{width:auto;padding:0 12px;font-size:13px;font-weight:700}
+.progress{position:fixed;top:0;left:0;height:4px;background:var(--acc);z-index:20;transition:width .3s ease}
+.notes{position:fixed;left:0;right:0;bottom:0;max-height:38vh;overflow:auto;background:#0c1c22;color:#d7e6e6;
+  padding:20px 28px 26px;z-index:19;transform:translateY(100%);transition:transform .25s ease;
+  box-shadow:0 -8px 30px rgba(0,0,0,.4);font-size:16px;line-height:1.6}
+.notes.on{transform:none}
+.notes h4{margin:0 0 8px;color:#7fc7cd;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.hint{position:fixed;top:12px;right:16px;color:var(--ink2);font-size:12.5px;z-index:20;opacity:.75}
+@media (prefers-color-scheme:dark){.hint{color:#8aa}}
+</style>
+<div class="deck"><div class="stage" id="stage"><section class="slide s-cover"><div class="cov-brand">TTA · AI-Ready 표준화 전략과제</div><h1 class="cov-title">AI-Ready 데이터 단체표준 제정을 위한<br>필요사항 검토</h1><div class="cov-rule"></div><div class="cov-sub">정보통신단체표준 규범 개정의 필요성과 방향</div><div class="cov-meta"><span>전략계획위원회(SPC) 보고</span><span class="dot">·</span><span>2026. 8. 10.</span><span class="dot">·</span><span>TTA AI-Ready 표준화 전략과제</span></div></section>
+<section class="slide s-agenda"><div class="ag-left"><div class="kicker light">발표 순서</div><h2 class="ag-title">오늘 말씀드릴 것</h2><div class="rule"></div></div><div class="ag-right"><div class="ag-row"><div class="ag-n">01</div><div><div class="ag-h">왜 필요한가</div><div class="ag-s">AI 시대의 데이터, 그리고 현행 20종 실측 진단</div></div></div><div class="ag-row"><div class="ag-n">02</div><div><div class="ag-h">AI-Ready란 무엇인가</div><div class="ag-s">7개 구성요소 · 3단계(L1/L2/L3) · 3 프로파일</div></div></div><div class="ag-row"><div class="ag-n">03</div><div><div class="ag-h">무엇을 바꿔야 하나</div><div class="ag-s">규범 3종 개정안 — 작성지침 · 운영요령</div></div></div><div class="ag-row"><div class="ag-n">04</div><div><div class="ag-h">SPC에 드리는 요청</div><div class="ag-s">작성지침 개정 착수 · AI-Ready 전문위원회</div></div></div></div></section>
+<section class="slide"><div class="kicker">배경</div><h2 class="s-title">데이터는 자산이지만, AI는 아직 우리 표준을 읽지 못한다</h2><div class="rule"></div><ul class="bl"><li><b>AI 시대의 데이터 가치</b><span>데이터의 값어치는 &#x27;기계가 그 의미·구조·품질·출처·이용조건을 스스로 읽을 수 있는가&#x27;에 달려 있습니다.</span></li><li><b>현행 단체표준의 한계</b><span>메타데이터를 사람이 읽는 표와 산문으로만 규정합니다. 기계는 필드의 의미도, 코드값의 뜻도, 측정 단위도 해석하지 못합니다.</span></li><li><b>국제 흐름</b><span>DataCite · DCAT · W3C(PROV·DQV·ODRL) · MLCommons Croissant 등 &#x27;기계가독&#x27; 메타데이터 표준이 빠르게 확산하고 있습니다.</span></li></ul><div class="callout soft"><span class="ca-mk">▶</span><div class="ca-tx"><div>표준이 &#x27;AI-Ready&#x27;하지 않으면, 데이터를 아무리 모아도 AI가 바로 쓸 수 없습니다.</div></div></div></section>
+<section class="slide"><div class="kicker">진단 · 현행 20종 실측</div><h2 class="s-title">우리 표준은 지금 어디에 있나</h2><div class="rule"></div><div class="kpis"><div class="kpi"><div class="kv">37%</div><div class="kl">20종 평균 AI-Ready 성숙도</div></div><div class="kpi"><div class="kv">3종</div><div class="kl">L1(기준선) 충족 — L2·L3는 0종</div></div><div class="kpi"><div class="kv">90%</div><div class="kl">인용표준·일관성 결함 (18/20종) · 모두 기계 검출 가능</div></div></div><ul class="bl"><li><b>공백이 몰린 곳</b><span>품질(2등급 0종)·시맨틱(11종이 0등급)·신태틱(8종이 0등급)에 구조적으로 집중돼 있습니다.</span></li><li><b>이미 갖춘 것</b><span>데이터 모델은 평균 1.15로 대부분 표로 정리돼 있습니다 — &#x27;새로 정하는 것&#x27;이 아니라 &#x27;옮기는&#x27; 일입니다.</span></li><li><b>분석 범위</b><span>RG 11종 + TG 9종. 최고 83%(Y.3603 빅데이터 카탈로그) ~ 최저 8%.</span></li></ul></section>
+<section class="slide s-insight"><div class="kicker">핵심 통찰</div><h2 class="s-title">성숙도를 가른 것은 도메인이 아니라 &#x27;설계 방식&#x27;이었다</h2><div class="rule"></div><ul class="bl"><li><b>성숙도 높은 표준</b><span>예외 없이 RDF·온톨로지를 전제로 설계됐습니다.</span></li><li><b>성숙도 낮은 표준</b><span>예외 없이 표와 산문으로 설계됐습니다 — 나쁜 표준이 아니라 &#x27;사람용&#x27;으로 만들어졌을 뿐입니다.</span></li></ul><div class="callout strong"><span class="ca-mk">▶</span><div class="ca-tx"><div>도메인이 달라도 고쳐야 할 지점은 같다.</div><div>→ 표준을 &#x27;작성하는 방법&#x27;(작성지침)을 한 번 고치면 20종 전체에 함께 적용된다.</div></div></div></section>
+<section class="slide"><div class="kicker">개념</div><h2 class="s-title">AI-Ready = 7개 구성요소를 3단계로 갖추는 것</h2><div class="rule"></div><table class="dt"><thead><tr><th>단계</th><th>구성요소</th><th>무엇을 갖추나</th></tr></thead><tbody><tr><td class="c0">L1 · 기준선(필수)</td><td>시맨틱 · 신태틱</td><td>뜻을 전역 어휘 IRI에 연결 + 기계가독 직렬화(@context)</td></tr><tr><td class="c0">L2 · 권장</td><td>데이터모델 · 출처/계보</td><td>구조·타입 제약(SHACL) + 데이터의 출처(PROV)</td></tr><tr><td class="c0">L3 · 선택</td><td>품질 · 접근/이용 (+운영시맨틱, ML)</td><td>품질지표(DQV) · 이용조건(ODRL)</td></tr></tbody></table><ul class="bl"><li><b>3 프로파일</b><span>① 지식정보(카탈로그) ② 자기기술형 레코드 ③ AI 데이터세트 — &#x27;무엇을 기술하는가&#x27;로 나뉩니다.</span></li><li><b>측정 방식</b><span>성숙도 = 등급 합계 ÷ (적용 구성요소 수 × 2). 표준별로 목표 수준을 &#x27;선언&#x27;하고 달성을 &#x27;자가점검&#x27;합니다.</span></li></ul></section>
+<section class="slide"><div class="kicker">이 과제가 준비한 것</div><h2 class="s-title">개념이 아니라, 바로 적용 가능한 개정안까지</h2><div class="rule"></div><ul class="bl"><li><b>① 진단</b><span>현행 20종(RG 11 + TG 9)을 정밀 분석해 표준별 개선방향을 도출했습니다.</span></li><li><b>② 실증</b><span>5종 재작성 패키지 — 선언 → 요소정의표 → 부속서 설계·생성 → 자가점검. (① 0976 / ② 1530·1510 / ③ 1594·0310)</span></li><li><b>③ 개정안</b><span>규범 3종 신구조문대비표 + 별표 10·별지 서식 + AI-Ready 접점 절차도까지 완성했습니다.</span></li></ul><div class="callout soft"><span class="ca-mk">▶</span><div class="ca-tx"><div>논의용 자료가 아니라, 의결·상정이 가능한 문안까지 준비돼 있습니다.</div></div></div></section>
+<section class="slide"><div class="kicker">무엇을 바꿔야 하나</div><h2 class="s-title">규범 3종에 &#x27;최소 개입&#x27; — 표준 본문 구조는 그대로</h2><div class="rule"></div><table class="dt"><thead><tr><th>규범</th><th>무엇을</th><th>소관</th><th>상정 경로</th></tr></thead><tbody><tr><td class="c0">작성지침 (TTAR-09.0040)</td><td>요소정의표·부속서 작성법 신설</td><td class="star">★ 전략계획위원회(SPC)</td><td>안건 ② — 오늘 핵심</td></tr><tr><td class="c0">운영요령</td><td>절차·서식(선언·자가점검·공동에디터)</td><td>운영위원회</td><td>안건 ① (SPC 연계)</td></tr><tr><td class="c0">운영규정</td><td>개정 불필요 — 근거조문 활용</td><td>표준총회</td><td>—</td></tr></tbody></table></section>
+<section class="slide"><div class="kicker">개정 상세 ① · ★ SPC 정면 소관</div><h2 class="s-title">작성지침 — 요소정의표와 기계가독 부속서</h2><div class="rule"></div><ul class="bl"><li><b>6.5.7 데이터 요소 정의 (신설)</b><span>각 요소를 14개 정규 컬럼(식별번호·의미 IRI·타입·필수 M/R/O·카디널리티·허용값·단위 …)으로 정의합니다.</span></li><li><b>6.6 부속서 (보강)</b><span>요소↔전역 어휘 IRI 매핑을 @context·SHACL 등 &#x27;안정 URI를 가진 규범 부속서&#x27;로 첨부합니다 — 별첨이 아닙니다.</span></li><li><b>근거·절차</b><span>SPC 소관(운영규정 제20조의3①6). 개정은 제47조① 준용(제35~39조, 의견수렴 4주 이상)으로 기술위원회가 최종 채택합니다 — 당일 확정이 아닙니다.</span></li></ul><div class="callout soft"><span class="ca-mk">▶</span><div class="ca-tx"><div>작성지침 한 곳을 고치면, 앞으로 만들어질 모든 데이터 표준이 같은 방식으로 AI-Ready해집니다.</div></div></div></section>
+<section class="slide"><div class="kicker">개정 상세 ② · 운영위 소관 (SPC 연계)</div><h2 class="s-title">운영요령 — 절차·서식·역할 신설</h2><div class="rule"></div><ul class="bl"><li><b>조문 신설·보강</b><span>제2조①6~8호(용어) · 제19조①9호(부속서 작성) · 제19조의2⑤(공동 에디터) · 제21조⑤(상정 자가점검) · 제26조⑥(유지보수 점검) 등.</span></li><li><b>서식·별표 신설</b><span>별표 10(AI-Ready 수준 요건) · 별지 제11-1호(AI-Ready 선언) · 별지 제21-1호(자가점검표).</span></li><li><b>개정 권한</b><span>운영요령 개정은 운영위원회 권한(운영규정 제57조)으로, 표준총회 상정을 요하지 않습니다.</span></li></ul></section>
+<section class="slide"><div class="kicker">절차 변화</div><h2 class="s-title">기존 제정 절차에 4개의 AI-Ready 접점만 부가</h2><div class="rule"></div><div class="pflow"><div class="pstep"><div class="p-n">STEP 1</div><div class="p-nm">표준 제안서</div></div><div class="p-arrow">›</div><div class="pstep hot"><div class="p-n">STEP 2 <span class="pstar">★</span></div><div class="p-nm">AI-Ready 선언</div><div class="p-sub">제안자 · 별지 11-1호</div></div><div class="p-arrow">›</div><div class="pstep"><div class="p-n">STEP 3</div><div class="p-nm">표준초안 · 요소정의표</div><div class="p-sub">에디터 · 부속서 A</div></div><div class="p-arrow">›</div><div class="pstep hot"><div class="p-n">STEP 4 <span class="pstar">★</span></div><div class="p-nm">부속서 설계 · 생성</div><div class="p-sub">공동 에디터 · B~G</div></div><div class="p-arrow">›</div><div class="pstep hot"><div class="p-n">STEP 5 <span class="pstar">★</span></div><div class="p-nm">AI-Ready 자가점검</div><div class="p-sub">별지 21-1호</div></div></div><div class="p-legend">★ = AI-Ready 접점 (신설·보강)</div><ul class="bl"><li><b>신설 역할 — 공동 에디터</b><span>어휘 전문가를 특별위원으로 위촉(제19조의2⑤)해 에디터의 표를 기계가독 부속서로 번역·보강합니다.</span></li><li><b>자동화</b><span>부속서 B(@context)·C(SHACL)·U(단위)는 시스템이 자동 생성, D·E·F·G는 공동 에디터가 설계합니다.</span></li><li><b>기존 절차 유지</b><span>별표 1의 제·개정 흐름은 그대로이며, 각 단계에 산출물·점검만 부가됩니다.</span></li></ul></section>
+<section class="slide"><div class="kicker">SPC에 드리는 요청</div><h2 class="s-title">오늘, 세 가지를 논의드립니다</h2><div class="rule"></div><table class="dt"><thead><tr><th>안건</th><th>내용</th><th>SPC와의 관계</th></tr></thead><tbody><tr><td class="c0">② 작성지침 개정</td><td>6.5.7 요소정의표 · 6.6 부속서 신설</td><td class="star">★ 정면 소관 (제20조의3①6) — 논의 핵심</td></tr><tr><td class="c0">③ AI-Ready 전문위원회</td><td>어휘·기계가독 검토 전문위 설치</td><td class="star">★ SPC가 두는 것 (제20조의3②)</td></tr><tr><td class="c0">① 운영요령 개정</td><td>절차·서식·공동 에디터</td><td>운영위 소관 · SPC 연계</td></tr></tbody></table><div class="callout soft"><span class="ca-mk">▶</span><div class="ca-tx"><div>요청: 작성지침 개정 착수(의견수렴 절차 개시)와 AI-Ready 전문위원회 설치에 대한 SPC의 검토·의결.</div></div></div></section>
+<section class="slide s-close"><div class="kicker">기대효과 &amp; 다음 단계</div><h2 class="s-title">표준 간 상호운용 · AI 즉시 소비 · 국제 정합</h2><div class="rule"></div><ul class="bl"><li><b>상호운용</b><span>동일한 어휘 IRI로 표준을 넘나드는 데이터 통합·질의가 가능해집니다.</span></li><li><b>AI 즉시 소비</b><span>@context·SHACL로 기계가 의미와 제약을 바로 해석합니다.</span></li><li><b>자동 품질관리</b><span>지금 90%에서 발견되는 인용표준·일관성 결함을 기계가 검출합니다.</span></li></ul><div class="rm-label">로드맵</div><div class="rmflow"><div class="rm hot">8/10 SPC 논의</div><div class="rm-arrow">→</div><div class="rm ">작성지침 개정(의견수렴)</div><div class="rm-arrow">→</div><div class="rm ">운영요령 개정(운영위)</div><div class="rm-arrow">→</div><div class="rm ">연내 시행</div></div><div class="closing">감사합니다.  ·  질의응답</div></section></div></div><div class="progress" id="prog" style="width:0"></div><div class="hint">← → 이동 · N 노트 · F 전체화면</div><div class="hud"><button id="prev">‹</button><span class="counter" id="counter">1 / 1</span><button id="next">›</button><button class="nbtn" id="nbtn">노트</button></div><div class="notes" id="notes"><h4>발표 노트</h4><div id="notebody"></div></div>
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var stage=document.getElementById('stage');
+  var notes=["인사드립니다. 오늘 10분 동안 두 가지를 말씀드리겠습니다. 첫째, 왜 이 AI-Ready 데이터 표준 과제가 필요한가. 둘째, 그래서 무엇을 어떻게 고쳐야 하는가입니다. 특히 SPC 소관인 '작성지침' 개정을 중심으로 요청드리겠습니다. 미리 결론을 말씀드리면 — 표준을 작성하는 방법을 정한 문서 한 곳만 고치면, 앞으로 만들어질 데이터 표준 전체가 함께 AI-Ready해집니다.","네 부분으로 말씀드립니다. 앞의 두 부분(필요성·개념)은 3분, 뒤의 두 부분(무엇을 바꾸나·요청)에 시간을 더 쓰겠습니다.","핵심은 '기계가독성'입니다. 지금 우리 표준은 사람에게 설명하도록 잘 설계돼 있지만, 기계에게 설명하도록은 설계돼 있지 않습니다. 국제적으로는 이미 이걸 규범으로 다루기 시작했습니다.","20종을 실측했습니다. 평균 성숙도 37%, L1을 충족한 표준은 단 3종, L2·L3는 하나도 없습니다. 다만 데이터 모델은 이미 대부분 표로 정리돼 있어서, 고칠 일이 '창작'이 아니라 '형식으로 옮기기'라는 점이 중요합니다.","이 발견이 오늘 말씀의 핵심입니다. 수산양식이라 낮고 빅데이터라 높은 게 아니었습니다. 설계 단계부터 형식화했는가가 갈랐습니다. 그래서 표준마다 따로 대응할 필요 없이, 작성하는 방법을 정한 문서 — 작성지침 — 를 한 번 고치면 됩니다. 그리고 이 작성지침이 바로 SPC 소관입니다.","AI-Ready를 막연한 구호가 아니라 측정 가능한 요건으로 정의했습니다. 7개 조각, 3단계, 3가지 프로파일. L1이 기준선이고 그 위는 표준의 성격에 따라 선택적으로 쌓습니다.","말로만 필요하다는 게 아니라, 세 프로파일 각각을 실제 표준으로 재작성해 전후 성숙도를 비교했고, 규범 개정 문안까지 신구조문대비표로 만들었습니다.","세 규범의 역할과 소관이 다릅니다. 작성하는 '방법'은 작성지침(SPC 소관), 절차와 서식은 운영요령(운영위), 상위 근거는 운영규정인데 이건 고칠 필요 없이 기존 조문을 활용합니다. 오늘 SPC와 논의할 핵심은 작성지침입니다.","작성지침 개정이 오늘의 핵심입니다. 두 조항 — 요소정의표(6.5.7)와 부속서(6.6) — 를 신설·보강합니다. 이건 SPC 정면 소관입니다(제20조의3 제1항 6호). 다만 작성지침은 기술보고서라, 제47조 제1항에 따라 의견수렴 절차를 준용하므로 오늘 당일 확정이 아니라 절차 개시를 요청드리는 것입니다.","운영요령에는 절차와 서식이 들어갑니다. 조문 몇 개 신설과 별표·별지 서식입니다. 이건 운영위원회 소관이지만 SPC가 그 산하라 연계됩니다. 운영규정 제57조가 운영위에 요령 제정 권한을 주고 있어 표준총회까지 갈 필요가 없습니다.","절차를 새로 만드는 게 아닙니다. 기존 5단계 흐름에 선언·부속서 설계·자가점검 세 접점을 얹고, 어휘 전문가를 '공동 에디터'로 참여시키는 것입니다. 상당 부분은 시스템이 자동 생성합니다.","SPC께 드리는 요청은 명확합니다. 첫째, 작성지침 개정 절차를 시작해 주십시오. 둘째, 어휘·기계가독을 검토할 AI-Ready 전문위원회 설치를 검토해 주십시오. 운영요령은 운영위 소관이라 연계 보고 드립니다.","정리하겠습니다. 이 개정이 이뤄지면 표준 간 상호운용, AI 즉시 소비, 국제 정합이라는 세 가지 효과가 생깁니다. 다음 단계는 오늘 SPC 논의를 시작으로 작성지침 개정 절차에 착수하는 것입니다. 감사합니다. 질문 받겠습니다."];
+  var cur=0, N=slides.length;
+  function fit(){var s=Math.min(innerWidth/1280, innerHeight/720);stage.style.transform='scale('+s+')';}
+  function show(i){
+    cur=Math.max(0,Math.min(N-1,i));
+    slides.forEach(function(s,k){s.classList.toggle('active',k===cur);});
+    document.getElementById('counter').textContent=(cur+1)+' / '+N;
+    document.getElementById('prog').style.width=((cur+1)/N*100)+'%';
+    document.getElementById('notebody').textContent=notes[cur]||'(노트 없음)';
+  }
+  function next(){show(cur+1);} function prev(){show(cur-1);}
+  addEventListener('resize',fit); fit(); show(0);
+  addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();next();}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev();}
+    else if(e.key==='Home'){show(0);} else if(e.key==='End'){show(N-1);}
+    else if(e.key==='n'||e.key==='N'){document.getElementById('notes').classList.toggle('on');}
+    else if(e.key==='f'||e.key==='F'){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen();}
+  });
+  document.getElementById('next').onclick=next;
+  document.getElementById('prev').onclick=prev;
+  document.getElementById('nbtn').onclick=function(){document.getElementById('notes').classList.toggle('on');};
+})();
+</script>
+
+</body>
+</html>

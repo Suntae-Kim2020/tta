@@ -200,7 +200,11 @@
   :root[data-theme="dark"] .ai-note{--r:#ff8a8f} :root[data-theme="dark"] .red-em{--r:#ff8a8f}
   :root[data-theme="light"] .ai-note{--r:#c0272d} :root[data-theme="light"] .red-em{--r:#c0272d}
   /* 발표자료 CTA (메인화면) */
-  .deck-cta{display:inline-flex;align-items:center;gap:14px;margin-top:22px;text-decoration:none;
+  .deck-row{display:flex;align-items:stretch;gap:12px;flex-wrap:wrap;margin-top:22px}
+  .deck-pdf{display:inline-flex;align-items:center;gap:7px;text-decoration:none;font-size:13.5px;font-weight:700;
+    color:var(--accent-ink);background:var(--surface);border:1.5px solid var(--accent);border-radius:12px;padding:0 18px}
+  .deck-pdf:hover{background:var(--accent-soft)}
+  .deck-cta{display:inline-flex;align-items:center;gap:14px;text-decoration:none;
     background:var(--accent);color:#fff;border-radius:12px;padding:14px 20px;
     box-shadow:0 6px 18px color-mix(in srgb,var(--accent) 40%,transparent);transition:transform .12s ease,box-shadow .12s ease}
   .deck-cta:hover{transform:translateY(-1px);box-shadow:0 10px 24px color-mix(in srgb,var(--accent) 48%,transparent)}
@@ -269,6 +273,7 @@
     <button class="menu" data-t="faq">❓ 규정 용어·조직 FAQ (SPC·IPR)</button>
     <div class="side-group">발표</div>
     <a class="side-deck" href="https://suntae-kim2020.github.io/tta/deck.html" target="_blank" rel="noopener">🖥️ 8/10 SPC 발표자료 (HTML)<span class="sd-arrow">↗</span></a>
+    <a class="side-deck" href="https://suntae-kim2020.github.io/tta/slides.pdf" target="_blank" rel="noopener">📄 발표자료 (슬라이드 PDF)<span class="sd-arrow">↗</span></a>
   </nav>
   <main class="content">
     <section class="panel active" id="overview">
@@ -277,11 +282,14 @@
   <h1>문서 체계 지도 &amp; 정합성 점검</h1>
   <p class="lede">이 과제가 생성한 문서, 실제 표준화 과정에서 만들어지는 문서, 각 문서의 작성 주체와 프로세스상 시점을 한 장에 정리하고, 전 문서를 정본 모델과 대조한 결과를 함께 싣는다.</p>
   <div class="meta"><span>범위 · RG 11종 + TG 9종 분석 · 실증 5종 패키지 · 규범 4문서</span><span>점검 · 3개 클러스터 병렬 감사</span></div>
-  <a class="deck-cta" href="https://suntae-kim2020.github.io/tta/deck.html" target="_blank" rel="noopener">
-    <span class="deck-ic">▶</span>
-    <span class="deck-tx"><b>8/10 SPC 발표자료 열기</b><small>AI-Ready 데이터 단체표준 필요성·규범 개정 방향 · HTML 슬라이드 13장</small></span>
-    <span class="deck-arrow">↗</span>
-  </a>
+  <div class="deck-row">
+    <a class="deck-cta" href="https://suntae-kim2020.github.io/tta/deck.html" target="_blank" rel="noopener">
+      <span class="deck-ic">▶</span>
+      <span class="deck-tx"><b>8/10 SPC 발표자료 열기</b><small>AI-Ready 데이터 단체표준 필요성·규범 개정 방향 · HTML 슬라이드 13장</small></span>
+      <span class="deck-arrow">↗</span>
+    </a>
+    <a class="deck-pdf" href="https://suntae-kim2020.github.io/tta/slides.pdf" target="_blank" rel="noopener">📄 슬라이드 PDF <span class="deck-arrow">↗</span></a>
+  </div>
 </header>
 
 <!-- PROCESS -->

@@ -66,8 +66,15 @@
 
   h2{font-size:19px; letter-spacing:-.01em; font-weight:700;
      margin:calc(var(--step) * 1.3) 0 0; text-wrap:balance;}
+  h3{font-size:14.5px; font-weight:700; margin:10px 0 0; color:var(--ink);}
   h2 + p{margin-top:8px;}
+  h3 + p{margin-top:6px;}
   p{margin:0;}
+
+  .warn{max-width:68ch; border-left:3px solid var(--agenda);
+        background:var(--agenda-soft); border-radius:0 6px 6px 0;
+        padding:14px 18px; font-size:14px; color:var(--ink-2);}
+  .warn b{color:var(--ink); font-weight:700;}
 
   figure{margin:0; background:var(--surface); border:1px solid var(--line);
          border-radius:6px; padding:22px 8px 16px;}
@@ -335,6 +342,136 @@
     <b>운영규정은 개정하지 않는다.</b> 세 안건 모두 기존 근거조문으로 처리된다 —
     작성지침 소관은 제20조의3①6, 전문위원회 설치는 제20조의3②, 운영요령 제정 권한은 제57조다.
     운영규정 개정은 표준총회 의결 사항이므로(제5조①4), 이를 피한 것이 이번 설계의 전제다.
+  </p>
+
+  <h2>AI-Ready 전문위원회는 무엇을 하는 기구인가</h2>
+  <p class="prose">
+    안건 ③으로 설치를 제안하는 기구다. 규정상 할 수 있는 일이 좁게 정해져 있는데,
+    그 제약이 곧 이 과제가 역할을 나눈 근거다.
+  </p>
+
+  <h3>1. 근거와 지위</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>항목</th><th>내용</th><th>근거</th></tr></thead>
+      <tbody>
+        <tr><td>설치</td><td>전략계획위원회가 제20조의3제1항 각 호의 임무를 수행하기 위해 <b>필요시</b> 산하에 둔다</td><td class="n">운영규정 제20조의3②</td></tr>
+        <tr><td>구성</td><td>전략계획위원회의 구성 방식을 준용 — 각 기술위원회 추천 위원·전문가·회장 위촉</td><td class="n">운영요령 제3조의5 (제20조의2 준용)</td></tr>
+        <tr><td>운영</td><td>의장단·회의·의결 모두 전략계획위원회 규정을 준용</td><td class="n">운영요령 제3조의5 (제20조의4~6 준용)</td></tr>
+        <tr><td>의장 임무</td><td>① 회의의 원활·공정한 운영 ② <b>활동 결과를 상위 위원회에 보고</b> ③ 특별위원 추천 — <b>이 셋뿐</b></td><td class="n">운영요령 제5조③</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>2. 결정적 제약 — 표준을 대신 만들 수 없다</h3>
+  <p class="prose">
+    전문위원회는 전략계획위원회의 임무를 수행하기 위한 하부 조직이므로,
+    임무 범위가 <b>제20조의3제1항 각 호를 벗어날 수 없다</b>. 그 각 호는 표준화전략 ·
+    중기 과제계획 · 이용자 의견 반영 절차 · IPR 정책 · 운영위 보고 · 작성지침 ·
+    운영위 지정업무다. <b>표준초안 작성은 없다.</b>
+  </p>
+  <p class="prose">
+    표준초안을 작성할 수 있는 주체는 해당 프로젝트그룹의 위원인 에디터로 한정되고,
+    작성 방법은 작성지침에 위임돼 있다(제38조②③). 그래서 전문위원회가
+    “이 표준의 @context를 대신 만들어 드립니다”를 할 수 없다.
+    이 한 줄이 아래 두 트랙을 가른다.
+  </p>
+
+  <figure>
+    <div class="scroll">
+      <svg class="chart" viewBox="0 0 1100 300" role="img"
+           aria-label="AI-Ready 전문위원회의 산출물 흐름. 전문위원회가 공동 어휘·매핑 가이드·@context 템플릿·작성지침 개정안이라는 공용 자산을 한 번 만들고, 그것이 여러 프로젝트그룹으로 갈라져 각 그룹의 공동 에디터가 표준마다 부속서를 작성하는 데 쓰인다. 표준초안 본문은 프로젝트그룹의 에디터가 작성하며 전문위원회는 관여하지 않는다.">
+        <defs>
+          <marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,1 L9,5 L0,9 z" fill="var(--ink-3)"/>
+          </marker>
+        </defs>
+
+        <rect x="30" y="110" width="210" height="64" rx="5"
+              fill="var(--agenda-soft)" stroke="var(--agenda)" stroke-width="1.4"/>
+        <text x="135" y="138" text-anchor="middle" font-size="12.5"
+              font-weight="700" fill="var(--agenda-ink)">AI-Ready 전문위원회</text>
+        <text x="135" y="156" text-anchor="middle" font-size="9.5"
+              fill="var(--agenda-ink)" opacity=".85">전략계획위원회 산하 · 제20조의3②</text>
+
+        <path d="M240,142 H302" fill="none" stroke="var(--ink-3)"
+              stroke-width="1.2" marker-end="url(#ah3)"/>
+        <text x="271" y="133" text-anchor="middle" font-size="9.5"
+              fill="var(--ink-3)">한 번</text>
+
+        <rect x="312" y="86" width="248" height="112" rx="5"
+              fill="none" stroke="var(--agenda)" stroke-width="1.3"/>
+        <text x="328" y="108" font-size="11.5" font-weight="700"
+              fill="var(--agenda-ink)">공용 자산 — 만들어 공유한다</text>
+        <g font-size="11" fill="currentColor">
+          <text x="332" y="130">· 공동 어휘</text>
+          <text x="332" y="148">· 매핑 가이드</text>
+          <text x="332" y="166">· @context 템플릿</text>
+          <text x="332" y="184">· 작성지침 개정안</text>
+        </g>
+
+        <g fill="none" stroke="var(--ink-3)" stroke-width="1.2" marker-end="url(#ah3)">
+          <path d="M560,132 L692,92"/>
+          <path d="M560,142 L692,164"/>
+          <path d="M560,152 L692,236"/>
+        </g>
+
+        <g stroke="currentColor" stroke-width="1.1" fill="var(--surface)">
+          <rect x="700" y="62"  width="370" height="58" rx="5"/>
+          <rect x="700" y="134" width="370" height="58" rx="5"/>
+          <rect x="700" y="206" width="370" height="58" rx="5"/>
+        </g>
+        <g fill="currentColor">
+          <text x="718" y="86"  font-size="12" font-weight="650">프로젝트그룹 A</text>
+          <text x="718" y="105" font-size="9.5" fill="var(--ink-3)">공동 에디터(특별위원)가 부속서 B·C·U 작성</text>
+          <text x="718" y="158" font-size="12" font-weight="650">프로젝트그룹 B</text>
+          <text x="718" y="177" font-size="9.5" fill="var(--ink-3)">공동 에디터(특별위원)가 부속서 B·C·U 작성</text>
+          <text x="718" y="230" font-size="12" font-weight="650">프로젝트그룹 …</text>
+          <text x="718" y="249" font-size="9.5" fill="var(--ink-3)">표준마다 되풀이 — 틀은 같고 내용만 다르다</text>
+        </g>
+
+        <text x="30" y="278" font-size="11" fill="var(--ink-2)">표준초안 본문은 해당 프로젝트그룹의 에디터가 작성한다(제38조②③).</text>
+        <text x="30" y="294" font-size="11" fill="var(--ink-2)">전문위원회는 개별 표준초안을 대신 작성할 수 없다(제20조의3②).</text>
+      </svg>
+    </div>
+    <figcaption>
+      전문위원회는 <b>틀</b>을 만들고, 공동 에디터는 표준마다 그 틀을 <b>적용</b>한다.
+      어휘·템플릿을 표준마다 새로 만들면 표준끼리 어긋나므로 한 번 만들어 공유하고,
+      개별 표준 작업은 프로젝트그룹 안에서 끝낸다.
+    </figcaption>
+  </figure>
+
+  <h3>3. 두 트랙 — 누가 무엇을 맡나</h3>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th></th><th>AI-Ready 전문위원회</th><th>공동 에디터</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>위치</b></td><td>전략계획위원회 산하 위원회</td><td>해당 프로젝트그룹의 특별위원</td></tr>
+        <tr><td><b>근거</b></td><td class="n">운영규정 제20조의3②</td><td class="n">제29조①2 · 운영요령 제19조의2</td></tr>
+        <tr><td><b>하는 일</b></td><td>공동 어휘 · 매핑 가이드 · @context 템플릿 · 작성지침 개정안</td><td>개별 표준의 요소↔IRI 매핑 · @context · SHACL 작성</td></tr>
+        <tr><td><b>주기</b></td><td>한 번 만들어 모든 PG가 공유</td><td>표준마다</td></tr>
+        <tr><td><b>의결권</b></td><td>위원회로서 의결한다</td><td><b>없다</b> — 특별위원은 의결권이 없다(제33조⑤)</td></tr>
+        <tr><td><b>임기</b></td><td>의장단 2년 (제20조의4 준용)</td><td>특별위원 1년, 연임 가능 (제29조②)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>4. 일부러 채택하지 않은 안</h3>
+  <div class="warn">
+    <b>“전문위원회에 검토 요청” 신설안은 채택하지 않는다.</b>
+    프로젝트그룹이 만든 초안을 전문위원회에 보내 검토받게 하는 조문을 넣으려다 뺐다.
+    전문위원회가 개별 표준에 관여하는 모양이 되어 제20조의3②의 임무 한계를 넘기 때문이다.
+    대신 어휘 전문가를 <b>그 프로젝트그룹의 특별위원으로 위촉해 공동 에디터로 지정</b>하는
+    경로를 택했다.
+  </div>
+  <p class="prose">
+    이 설계에는 부수 효과가 있다. 특별위원은 의결권이 없으므로(제33조⑤),
+    어휘 전문가는 형식화만 수행하고 표준의 <b>내용은 좌우하지 않는다</b>.
+    “에디터가 정한 것을 기계가 읽는 형식으로 옮기기만 한다”는 설계 의도가
+    규정 구조와 그대로 맞아떨어진다.
   </p>
 
   <h2>기구별 설치 근거와 권한</h2>

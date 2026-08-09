@@ -13,6 +13,7 @@
     --ink:#14202a; --ink-2:#4a5a66; --ink-3:#7d8c98;
     --line:#dde4e9; --line-2:#e9eef1;
     --accent:#0e7c86; --accent-ink:#0a5a63; --accent-soft:#dcedef;
+    --agenda:#a9750f; --agenda-ink:#7f5707; --agenda-soft:#f7edd8;
     --sans:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',system-ui,-apple-system,'Segoe UI',sans-serif;
     --step:1.5rem;
   }
@@ -22,6 +23,7 @@
       --ink:#e6edf1; --ink-2:#a3b3bd; --ink-3:#75868f;
       --line:#26323a; --line-2:#1f2a31;
       --accent:#45b6bf; --accent-ink:#7ad4da; --accent-soft:#11333a;
+      --agenda:#d9a441; --agenda-ink:#e9c274; --agenda-soft:#332810;
     }
   }
   :root[data-theme="dark"]{
@@ -29,12 +31,14 @@
     --ink:#e6edf1; --ink-2:#a3b3bd; --ink-3:#75868f;
     --line:#26323a; --line-2:#1f2a31;
     --accent:#45b6bf; --accent-ink:#7ad4da; --accent-soft:#11333a;
+      --agenda:#d9a441; --agenda-ink:#e9c274; --agenda-soft:#332810;
   }
   :root[data-theme="light"]{
     --bg:#f6f8f9; --surface:#ffffff; --surface-2:#eef2f4;
     --ink:#14202a; --ink-2:#4a5a66; --ink-3:#7d8c98;
     --line:#dde4e9; --line-2:#e9eef1;
     --accent:#0e7c86; --accent-ink:#0a5a63; --accent-soft:#dcedef;
+    --agenda:#a9750f; --agenda-ink:#7f5707; --agenda-soft:#f7edd8;
   }
 
   body{
@@ -113,8 +117,8 @@
 
   <figure>
     <div class="scroll">
-      <svg class="chart" viewBox="0 0 1240 560" role="img"
-           aria-label="TTA 정보통신표준화위원회 조직도. 바깥 테두리가 정보통신표준화위원회 전체이며 회장은 그 밖에 있다. 테두리 안 맨 위가 정보통신표준총회이고, 그 아래로 운영위원회·기술위원회·특별기술위원회가 나란히 놓인다. 운영위원회 산하에 전략계획위원회·프로젝트조정위원회·정보통신용어표준화위원회가 있고 전략계획위원회 산하에 전문위원회를 둘 수 있다. 기술위원회 산하에 프로젝트그룹, 그 아래 실무반과 특별반이 있다. 프로젝트그룹 구성은 운영위원회가, 실무반 구성은 기술위원회가 승인하여 승인선이 계통을 가로지른다.">
+      <svg class="chart" viewBox="0 0 1240 620" role="img"
+           aria-label="TTA 정보통신표준화위원회 조직도. 바깥 테두리가 정보통신표준화위원회 전체이며 회장은 그 밖에 있다. 테두리 안 맨 위가 정보통신표준총회이고, 그 아래로 운영위원회·기술위원회·특별기술위원회가 나란히 놓인다. 운영위원회 산하에 전략계획위원회·프로젝트조정위원회·정보통신용어표준화위원회가 있고 전략계획위원회 산하에 전문위원회를 둘 수 있다. 기술위원회 산하에 프로젝트그룹, 그 아래 실무반과 특별반이 있다. 프로젝트그룹 구성은 운영위원회가, 실무반 구성은 기술위원회가 승인하여 승인선이 계통을 가로지른다. 이번 과제의 세 안건이 닿는 지점이 황토색으로 표시돼 있다 — 안건 1은 운영위원회, 안건 2와 3은 전략계획위원회, 안건 2의 채택은 기술위원회이며, 신설을 제안하는 AI-Ready 전문위원회가 전략계획위원회 산하에 점선 상자로 놓여 있다.">
         <defs>
           <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5"
                   markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -122,7 +126,7 @@
           </marker>
         </defs>
 
-        <rect x="15" y="78" width="1135" height="400" rx="9"
+        <rect x="15" y="78" width="1135" height="468" rx="9"
               fill="none" stroke="currentColor" stroke-width="1" opacity=".3"/>
         <text x="15" y="70" font-size="11.5" font-weight="700"
               fill="var(--accent-ink)" letter-spacing=".12em">정보통신표준화위원회 · 제2장</text>
@@ -198,13 +202,36 @@
           <text x="730" y="449" font-size="10.5" fill="var(--ink-3)" font-weight="500">제34조 · PG 산하</text>
         </g>
 
-        <g transform="translate(27,498)">
+        <path d="M110,462 V480" fill="none" stroke="var(--agenda)"
+              stroke-width="1.3" stroke-dasharray="5 4"/>
+        <rect x="25" y="480" width="170" height="48" rx="4" fill="none"
+              stroke="var(--agenda)" stroke-width="1.3" stroke-dasharray="5 4"/>
+        <text x="110" y="501" text-anchor="middle" font-size="12"
+              font-weight="700" fill="var(--agenda-ink)">AI-Ready 전문위원회</text>
+        <text x="110" y="518" text-anchor="middle" font-size="9.5"
+              fill="var(--agenda-ink)" opacity=".85">설치 제안 · 안건 ③</text>
+
+        <g fill="var(--agenda-soft)" stroke="var(--agenda)" stroke-width=".9">
+          <rect x="317" y="174" width="48"  height="16" rx="8"/>
+          <rect x="127" y="282" width="66"  height="16" rx="8"/>
+          <rect x="741" y="174" width="74"  height="16" rx="8"/>
+        </g>
+        <g text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--agenda-ink)">
+          <text x="341" y="185.5">안건 ①</text>
+          <text x="160" y="293.5">안건 ②·③</text>
+          <text x="778" y="185.5">안건 ② 채택</text>
+        </g>
+
+        <g transform="translate(27,578)">
           <line x1="0" y1="0" x2="34" y2="0" stroke="currentColor"
                 stroke-width="1.1" opacity=".55"/>
           <text x="44" y="4" font-size="11" fill="var(--ink-2)">계통 — 상위 기구가 산하에 둔다</text>
-          <line x1="290" y1="0" x2="324" y2="0" stroke="var(--accent)"
+          <line x1="250" y1="0" x2="284" y2="0" stroke="var(--accent)"
                 stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ah)"/>
-          <text x="334" y="4" font-size="11" fill="var(--ink-2)">승인 — 만드는 기구와 승인하는 기구가 다르다</text>
+          <text x="294" y="4" font-size="11" fill="var(--ink-2)">승인 — 만드는 기구와 승인하는 기구가 다르다</text>
+          <rect x="590" y="-8" width="34" height="16" rx="8"
+                fill="var(--agenda-soft)" stroke="var(--agenda)" stroke-width=".9"/>
+          <text x="634" y="4" font-size="11" fill="var(--ink-2)">안건 — 이번 과제가 개정을 제안하는 지점</text>
         </g>
       </svg>
     </div>
@@ -214,8 +241,101 @@
       점선은 승인권이다. 프로젝트그룹은 기술위원회 의장이 구성하지만 승인은 운영위원회가 하고,
       실무반은 프로젝트그룹이 구성하지만 승인은 기술위원회가 한다. 두 점선이 계통을
       가로지르는 것은 조직 신설이 한 계통 안에서 끝나지 않도록 견제를 걸어 둔 것이다.
+      황토색 표식은 <b>이번 과제가 개정을 제안하는 지점</b>이다 — 세 안건이 서로 다른
+      기구에 걸려 있고, 신설을 제안하는 AI-Ready 전문위원회는 전략계획위원회 산하에 놓인다.
     </figcaption>
   </figure>
+
+  <h2>이번 과제의 규정 개정 — 어디서 의결하나</h2>
+  <p class="prose">
+    세 안건이 각각 다른 기구에서 끝난다. 상위 기구를 거쳐 올라가는 것이 아니라,
+    대상 문서의 성격에 따라 종착지가 정해져 있다.
+    <b>세 안건 모두 표준총회에 상정하지 않는다.</b>
+  </p>
+
+  <figure>
+    <div class="scroll">
+      <svg class="chart" viewBox="0 0 1100 300" role="img"
+           aria-label="세 안건의 의결 경로. 안건 1 운영요령 개정은 운영위원회가 제57조로 의결한다. 안건 2 작성지침 개정은 전략계획위원회가 제20조의3제1항제6호로 수립·검토한 뒤 4주 이상 의견수렴을 거쳐 기술위원회등이 제47조제1항으로 채택한다. 안건 3 전문위원회 설치는 전략계획위원회가 제20조의3제2항으로 의결해 산하에 두고 운영위원회에 보고한다. 세 안건 모두 표준총회에 상정하지 않는다.">
+        <defs>
+          <marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,1 L9,5 L0,9 z" fill="var(--ink-3)"/>
+          </marker>
+        </defs>
+
+        <g font-weight="700" fill="currentColor">
+          <text x="0" y="62"  font-size="13">안건 ① 운영요령 개정</text>
+          <text x="0" y="154" font-size="13">안건 ② 작성지침 개정</text>
+          <text x="0" y="246" font-size="13">안건 ③ 전문위원회 설치</text>
+        </g>
+        <g font-size="9.5" fill="var(--ink-3)">
+          <text x="0" y="79">별표 10 · 별지 11-1호 · 21-1호</text>
+          <text x="0" y="171">TTAR-09.0040 · 6.5.3 · 6.5.7 · 6.6</text>
+          <text x="0" y="263">AI-Ready 전문위원회</text>
+        </g>
+
+        <g fill="none" stroke="var(--ink-3)" stroke-width="1.2" marker-end="url(#ah2)">
+          <path d="M596,156 H626"/>
+          <path d="M796,156 H826"/>
+          <path d="M396,248 H426"/>
+          <path d="M626,248 H656"/>
+        </g>
+        <g font-size="9.5" fill="var(--ink-3)" text-anchor="middle">
+          <text x="611" y="150">검토 후</text>
+          <text x="811" y="150">상정</text>
+          <text x="411" y="242">설치</text>
+          <text x="641" y="242">보고</text>
+        </g>
+
+        <g stroke="var(--agenda)" stroke-width="1.4" fill="var(--agenda-soft)">
+          <rect x="216" y="42"  width="180" height="44" rx="5"/>
+          <rect x="626" y="134" width="180" height="44" rx="5"/>
+          <rect x="216" y="226" width="180" height="44" rx="5"/>
+        </g>
+        <g stroke="currentColor" stroke-width="1.1" fill="var(--surface)" opacity=".9">
+          <rect x="216" y="134" width="180" height="44" rx="5"/>
+          <rect x="426" y="134" width="170" height="44" rx="5"/>
+          <rect x="426" y="226" width="200" height="44" rx="5"/>
+          <rect x="656" y="226" width="170" height="44" rx="5"/>
+        </g>
+
+        <g text-anchor="middle">
+          <text x="306" y="63"  font-size="12" font-weight="700" fill="var(--agenda-ink)">운영위원회 의결</text>
+          <text x="306" y="78"  font-size="9.5" fill="var(--agenda-ink)" opacity=".85">제57조 · 요령으로 정한다</text>
+
+          <text x="306" y="155" font-size="12" font-weight="650" fill="currentColor">전략계획위원회 (SPC)</text>
+          <text x="306" y="170" font-size="9.5" fill="var(--ink-3)">제20조의3①6 · 수립·검토</text>
+          <text x="511" y="155" font-size="12" font-weight="650" fill="currentColor">의견수렴</text>
+          <text x="511" y="170" font-size="9.5" fill="var(--ink-3)">4주 이상 · 제35~39조 준용</text>
+          <text x="716" y="155" font-size="12" font-weight="700" fill="var(--agenda-ink)">기술위원회등 채택</text>
+          <text x="716" y="170" font-size="9.5" fill="var(--agenda-ink)" opacity=".85">제47조① · 최종 확정</text>
+
+          <text x="306" y="247" font-size="12" font-weight="700" fill="var(--agenda-ink)">전략계획위원회 의결</text>
+          <text x="306" y="262" font-size="9.5" fill="var(--agenda-ink)" opacity=".85">제20조의3② · 필요시 설치</text>
+          <text x="526" y="247" font-size="12" font-weight="650" fill="currentColor">AI-Ready 전문위원회</text>
+          <text x="526" y="262" font-size="9.5" fill="var(--ink-3)">SPC 산하</text>
+          <text x="741" y="247" font-size="12" font-weight="650" fill="currentColor">운영위원회</text>
+          <text x="741" y="262" font-size="9.5" fill="var(--ink-3)">제20조의3①5 · 보고</text>
+        </g>
+
+        <text x="426" y="63" font-size="11.5" fill="var(--ink-2)">표준총회 상정 불요 — 운영위원회 권한으로 끝난다</text>
+        <text x="846" y="163" font-size="11.5" fill="var(--ink-2)">표준총회 상정 불요</text>
+      </svg>
+    </div>
+    <figcaption>
+      색이 채워진 상자가 <b>그 안건을 최종 확정하는 기구</b>다. 안건 ②만 두 기구를 거친다 —
+      작성지침을 수립·검토하는 곳은 전략계획위원회지만, 기술보고서로서 채택하는 곳은
+      기술위원회등이다(제47조①). 그래서 8/10 회의는 확정이 아니라 개정 착수를 논의하는
+      자리이고, 그 사이에 4주 이상의 의견수렴이 놓인다.
+    </figcaption>
+  </figure>
+
+  <p class="prose" style="font-size:14px;color:var(--ink-2)">
+    <b>운영규정은 개정하지 않는다.</b> 세 안건 모두 기존 근거조문으로 처리된다 —
+    작성지침 소관은 제20조의3①6, 전문위원회 설치는 제20조의3②, 운영요령 제정 권한은 제57조다.
+    운영규정 개정은 표준총회 의결 사항이므로(제5조①4), 이를 피한 것이 이번 설계의 전제다.
+  </p>
 
   <h2>기구별 설치 근거와 권한</h2>
   <div class="tw">

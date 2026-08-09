@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TTA 정보통신표준화 조직 위계</title>
+<style>*{box-sizing:border-box}html,body{margin:0;padding:0}img{max-width:100%}</style>
+</head>
+<body>
+<style>
+  :root{
+    --bg:#f6f8f9; --surface:#ffffff; --surface-2:#eef2f4;
+    --ink:#14202a; --ink-2:#4a5a66; --ink-3:#7d8c98;
+    --line:#dde4e9; --line-2:#e9eef1;
+    --accent:#0e7c86; --accent-ink:#0a5a63; --accent-soft:#dcedef;
+    --sans:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --step:1.5rem;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0e1418; --surface:#151d23; --surface-2:#1b242b;
+      --ink:#e6edf1; --ink-2:#a3b3bd; --ink-3:#75868f;
+      --line:#26323a; --line-2:#1f2a31;
+      --accent:#45b6bf; --accent-ink:#7ad4da; --accent-soft:#11333a;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1418; --surface:#151d23; --surface-2:#1b242b;
+    --ink:#e6edf1; --ink-2:#a3b3bd; --ink-3:#75868f;
+    --line:#26323a; --line-2:#1f2a31;
+    --accent:#45b6bf; --accent-ink:#7ad4da; --accent-soft:#11333a;
+  }
+  :root[data-theme="light"]{
+    --bg:#f6f8f9; --surface:#ffffff; --surface-2:#eef2f4;
+    --ink:#14202a; --ink-2:#4a5a66; --ink-3:#7d8c98;
+    --line:#dde4e9; --line-2:#e9eef1;
+    --accent:#0e7c86; --accent-ink:#0a5a63; --accent-soft:#dcedef;
+  }
+
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--sans);
+    font-size:15px; line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px; margin:0 auto; padding:56px 28px 96px;
+        display:flex; flex-direction:column; gap:var(--step);}
+  .prose{max-width:68ch;}
+
+  .back{display:inline-flex;align-items:center;gap:6px;text-decoration:none;
+        font-size:12.5px;font-weight:650;color:var(--accent-ink);
+        background:var(--accent-soft);border-radius:8px;padding:7px 12px;
+        margin-bottom:20px;align-self:flex-start;}
+  .back:hover{background:color-mix(in srgb,var(--accent) 22%,transparent);}
+  .back:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .eyebrow{font-size:11.5px; letter-spacing:.16em; color:var(--accent-ink);
+           font-weight:700; margin:0;}
+  h1{font-size:clamp(28px,4vw,38px); line-height:1.2; letter-spacing:-.02em;
+     font-weight:750; margin:10px 0 0; text-wrap:balance;}
+  .lede{color:var(--ink-2); margin:14px 0 0;}
+  .src{margin:18px 0 0; padding-top:14px; border-top:1px solid var(--line);
+       font-size:12.5px; color:var(--ink-3); font-variant-numeric:tabular-nums;}
+  .src b{color:var(--ink-2); font-weight:650;}
+
+  h2{font-size:19px; letter-spacing:-.01em; font-weight:700;
+     margin:calc(var(--step) * 1.3) 0 0; text-wrap:balance;}
+  h2 + p{margin-top:8px;}
+  p{margin:0;}
+
+  figure{margin:0; background:var(--surface); border:1px solid var(--line);
+         border-radius:6px; padding:22px 8px 16px;}
+  .scroll{overflow-x:auto;}
+  svg.chart{display:block; min-width:1000px; width:100%; height:auto; color:var(--ink);}
+  figcaption{max-width:68ch; margin:16px auto 0; padding:0 16px;
+             font-size:13px; color:var(--ink-2); line-height:1.65;}
+
+  table{border-collapse:collapse; width:100%; font-size:13.5px;}
+  .tw{overflow-x:auto; border:1px solid var(--line); border-radius:6px;
+      background:var(--surface);}
+  th,td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--line-2);
+        vertical-align:top;}
+  th{font-size:11.5px; letter-spacing:.09em; color:var(--ink-3); font-weight:700;
+     background:var(--surface-2); border-bottom:1px solid var(--line); white-space:nowrap;}
+  tr:last-child td{border-bottom:0;}
+  td.n{font-variant-numeric:tabular-nums; color:var(--ink-2); white-space:nowrap;}
+  td b{font-weight:650;}
+  .no{color:var(--ink-3);}
+
+  .notes{list-style:none; padding:0; margin:0; display:flex;
+         flex-direction:column; gap:10px; max-width:68ch;}
+  .notes li{padding-left:16px; position:relative; color:var(--ink-2); font-size:14px;}
+  .notes li::before{content:''; position:absolute; left:0; top:.72em;
+                    width:5px; height:5px; border-radius:50%; background:var(--accent);}
+  .notes b{color:var(--ink); font-weight:650;}
+</style>
+
+<div class="wrap">
+
+  <a class="back" href="./index.html">← 문서 체계 지도 &amp; 정합성 점검</a>
+
+  <header class="prose">
+    <p class="eyebrow">정보통신표준화 운영규정 제2장</p>
+    <h1>TTA 정보통신표준화 조직 위계</h1>
+    <p class="lede">
+      표준총회 아래로 두 계통이 갈린다. 하나는 전략·조정을 맡는 <b>운영위원회 계통</b>,
+      다른 하나는 표준을 실제로 만드는 <b>기술위원회 계통</b>이다.
+      그런데 조직을 만드는 주체와 그것을 승인하는 주체가 서로 다른 계통에 있다 —
+      조직도가 알려주는 가장 중요한 사실이 이것이다.
+    </p>
+    <p class="src">
+      근거 · <b>정보통신표준화 운영규정</b> SAG-0029(24)/R24 &nbsp;·&nbsp;
+      <b>정보통신표준화 운영요령</b> SBG-0030(13)/R13
+    </p>
+  </header>
+
+  <figure>
+    <div class="scroll">
+      <svg class="chart" viewBox="0 0 1240 560" role="img"
+           aria-label="TTA 정보통신표준화위원회 조직도. 바깥 테두리가 정보통신표준화위원회 전체이며 회장은 그 밖에 있다. 테두리 안 맨 위가 정보통신표준총회이고, 그 아래로 운영위원회·기술위원회·특별기술위원회가 나란히 놓인다. 운영위원회 산하에 전략계획위원회·프로젝트조정위원회·정보통신용어표준화위원회가 있고 전략계획위원회 산하에 전문위원회를 둘 수 있다. 기술위원회 산하에 프로젝트그룹, 그 아래 실무반과 특별반이 있다. 프로젝트그룹 구성은 운영위원회가, 실무반 구성은 기술위원회가 승인하여 승인선이 계통을 가로지른다.">
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,1 L9,5 L0,9 z" fill="var(--accent)"/>
+          </marker>
+        </defs>
+
+        <rect x="15" y="78" width="1135" height="400" rx="9"
+              fill="none" stroke="currentColor" stroke-width="1" opacity=".3"/>
+        <text x="15" y="70" font-size="11.5" font-weight="700"
+              fill="var(--accent-ink)" letter-spacing=".12em">정보통신표준화위원회 · 제2장</text>
+
+        <g fill="none" stroke="currentColor" stroke-width="1.1" opacity=".55">
+          <path d="M620,58 V92"/>
+          <path d="M620,148 V172"/>
+          <path d="M290,172 H1030"/>
+          <path d="M290,172 V194"/><path d="M730,172 V194"/><path d="M1030,172 V194"/>
+          <path d="M290,250 V276"/>
+          <path d="M110,276 H470"/>
+          <path d="M110,276 V300"/><path d="M290,276 V300"/><path d="M470,276 V300"/>
+          <path d="M730,250 V300"/>
+          <path d="M110,356 V406"/>
+          <path d="M730,356 V406"/>
+        </g>
+
+        <g fill="none" stroke="var(--accent)" stroke-width="1.5"
+           stroke-dasharray="5 4" marker-end="url(#ah)">
+          <path d="M365,222 H605 V326 H641"/>
+          <path d="M815,222 H865 V434 H829"/>
+        </g>
+        <g font-size="10.5" fill="var(--accent-ink)" font-weight="650">
+          <text x="485" y="213" text-anchor="middle">PG 구성 승인 · 제28조①</text>
+          <text x="878" y="300">실무반 구성 승인 · 제34조①</text>
+        </g>
+
+        <g stroke="currentColor" stroke-width="1.1" fill="var(--surface)">
+          <rect x="560" y="18"  width="120" height="40" rx="4"/>
+          <rect x="500" y="92"  width="240" height="56" rx="4"/>
+          <rect x="215" y="194" width="150" height="56" rx="4"/>
+          <rect x="645" y="194" width="170" height="56" rx="4"/>
+          <rect x="935" y="194" width="190" height="56" rx="4"/>
+          <rect x="27"  y="300" width="166" height="56" rx="4"/>
+          <rect x="207" y="300" width="166" height="56" rx="4"/>
+          <rect x="387" y="300" width="166" height="56" rx="4"/>
+          <rect x="645" y="300" width="170" height="56" rx="4"/>
+          <rect x="35"  y="406" width="150" height="56" rx="4"/>
+          <rect x="635" y="406" width="190" height="56" rx="4"/>
+        </g>
+
+        <g text-anchor="middle" fill="currentColor" font-weight="650">
+          <text x="620" y="43"  font-size="13">회장</text>
+
+          <text x="620" y="117" font-size="14.5">정보통신표준총회</text>
+          <text x="620" y="136" font-size="10.5" fill="var(--ink-3)" font-weight="500">제3조 · 표준 제정등 최종 심의·의결</text>
+
+          <text x="290" y="219" font-size="13">운영위원회</text>
+          <text x="290" y="237" font-size="10.5" fill="var(--ink-3)" font-weight="500">제14조 · 조정·자문·지원</text>
+
+          <text x="730" y="219" font-size="13">기술위원회 (TC)</text>
+          <text x="730" y="237" font-size="10.5" fill="var(--ink-3)" font-weight="500">제22조 · 표준총회 의결로 설치</text>
+
+          <text x="1030" y="219" font-size="13">특별기술위원회</text>
+          <text x="1030" y="237" font-size="10.5" fill="var(--ink-3)" font-weight="500">제27조의2 · 2년 한시 · 산하 불가</text>
+
+          <text x="110" y="325" font-size="13">전략계획위원회 (SPC)</text>
+          <text x="110" y="343" font-size="10.5" fill="var(--ink-3)" font-weight="500">제20조 · 작성지침·IPR 정책</text>
+
+          <text x="290" y="325" font-size="13">프로젝트조정위원회</text>
+          <text x="290" y="343" font-size="10.5" fill="var(--ink-3)" font-weight="500">제21조 · 상시 운영</text>
+
+          <text x="470" y="325" font-size="12">정보통신용어표준화위원회</text>
+          <text x="470" y="343" font-size="10.5" fill="var(--ink-3)" font-weight="500">제21조의2</text>
+
+          <text x="730" y="325" font-size="13">프로젝트그룹 (PG)</text>
+          <text x="730" y="343" font-size="10.5" fill="var(--ink-3)" font-weight="500">제28조 · 한시 조직</text>
+
+          <text x="110" y="431" font-size="13">전문위원회</text>
+          <text x="110" y="449" font-size="10" fill="var(--ink-3)" font-weight="500">제20조의3② · 필요시</text>
+
+          <text x="730" y="431" font-size="13">실무반 · 특별반</text>
+          <text x="730" y="449" font-size="10.5" fill="var(--ink-3)" font-weight="500">제34조 · PG 산하</text>
+        </g>
+
+        <g transform="translate(27,498)">
+          <line x1="0" y1="0" x2="34" y2="0" stroke="currentColor"
+                stroke-width="1.1" opacity=".55"/>
+          <text x="44" y="4" font-size="11" fill="var(--ink-2)">계통 — 상위 기구가 산하에 둔다</text>
+          <line x1="290" y1="0" x2="324" y2="0" stroke="var(--accent)"
+                stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ah)"/>
+          <text x="334" y="4" font-size="11" fill="var(--ink-2)">승인 — 만드는 기구와 승인하는 기구가 다르다</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption>
+      바깥 테두리가 <b>정보통신표준화위원회</b>다 — 별도의 기구가 아니라 이 조직 전체를
+      부르는 이름이며, 회장은 그 밖에서 표준총회를 둔다. 안쪽에서 실선은 계통,
+      점선은 승인권이다. 프로젝트그룹은 기술위원회 의장이 구성하지만 승인은 운영위원회가 하고,
+      실무반은 프로젝트그룹이 구성하지만 승인은 기술위원회가 한다. 두 점선이 계통을
+      가로지르는 것은 조직 신설이 한 계통 안에서 끝나지 않도록 견제를 걸어 둔 것이다.
+    </figcaption>
+  </figure>
+
+  <h2>기구별 설치 근거와 권한</h2>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>기구</th><th>설치 근거</th><th>누가 설치하나</th><th>산하 조직</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>정보통신표준총회</b></td><td class="n">제3조</td><td>회장이 둔다</td><td>기술위원회등 · 운영위원회</td></tr>
+        <tr><td><b>운영위원회</b></td><td class="n">제14조</td><td>표준총회가 둘 수 있다</td><td>전략계획위 · 프로젝트조정위 · 용어표준화위</td></tr>
+        <tr><td><b>전략계획위원회 (SPC)</b></td><td class="n">제20조</td><td>운영위원회 산하</td><td>전문위원회</td></tr>
+        <tr><td><b>전문위원회</b></td><td class="n">제20조의3②</td><td>전략계획위원회가 필요시</td><td class="no">—</td></tr>
+        <tr><td><b>프로젝트조정위원회</b></td><td class="n">제21조</td><td>운영위원회가 상시 운영</td><td class="no">—</td></tr>
+        <tr><td><b>정보통신용어표준화위원회</b></td><td class="n">제21조의2</td><td>운영위원회가 둘 수 있다</td><td class="no">—</td></tr>
+        <tr><td><b>기술위원회 (TC)</b></td><td class="n">제22조</td><td>표준총회 의결</td><td>프로젝트그룹</td></tr>
+        <tr><td><b>특별기술위원회</b></td><td class="n">제27조의2</td><td>운영위 의결 · 표준총회 산하</td><td class="no">구성 불가 (2년 한시)</td></tr>
+        <tr><td><b>프로젝트그룹 (PG)</b></td><td class="n">제28조</td><td>기술위 의장 · <b>운영위 승인</b></td><td>실무반 · 특별반</td></tr>
+        <tr><td><b>실무반 · 특별반</b></td><td class="n">제34조</td><td>프로젝트그룹 · <b>기술위 승인</b></td><td class="no">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>무엇을 어디서 최종 확정하나</h2>
+  <p class="prose">
+    조직도가 위계를 보여준다면, 아래는 그 위계에서 결정이 어디서 끝나는지를 보여준다.
+    상위 기구라고 모든 것을 확정하지는 않는다.
+  </p>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>대상</th><th>최종 확정 기구</th><th>근거</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>표준</b></td><td>표준총회 — 상정된 표준안을 심의·의결하여 채택</td><td class="n">제42조①</td></tr>
+        <tr><td>표준안</td><td>기술위원회등 — 표준초안을 심의해 표준안으로 채택 후 표준총회 상정</td><td class="n">제40조①</td></tr>
+        <tr><td>표준초안</td><td>프로젝트그룹 — 작성</td><td class="n">제38조</td></tr>
+        <tr><td><b>기술보고서</b> (작성지침 포함)</td><td>기술위원회등 — 의견수렴 4주 이상을 거쳐 채택. 표준총회 상정 불요</td><td class="n">제47조①</td></tr>
+        <tr><td>작성지침의 수립·검토</td><td>전략계획위원회 — 채택 전 단계의 소관</td><td class="n">제20조의3①6</td></tr>
+        <tr><td><b>운영요령</b></td><td>운영위원회 — 운영규정 시행에 필요한 사항을 요령으로 정한다</td><td class="n">제57조</td></tr>
+        <tr><td>조직 개편 (기술위원회등 신설·폐지)</td><td>표준총회</td><td class="n">제5조①3</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>읽을 때 헷갈리는 것</h2>
+  <ul class="notes">
+    <li><b>“정보통신표준화위원회”는 기구가 아니라 조직 전체의 이름이다.</b>
+      운영규정에 아홉 번 나오지만 제2조 정의에는 없어 별도 위원회로 오해하기 쉽다.
+      제2장의 제목이 그것이고, 그 절이 표준총회·운영위원회·전략계획위원회등·기술위원회등·프로젝트그룹이다.
+      기술위원회 신설을 “정보통신표준화위원회 조직 전반의 개편”이라 하고(제5조①3),
+      SPC가 기술위원회등의 전략을 모아 “정보통신표준화위원회 표준화전략”을 세우며(제20조의3①1),
+      운영요령은 “정보통신표준화위원회 프로젝트그룹등”이라 하여 PG까지 포함한다(운영요령 제30조②).
+      다만 제55조의2①의 “표준총회는 산하 정보통신표준화위원회 … 우수 위원회”는
+      산하 위원회들을 가리키는 느슨한 쓰임이라 총칭 용법과 어긋난다.</li>
+    <li><b>“기술위원회등”</b>은 기술위원회와 특별기술위원회를 함께 부르는 말이다(제5조①3). 규정 곳곳에 나오므로 둘 중 하나만 가리키는 것으로 읽으면 안 된다.</li>
+    <li><b>특별기술위원회는 기술위원회의 하위가 아니다.</b> 둘 다 표준총회 산하이며 임무도 대등하다. 다른 점은 2년 한시라는 것과 산하 조직을 둘 수 없다는 것이다.</li>
+    <li><b>전략계획위원회는 표준을 만들지 않는다.</b> 표준화 전략·중기 과제계획·IPR 정책·작성지침을 다루는 기구이고, 각 기술위원회 장이 추천한 위원으로 구성돼 계통 전체를 가로지른다(제20조의2①).</li>
+    <li><b>사무국은 위계에 없다.</b> 협회 내 표준화 담당 부서를 가리키는 말이며(제2조⑪), 조직도의 한 칸이 아니라 위원 추천·협의·공고 등 절차 곳곳에서 실무를 맡는다.</li>
+    <li><b>특별위원</b>은 기구가 아니라 위원의 종류다. 교수·공무원 등을 프로젝트그룹 의장이 추천하고 회장이 위촉하며, 임기는 1년이다(제29조①2).</li>
+  </ul>
+
+</div>
+</body>
+</html>

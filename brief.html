@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8/10 SPC 보고 — 규범 3종 개정 근거와 요청 사항</title>
+<style>*{box-sizing:border-box}html,body{margin:0;padding:0}img{max-width:100%}</style>
+</head>
+<body>
+<style>
+  :root{
+    --bg:#f6f8f9; --surface:#ffffff; --surface-2:#eef2f4; --surface-3:#e6ebee;
+    --ink:#14202a; --ink-2:#4a5a66; --ink-3:#7d8c98;
+    --line:#dde4e9; --line-2:#e9eef1;
+    --accent:#0e7c86; --accent-ink:#0a5a63; --accent-soft:#dcedef;
+    --agenda:#a9750f; --agenda-ink:#7f5707; --agenda-soft:#f7edd8;
+    --sans:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --step:1.5rem;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0e1418; --surface:#151d23; --surface-2:#1b242b; --surface-3:#212b33;
+      --ink:#e6edf1; --ink-2:#a3b3bd; --ink-3:#75868f;
+      --line:#26323a; --line-2:#1f2a31;
+      --accent:#45b6bf; --accent-ink:#7ad4da; --accent-soft:#11333a;
+      --agenda:#d9a441; --agenda-ink:#e9c274; --agenda-soft:#332810;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1418; --surface:#151d23; --surface-2:#1b242b; --surface-3:#212b33;
+    --ink:#e6edf1; --ink-2:#a3b3bd; --ink-3:#75868f;
+    --line:#26323a; --line-2:#1f2a31;
+    --accent:#45b6bf; --accent-ink:#7ad4da; --accent-soft:#11333a;
+    --agenda:#d9a441; --agenda-ink:#e9c274; --agenda-soft:#332810;
+  }
+  :root[data-theme="light"]{
+    --bg:#f6f8f9; --surface:#ffffff; --surface-2:#eef2f4; --surface-3:#e6ebee;
+    --ink:#14202a; --ink-2:#4a5a66; --ink-3:#7d8c98;
+    --line:#dde4e9; --line-2:#e9eef1;
+    --accent:#0e7c86; --accent-ink:#0a5a63; --accent-soft:#dcedef;
+    --agenda:#a9750f; --agenda-ink:#7f5707; --agenda-soft:#f7edd8;
+  }
+
+  body{background:var(--bg); color:var(--ink); font-family:var(--sans);
+       font-size:15px; line-height:1.75; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1180px; margin:0 auto; padding:56px 28px 96px;
+        display:flex; flex-direction:column; gap:var(--step);}
+  .prose{max-width:68ch;}
+
+  .back{display:inline-flex; align-items:center; gap:6px; text-decoration:none;
+        font-size:12.5px; font-weight:650; color:var(--accent-ink);
+        background:var(--accent-soft); border-radius:8px; padding:7px 12px;
+        align-self:flex-start;}
+  .back:hover{background:color-mix(in srgb,var(--accent) 22%,transparent);}
+  .back:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+
+  .eyebrow{font-size:11.5px; letter-spacing:.16em; color:var(--accent-ink);
+           font-weight:700; margin:0;}
+  h1{font-size:clamp(27px,3.6vw,36px); line-height:1.2; letter-spacing:-.02em;
+     font-weight:750; margin:10px 0 0; text-wrap:balance;}
+  .lede{color:var(--ink-2); margin:14px 0 0;}
+  .src{margin:18px 0 0; padding-top:14px; border-top:1px solid var(--line);
+       font-size:12.5px; color:var(--ink-3); font-variant-numeric:tabular-nums;}
+  .src b{color:var(--ink-2); font-weight:650;}
+
+  h2{font-size:19px; letter-spacing:-.01em; font-weight:700;
+     margin:calc(var(--step) * 1.2) 0 0; text-wrap:balance;}
+  h3{font-size:14.5px; font-weight:700; margin:12px 0 0;}
+  h2 + p, h3 + p{margin-top:8px;}
+  p{margin:0;}
+
+  figure{margin:0; background:var(--surface); border:1px solid var(--line);
+         border-radius:6px; padding:22px 8px 16px;}
+  .scroll{overflow-x:auto;}
+  svg.chart{display:block; min-width:1000px; width:100%; height:auto; color:var(--ink);}
+  figcaption{max-width:68ch; margin:16px auto 0; padding:0 16px;
+             font-size:13px; color:var(--ink-2); line-height:1.65;}
+
+  table{border-collapse:collapse; width:100%; font-size:13.5px;}
+  .tw{overflow-x:auto; border:1px solid var(--line); border-radius:6px; background:var(--surface);}
+  th,td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--line-2); vertical-align:top;}
+  th{font-size:11.5px; letter-spacing:.09em; color:var(--ink-3); font-weight:700;
+     background:var(--surface-2); border-bottom:1px solid var(--line); white-space:nowrap;}
+  tr:last-child td{border-bottom:0;}
+  td.n{font-variant-numeric:tabular-nums; color:var(--ink-2); white-space:nowrap;}
+  td b{font-weight:650;}
+
+  .kpi{display:flex; gap:12px; flex-wrap:wrap;}
+  .kpi div{flex:1 1 190px; background:var(--surface); border:1px solid var(--line);
+           border-radius:6px; padding:16px 18px;}
+  .kpi b{display:block; font-size:27px; font-weight:750; letter-spacing:-.02em;
+         color:var(--accent-ink); font-variant-numeric:tabular-nums; line-height:1.15;}
+  .kpi span{display:block; font-size:12.5px; color:var(--ink-2); margin-top:6px;}
+
+  .stage{border:1px solid var(--line); border-radius:8px; background:var(--surface);
+         padding:22px 24px; display:flex; flex-direction:column; gap:14px;}
+  .stage > header{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;
+                  border-bottom:1px solid var(--line); padding-bottom:12px;}
+  .stage .num{font-size:11px; font-weight:800; letter-spacing:.12em;
+              color:#fff; background:var(--accent); border-radius:5px; padding:4px 9px;}
+  .stage h2{margin:0; font-size:18px;}
+  .stage .who{font-size:12.5px; color:var(--ink-3); margin-left:auto;}
+
+  ol.steps{list-style:none; counter-reset:s; padding:0; margin:0;
+           display:flex; flex-direction:column; gap:16px;}
+  ol.steps > li{counter-increment:s; padding-left:38px; position:relative;}
+  ol.steps > li::before{content:counter(s); position:absolute; left:0; top:1px;
+      width:26px; height:26px; border-radius:50%; background:var(--surface-3);
+      color:var(--ink-2); font-size:12px; font-weight:750;
+      display:flex; align-items:center; justify-content:center;
+      font-variant-numeric:tabular-nums;}
+  ol.steps b.t{display:block; font-size:15px; font-weight:700; margin-bottom:3px;}
+  ol.steps p{color:var(--ink-2); font-size:14px; max-width:70ch;}
+  ol.steps .cite{font-size:12px; color:var(--ink-3); font-variant-numeric:tabular-nums;}
+
+  .decide{border-left:3px solid var(--agenda); background:var(--agenda-soft);
+          border-radius:0 6px 6px 0; padding:12px 16px; margin-top:8px;
+          font-size:13.5px; color:var(--ink-2);}
+  .decide b{color:var(--ink); font-weight:700;}
+
+  .ask{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:12px;}
+  .ask li{padding-left:18px; position:relative; color:var(--ink-2); font-size:14px; max-width:70ch;}
+  .ask li::before{content:''; position:absolute; left:0; top:.72em; width:6px; height:6px;
+                  border-radius:50%; background:var(--agenda);}
+  .ask b{color:var(--ink); font-weight:650;}
+
+  .notes{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; max-width:68ch;}
+  .notes li{padding-left:16px; position:relative; color:var(--ink-2); font-size:14px;}
+  .notes li::before{content:''; position:absolute; left:0; top:.72em; width:5px; height:5px;
+                    border-radius:50%; background:var(--accent);}
+  .notes b{color:var(--ink); font-weight:650;}
+</style>
+
+<div class="wrap">
+
+  <a class="back" href="./index.html">← 문서 체계 지도 &amp; 정합성 점검</a>
+
+  <header class="prose">
+    <p class="eyebrow">전략계획위원회(SPC) 보고 · 2026. 8. 10.</p>
+    <h1>규범 3종은 어떻게 맞물리고, 무엇을 결정해 주셔야 하나</h1>
+    <p class="lede">
+      운영규정은 <b>고치지 않습니다</b>. 기존 조문이 운영요령과 작성지침에 근거를 주고 있어,
+      그 두 문서만 고치면 됩니다. 아래 그림은 어느 조문이 무엇을 떠받치고 있고
+      어디를 고쳐야 하는지를, 그 아래 브리핑은 오늘 위원님들께 무엇을 아셔야 하고
+      무엇을 정해 주셔야 하는지를 정리한 것입니다.
+    </p>
+    <p class="src">
+      근거 · <b>운영규정</b> SAG-0029(24)/R24 (2025.6.27.) &nbsp;·&nbsp;
+      <b>운영요령</b> SBG-0030(13)/R13 (2025.6.13.) &nbsp;·&nbsp;
+      <b>작성지침</b> TTAR-09.0040/R1 (2025.5.23.)
+    </p>
+  </header>
+
+  <h2>규범 3종의 의존 구조 — 무엇이 무엇을 떠받치나</h2>
+
+  <figure>
+    <div class="scroll">
+      <svg class="chart" viewBox="0 0 1160 410" role="img"
+           aria-label="규범 3종 의존 구조. 왼쪽 열 운영규정은 개정하지 않고 근거로만 쓴다. 제57조가 운영요령 제정 권한을 위임하고, 제29조 제1항 제2호와 제33조 제5항이 운영요령 제19조의2 제5항 공동 에디터의 근거가 되며, 제38조 제2항과 제3항이 작성지침에 작성 방법을 위임한다. 제5조 제1항 제4호는 운영규정 개정이 표준총회 권한임을 뜻하므로 개정을 회피한다. 가운데 열 운영요령은 안건 1로 운영위원회가 의결하고, 오른쪽 열 작성지침은 안건 2로 기술위원회등이 채택한다. 작성지침 6.6이 운영요령 제19조의2를 인용하므로 운영요령이 먼저 의결돼야 한다.">
+        <defs>
+          <marker id="bh" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,1 L9,5 L0,9 z" fill="var(--accent)"/>
+          </marker>
+        </defs>
+
+        <g fill="var(--surface-2)">
+          <rect x="22"  y="62" width="296" height="316" rx="8"/>
+          <rect x="428" y="62" width="320" height="316" rx="8"/>
+          <rect x="838" y="62" width="300" height="316" rx="8"/>
+        </g>
+
+        <g font-weight="750" fill="currentColor">
+          <text x="30"  y="32" font-size="15">운영규정</text>
+          <text x="436" y="32" font-size="15">운영요령</text>
+          <text x="846" y="32" font-size="15">작성지침 (TTAR-09.0040)</text>
+        </g>
+        <g font-size="10.5" fill="var(--ink-3)">
+          <text x="30"  y="50">개정하지 않는다 — 근거로만 활용</text>
+          <text x="522" y="50">운영위원회 의결 · 제57조</text>
+          <text x="932" y="50">기술위원회등 채택 · 제47조①</text>
+        </g>
+        <g fill="var(--agenda-soft)" stroke="var(--agenda)" stroke-width=".9">
+          <rect x="436" y="38" width="48" height="16" rx="8"/>
+          <rect x="846" y="38" width="48" height="16" rx="8"/>
+        </g>
+        <g text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--agenda-ink)">
+          <text x="460" y="49.5">안건 ①</text>
+          <text x="870" y="49.5">안건 ②</text>
+        </g>
+
+        <g fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#bh)">
+          <path d="M318,116 H424"/>
+          <path d="M318,186 H424"/>
+          <path d="M318,256 H834"/>
+          <path d="M748,186 H834"/>
+        </g>
+        <g font-size="10" fill="var(--accent-ink)" font-weight="650" text-anchor="middle">
+          <text x="371" y="109">위임</text>
+          <text x="371" y="179">근거</text>
+          <text x="576" y="249">작성 방법 위임</text>
+          <text x="791" y="179">인용</text>
+        </g>
+        <text x="791" y="205" font-size="9.5" fill="var(--agenda-ink)"
+              text-anchor="middle" font-weight="650">⇒ ①이 먼저</text>
+
+        <g stroke="currentColor" stroke-width="1.1" fill="var(--surface)">
+          <rect x="34"  y="90"  width="270" height="52" rx="5"/>
+          <rect x="34"  y="160" width="270" height="52" rx="5"/>
+          <rect x="34"  y="230" width="270" height="52" rx="5"/>
+          <rect x="440" y="90"  width="296" height="52" rx="5"/>
+          <rect x="440" y="160" width="296" height="52" rx="5"/>
+          <rect x="440" y="300" width="296" height="52" rx="5"/>
+          <rect x="850" y="160" width="276" height="52" rx="5"/>
+          <rect x="850" y="230" width="276" height="52" rx="5"/>
+          <rect x="850" y="300" width="276" height="52" rx="5"/>
+        </g>
+        <rect x="34" y="300" width="270" height="52" rx="5" fill="none"
+              stroke="var(--ink-3)" stroke-width="1.1" stroke-dasharray="5 4"/>
+
+        <g font-weight="700" fill="currentColor">
+          <text x="48"  y="114" font-size="12.5">제57조</text>
+          <text x="48"  y="184" font-size="12.5">제29조①2 · 제33조⑤</text>
+          <text x="48"  y="254" font-size="12.5">제38조②③</text>
+          <text x="48"  y="324" font-size="12.5" fill="var(--ink-3)">제5조①4</text>
+          <text x="454" y="114" font-size="12.5">조문 8건 신설·보강</text>
+          <text x="454" y="184" font-size="12.5">제19조의2⑤ 신설</text>
+          <text x="454" y="324" font-size="12.5">별표 10 · 별지 11-1 · 21-1 신설</text>
+          <text x="864" y="184" font-size="12.5">6.6 부속서 (보강)</text>
+          <text x="864" y="254" font-size="12.5">6.5.7 데이터 요소 정의 (신설)</text>
+          <text x="864" y="324" font-size="12.5">6.5.3 인용 표준 (보강)</text>
+        </g>
+        <g font-size="10" fill="var(--ink-3)">
+          <text x="48"  y="131">운영위원회가 요령으로 정한다</text>
+          <text x="48"  y="201">특별위원 위촉 · 의결권 없음</text>
+          <text x="48"  y="271">에디터가 작성 · 방법은 지침에 위임</text>
+          <text x="48"  y="341">운영규정 개정 = 표준총회 · 연 2회 → 회피</text>
+          <text x="454" y="131">제2조 · 13 · 15 · 19 · 21 · 26 · 11</text>
+          <text x="454" y="201">공동 에디터 지정 · 의결권 없음</text>
+          <text x="454" y="341">수준 요건 · 선언 · 자가점검표</text>
+          <text x="864" y="201">요소↔IRI 매핑을 @context로 첨부</text>
+          <text x="864" y="271">14개 정규 컬럼 요소 정의표</text>
+          <text x="864" y="341">분류 기준을 규범성으로 통일</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption>
+      화살표는 근거가 흐르는 방향이다. 운영규정은 한 칸도 고치지 않고 네 조문이 근거만 제공한다.
+      오른쪽 끝 화살표가 이번 상정 순서를 결정한다 — <b>작성지침 6.6이 운영요령 제19조의2의
+      공동 에디터를 인용하므로, 운영요령이 먼저 의결돼야 작성지침 개정이 성립한다.</b>
+    </figcaption>
+  </figure>
+
+  <h2>운영요령 개정 항목 (안건 ①)</h2>
+  <div class="tw">
+    <table>
+      <thead><tr><th>조문·서식</th><th>성격</th><th>내용</th><th>운영규정 근거</th></tr></thead>
+      <tbody>
+        <tr><td class="n">제2조①6~8호</td><td>신설</td><td>AI-Ready 표준 · 적용 대상 · 수준(L1·L2·L3)의 정의</td><td class="n">—</td></tr>
+        <tr><td class="n">제13조⑤</td><td>신설</td><td>제안 시 <b>AI-Ready 선언</b>(별지 11-1호) 첨부</td><td class="n">제35조</td></tr>
+        <tr><td class="n">제15조②</td><td>보강</td><td>검토결과서에 적용 대상 여부·목표 수준 기재</td><td class="n">제37조</td></tr>
+        <tr><td class="n">제19조①9호</td><td>신설</td><td>요소 정규 컬럼표 · @context 부속서 · 인용표준 등재 의무</td><td class="n">제38조③</td></tr>
+        <tr><td class="n">제19조의2⑤</td><td>신설</td><td><b>공동 에디터</b> — 어휘 전문가를 특별위원으로 위촉해 지정</td><td class="n">제29조①2 · 제33조⑤</td></tr>
+        <tr><td class="n">제21조⑤</td><td>신설</td><td>상정 시 <b>자가점검표</b>(별지 21-1호) 제출</td><td class="n">제40조</td></tr>
+        <tr><td class="n">제26조⑥</td><td>신설</td><td>유지보수 시 자가점검 실시·기재</td><td class="n">제48조</td></tr>
+        <tr><td class="n">제11조④</td><td>신설</td><td>사무국의 형식 정합성 전자 점검 — <b>재량(“할 수 있다”)</b></td><td class="n">제54조</td></tr>
+        <tr><td class="n">별표 10</td><td>신설</td><td>AI-Ready 수준 요건 — 7구성요소 등급 기준·성숙도 산식</td><td class="n">—</td></tr>
+        <tr><td class="n">별지 11-1호 · 21-1호</td><td>신설</td><td>AI-Ready 선언 · 자가점검표 (5-1·10-1호 하이픈 선례)</td><td class="n">—</td></tr>
+        <tr><td class="n">별지 15 · 23 · 24호</td><td>개정</td><td>검토결과서에 확인란 추가 (제15조②·제26조⑥ 연계)</td><td class="n">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>작성지침 개정 항목 (안건 ②)</h2>
+  <div class="tw">
+    <table>
+      <thead><tr><th>항</th><th>성격</th><th>내용</th><th>근거·연계</th></tr></thead>
+      <tbody>
+        <tr><td class="n">6.5.3 인용 표준</td><td>보강</td><td>인용 표준과 참고 문헌을 <b>인용 대상의 종류가 아니라 규범성</b>으로 구분. 외부 어휘·스키마를 본문 또는 부속서에서 규범적으로 쓰면 인용 표준에 등재</td><td class="n">20종 중 18종 결함의 직접 근거</td></tr>
+        <tr><td class="n">6.5.7 데이터 요소 정의</td><td>신설</td><td>데이터 요소를 14개 정규 컬럼표로 작성. ①~⑬은 에디터, ⑭ 어휘 식별자(IRI)는 공동 에디터</td><td class="n">운영규정 제38조③</td></tr>
+        <tr><td class="n">6.6 부속서</td><td>보강</td><td>요소↔IRI 매핑을 JSON-LD @context 부속서로 첨부. 기술규격은 제외</td><td class="n">운영요령 제19조의2 인용</td></tr>
+        <tr><td class="n">부속서 B</td><td>신설(선택)</td><td>단위·어휘 매핑 지침 — QUDT/UCUM 결합, @context 작성법</td><td class="n">—</td></tr>
+        <tr><td class="n">부록 Ⅱ-4</td><td>보강</td><td>기술보고서 이력에 개정 판(R2) 추가</td><td class="n">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>8/10 위원님들께 드리는 말씀</h2>
+
+  <div class="stage">
+    <header>
+      <span class="num">STEP 1</span>
+      <h2>알아 두셔야 할 것</h2>
+      <span class="who">배경 · 진단 · 개념</span>
+    </header>
+
+    <div class="kpi">
+      <div><b>38%</b><span>현행 20종 평균 AI-Ready 성숙도</span></div>
+      <div><b>3종</b><span>L1(기준선) 충족 — L2·L3는 0종</span></div>
+      <div><b>90%</b><span>인용표준·일관성 결함 (18/20종) · 모두 기계 검출 가능</span></div>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <b class="t">왜 지금인가</b>
+        <p>DataCite · DCAT · W3C(PROV·DQV·ODRL) · MLCommons Croissant 등 기계가독 메타데이터
+        표준이 국제적으로 규범이 되고 있습니다. EU 인공지능법 제10조는 고위험 AI의 학습데이터에
+        출처 추적을 요구합니다. 표준이 AI-Ready하지 않으면 데이터를 아무리 모아도 AI가 바로 쓰지 못합니다.</p>
+      </li>
+      <li>
+        <b class="t">현행 20종을 실측했습니다</b>
+        <p>PG606 전수 11종과 타 PG 표본 9종, 모두 20종을 7개 구성요소로 채점했습니다.
+        평균 38%, 최고 83%(Y.3603 빅데이터 카탈로그) ~ 최저 8%(1344-P2 · 1506).
+        L1을 충족한 표준은 3종이고 L2·L3는 하나도 없습니다.</p>
+      </li>
+      <li>
+        <b class="t">성숙도를 가른 것은 도메인이 아니라 작성 방식이었습니다</b>
+        <p>상위군은 빅데이터·AI·시맨틱웹·신원으로 도메인에 공통점이 없고, 하위군도 품질·문서·수산으로
+        제각각입니다. 갈린 것은 <b>설계 단계부터 RDF·JSON-LD를 전제했는가</b> 하나뿐이었습니다.
+        나쁜 표준이 아니라 ‘사람용’으로 만들어진 것입니다.</p>
+      </li>
+      <li>
+        <b class="t">반복 결함은 개별 표준의 실수가 아닙니다</b>
+        <p>인용표준 분류 오류와 내부 일관성 결함이 각각 <b>20종 중 18종(90%)</b>에서 발견됐습니다.
+        모두 기계로 검출할 수 있는 유형입니다. 이 정도로 반복된다면 원인은 개별 표준이 아니라
+        <b>작성 방법과 절차에 자동 점검이 없다는 것</b>입니다. 그래서 표준마다 대응하지 않고
+        작성지침을 고쳐 한 번에 해소합니다.</p>
+      </li>
+      <li>
+        <b class="t">AI-Ready는 측정 가능한 요건입니다</b>
+        <p>7개 구성요소(시맨틱·신태틱·데이터 모델·출처/계보·운영 시맨틱·품질·접근제약)를
+        0·1·2 등급으로 재고, 흔한 묶음에 L1·L2·L3라는 이름을 붙였습니다.
+        <b>L1이 기준선</b>이며 그 위는 계단이 아니라 구성요소별 분기입니다.
+        요구 수준은 단계가 아니라 기술 대상 프로파일(①지식정보 ②자기기술형 레코드 ③AI 데이터세트)에
+        따라 구성요소로 정합니다.</p>
+        <p class="cite">별표 10 · 명세 4.1 · 5.2</p>
+      </li>
+      <li>
+        <b class="t">개념이 아니라 문안까지 준비돼 있습니다</b>
+        <p>표준 5종(0976 · 1530 · 1510 · 1594 · 0310)을 세 프로파일 전부에 걸쳐 실제로 재작성했습니다 —
+        선언 → 요소정의표 → 부속서 설계·생성 → 자가점검. 규범 3종의 신구조문대비표와
+        별표·별지 서식, 절차도까지 완성했습니다. 전환이 ‘창작’이 아니라 ‘형식으로 옮기기’라는 것을
+        실물로 확인했습니다.</p>
+      </li>
+    </ol>
+  </div>
+
+  <div class="stage">
+    <header>
+      <span class="num">STEP 2</span>
+      <h2>결정해 주셔야 할 것</h2>
+      <span class="who">SPC 소관 2건 · 연계 1건</span>
+    </header>
+
+    <ol class="steps">
+      <li>
+        <b class="t">안건 ② — 작성지침(TTAR-09.0040) 개정 착수</b>
+        <p>작성지침의 수립·검토는 <b>전략계획위원회의 정면 소관</b>입니다(제20조의3①6).
+        6.5.3(인용 표준)·6.5.7(요소 정의표 신설)·6.6(부속서 @context)의 개정(안)을
+        의견수렴 절차에 부칠지를 정해 주시기 바랍니다.</p>
+        <div class="decide">
+          <b>오늘 확정되는 것이 아닙니다.</b> 작성지침은 기술보고서이므로 제47조①에 따라
+          제35~39조를 준용합니다 — <b>의견수렴 4주 이상</b>을 거쳐 <b>기술위원회등이 최종 채택</b>합니다.
+          오늘 정해 주실 것은 그 절차의 개시입니다.
+        </div>
+      </li>
+      <li>
+        <b class="t">안건 ③ — AI-Ready 전문위원회 설치</b>
+        <p>전략계획위원회는 임무 수행을 위해 필요시 산하에 전문위원회를 둘 수 있습니다(제20조의3②).
+        <b>SPC가 직접 두는 것</b>이므로 오늘 의결 가능합니다.</p>
+        <div class="decide">
+          <b>임무 범위를 함께 확인해 주십시오.</b> 전문위원회는 제20조의3①의 임무를 벗어날 수 없어
+          <b>개별 표준초안을 대신 작성할 수 없습니다</b>. 공동 어휘·매핑 가이드·@context 템플릿·
+          작성지침 개정안처럼 <b>한 번 만들어 모든 PG가 함께 쓰는 공용 자산</b>을 맡습니다.
+          개별 표준의 매핑·부속서 작성은 그 PG의 특별위원으로 위촉된 공동 에디터가 합니다.
+        </div>
+      </li>
+      <li>
+        <b class="t">안건 ① — 운영요령 개정 (SPC 결정 사항 아님 · 연계 확인)</b>
+        <p>운영요령 개정은 운영위원회 권한입니다(제57조). SPC가 의결하지 않습니다.
+        다만 <b>상정 순서가 ①→②</b>여야 하므로 — 작성지침 6.6이 운영요령 제19조의2의 공동 에디터를
+        인용하기 때문입니다 — SPC 논의와 운영위 상정이 어긋나지 않도록 연계를 확인해 주시기 바랍니다.</p>
+      </li>
+    </ol>
+  </div>
+
+  <div class="stage">
+    <header>
+      <span class="num">STEP 3</span>
+      <h2>앞으로의 절차와 부탁 말씀</h2>
+      <span class="who">일정 · 각 TC의 협조</span>
+    </header>
+
+    <ol class="steps">
+      <li>
+        <b class="t">운영요령 개정 — 운영위원회 의결</b>
+        <p>제57조에 따른 운영위원회 권한이라 60일 의견수렴이나 표준총회 상정을 요하지 않습니다.
+        안건으로 상정되면 그 회의에서 의결까지 가능합니다.</p>
+      </li>
+      <li>
+        <b class="t">작성지침 개정 — 의견수렴 4주 이상 → 기술위원회등 채택</b>
+        <p>제47조①이 제35~39조를 준용하므로 의견수렴을 거쳐야 하고, 최종 채택은 기술위원회등이 합니다.
+        표준총회 상정은 필요하지 않습니다.</p>
+      </li>
+      <li>
+        <b class="t">시행 — 제안·초안·상정 각 단계에 접점 4개가 부가됩니다</b>
+        <p>기존 제·개정 절차(별표 1)는 그대로 두고, 제안 시 <b>선언</b>, 초안 작성 시 <b>요소 정의표</b>,
+        공동 에디터의 <b>부속서 설계·생성</b>, 상정 시 <b>자가점검</b>만 더해집니다.
+        절차를 새로 만드는 것이 아니라 산출물과 점검을 붙이는 것입니다.</p>
+      </li>
+    </ol>
+
+    <h3>위원님들께 부탁드립니다</h3>
+    <ul class="ask">
+      <li><b>소속 기술위원회의 적용 대상 표준을 살펴봐 주십시오.</b>
+        데이터 요소·구조·품질을 기술하는 표준이 대상이며, 기술규격은 제외됩니다.
+        대상 범위를 조건절로 서술했으므로 절차 문서나 어휘 표준은 자연히 빠집니다.</li>
+      <li><b>의견수렴 기간에 소속 TC의 의견을 내 주십시오.</b>
+        작성지침은 앞으로 만들어질 모든 데이터 표준의 작성 방법을 정합니다.
+        한 번 정해지면 개별 표준마다 되돌리기 어렵습니다.</li>
+      <li><b>어휘 전문가를 추천해 주십시오.</b>
+        공동 에디터는 관련 분야 교수·공공기관 소속 전문가 등을 특별위원으로 위촉해 지정합니다
+        (제29조①2). 특별위원은 의결권이 없으므로 형식화만 담당하고 표준의 내용은 좌우하지 않습니다.</li>
+      <li><b>저비용 전환 구간부터 봐 주십시오.</b>
+        데이터 모델이 이미 표로 정리된 표준(평균 1.15)은 요소표에 IRI 열 하나를 더하는 일에 가깝습니다.
+        20종 중 시맨틱 0등급이 11종인데, 이 구간이 가장 적은 노력으로 가장 크게 오릅니다.</li>
+    </ul>
+  </div>
+
+  <h2>미리 짚어 둘 것</h2>
+  <ul class="notes">
+    <li><b>운영규정은 고치지 않습니다.</b> 개정하려면 표준총회(연 2회) 의결이 필요해
+      일정이 길어집니다(제5조①4). 네 조문을 근거로만 활용해 이를 피한 것이 이번 설계의 전제입니다.</li>
+    <li><b>“전문위원회에 검토 요청” 조문은 넣지 않았습니다.</b> PG 초안을 전문위원회가 검토하게 하면
+      제20조의3②의 임무 한계를 넘습니다. 대신 어휘 전문가를 그 PG의 특별위원으로 위촉하는 경로를 택했습니다.</li>
+    <li><b>사무국 기계 점검은 재량입니다.</b> 제11조④를 “할 수 있다”로 두어 필수 관문화에 따르는
+      별표 1 절차 개정과 사무국 부담을 피했습니다.</li>
+    <li><b>대상을 가르지 않고 요건을 조건절로 썼습니다.</b> “AI-Ready 적용 대상 표준은 …”이 아니라
+      “데이터 요소를 정의하는 표준은 …”으로 서술해, 해당하지 않는 표준이 자연히 빠지도록 했습니다.</li>
+    <li><b>현행 문안은 의결 전 원문 대조가 필요합니다.</b> 신구조문대비표의 현행란은 배포본 추출이므로,
+      상정 시 최종본과 한 번 더 맞춰야 합니다.</li>
+  </ul>
+
+</div>
+</body>
+</html>
